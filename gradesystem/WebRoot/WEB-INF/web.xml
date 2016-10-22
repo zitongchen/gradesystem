@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns="http://java.sun.com/xml/ns/javaee" 
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+id="WebApp_ID" version="3.0">
+  <display-name>gradesystem</display-name>
+ 	<servlet>
+ 		<servlet-name>UserServlet</servlet-name>
+ 		<servlet-class>team.wuming.modules.users.web.servlet.UserServlet</servlet-class>
+ 	</servlet>
+ 	<servlet>
+ 		<servlet-name>VerificationServlet</servlet-name>
+ 		<servlet-class>team.wuming.common.web.servlet.VerificationServlet</servlet-class>
+ 	</servlet>
+  <servlet>
+    <servlet-name>ExpertServlet</servlet-name>
+    <servlet-class>team.wuming.modules.experts.web.servlet.ExpertServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>AdminServlet</servlet-name>
+    <servlet-class>team.wuming.modules.admin.web.servlet.AdminServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>fileUpServlet</servlet-name>
+    <servlet-class>team.wuming.test.fileUpServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>TestUserServlet</servlet-name>
+    <servlet-class>team.wuming.test.TestUserServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>GsonServlet</servlet-name>
+    <servlet-class>team.wuming.test.GsonServlet</servlet-class>
+  </servlet>
+
+  
+
+
+
+ 	<servlet-mapping>
+ 		<servlet-name>UserServlet</servlet-name>
+ 		<url-pattern>/UserServlet</url-pattern>
+ 	</servlet-mapping>
+ 	<servlet-mapping>
+ 		<servlet-name>VerificationServlet</servlet-name>
+ 		<url-pattern>/VerificationServlet</url-pattern>
+ 	</servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ExpertServlet</servlet-name>
+    <url-pattern>/ExpertServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AdminServlet</servlet-name>
+    <url-pattern>/AdminServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>fileUpServlet</servlet-name>
+    <url-pattern>/fileUpServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TestUserServlet</servlet-name>
+    <url-pattern>/TestUserServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>GsonServlet</servlet-name>
+    <url-pattern>/GsonServlet</url-pattern>
+  </servlet-mapping>
+ 
+ 	<filter>
+ 		<filter-name>LoginFilter</filter-name>
+ 		<filter-class>team.wuming.modules.users.web.filter.LoginFilter</filter-class>
+ 	</filter>
+ 	<filter-mapping>
+ 		<filter-name>LoginFilter</filter-name>
+ 		<url-pattern>/jsps/user/*</url-pattern>
+ 	</filter-mapping>
+ 	
+</web-app>
