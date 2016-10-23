@@ -19,23 +19,29 @@ public class AdminServlet extends BaseServlet {
 
 	public String login(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, UserException {
-		Admin form = CommonUtils.toBean(request.getParameterMap(), Admin.class);
+		String userId = request.getParameter("userId");
+		String password = request.getParameter("password");
+		Admin form = new Admin();
+		form.setAdmin_account(userId);
+		form.setPassword(password);
 		String verification = request.getParameter("verification");
 		try {
 			Admin Admin = adminService.login(form);
 
 			String verificationCode = (String) request.getSession()
 					.getAttribute("verificationCode");
-			if (verification != verificationCode) {
+			if (!(verification.equals(verificationCode))) {
 				request.setAttribute("verificationError", "验证码错误！");
-				request.setAttribute("form", form);
+				request.setAttribute("userId", userId);
+				request.setAttribute("password", password);
 				return "f:/index.jsp";
 			}
 			request.getSession().setAttribute("session_Admin", Admin);
 			return "r:/jsp/admin/index.jsp";
 		} catch (Exception e) {
 			request.setAttribute("msg", e.getMessage());
-			request.setAttribute("form", form);
+			request.setAttribute("userId", userId);
+			request.setAttribute("password", password);
 			return "f:/index.jsp";
 		}
 	}

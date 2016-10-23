@@ -30,7 +30,13 @@ public class UserServlet extends BaseServlet {
 	 */
 	public String login(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, UserException {
-		User form = CommonUtils.toBean(request.getParameterMap(), User.class);
+		String userId = request.getParameter("userId");
+		String password = request.getParameter("password");
+
+		User form = new User();
+		form.setUser_acount(userId);
+		form.setPassword(password);
+
 		String verification = request.getParameter("verification");
 		System.out.println(verification);
 		try {
@@ -42,7 +48,8 @@ public class UserServlet extends BaseServlet {
 					.getAttribute("verificationCode");
 			if (!(verification.equals(verificationCode))) {
 				request.setAttribute("verificationError", "验证码错误！");
-				request.setAttribute("form", form);
+				request.setAttribute("userId", userId);
+				request.setAttribute("password", password);
 				return "f:/jsps/common/login.jsp";
 			}
 			User user = userService.login(form);
@@ -52,7 +59,8 @@ public class UserServlet extends BaseServlet {
 
 		} catch (team.wuming.modules.users.service.UserException e) {
 			request.setAttribute("msg", e.getMessage());
-			request.setAttribute("form", form);
+			request.setAttribute("userId", userId);
+			request.setAttribute("password", password);
 			return "f:/jsps/common/login.jsp";
 		}
 	}

@@ -1,6 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core"  %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -11,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'numbercode.jsp' starting page</title>
+    <title>My JSP 'index.jsp' starting page</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -21,21 +20,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-	<script type="text/javascript">
-	function _change(){
-		var imgEle=document.getElementById("vCode");
-		imgEle.src="${pageContext.request.contextPath}/VerificationServlet?"+new Date().getTime();
-	}
-	</script>
+
   </head>
   
   <body>
-    <h3>验证码</h3>
-    <img id="vCode" src="${pageContext.request.contextPath}/VerificationServlet">
-    <a href="javascript:_change()">看不清，换一张</a>
-    
-    <a href="${pageContext }"></a>
-   <fmt:formatDate value="" pattern="yyyy-MM-dd"/>
- 
+	    	<c:if test="${not empty sessionScope.session_expert}">
+	    		<c:out value="${sessionScope.session_expert.expacount}"></c:out>
+	    		<c:out value="${sessionScope.session_expert.name}"></c:out>
+	    		<c:out value="${sessionScope.session_expert.nickname}"></c:out>
+	    		
+	    	</c:if>
   </body>
 </html>

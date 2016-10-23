@@ -13,7 +13,7 @@ public class ExpertDaoImpl implements ExpertDao {
 	private QueryRunner qr = new TxQueryRunner();
 
 	public Expert findExertByExperId(Expert form) {
-		String sql = "select * from expert  expacount=?";
+		String sql = "select * from experts where expacount=?";
 		try {
 			return qr.query(sql, new BeanHandler<Expert>(Expert.class),
 					form.getExpacount());
@@ -24,7 +24,7 @@ public class ExpertDaoImpl implements ExpertDao {
 	}
 
 	public void updateExpertMessageById(Expert form) {
-		String sql = "update expert ";
+		String sql = "update experts ";
 		try {
 			qr.update(sql);
 		} catch (SQLException e) {
@@ -34,7 +34,7 @@ public class ExpertDaoImpl implements ExpertDao {
 	}
 
 	public Expert findExpertMessageById(String expertId) {
-		String sql = "select *　from expert where expacount=?";
+		String sql = "select *　from experts where expacount=?";
 		try {
 			return qr.query(sql, new BeanHandler<Expert>(Expert.class),
 					expertId);
@@ -44,7 +44,7 @@ public class ExpertDaoImpl implements ExpertDao {
 	}
 
 	public void updateExpertPassword(Expert form) {
-		String sql = "update expert set password=? where expacount=?";
+		String sql = "update experts set password=? where expacount=?";
 		try {
 			qr.update(sql, form.getPassword(), form.getExpacount());
 		} catch (SQLException e) {

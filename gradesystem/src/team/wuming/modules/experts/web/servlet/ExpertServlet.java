@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.omg.CORBA.UserException;
 
 import team.wuming.modules.experts.domain.Expert;
+import team.wuming.modules.experts.service.ExpertException;
 import team.wuming.modules.experts.service.ExpertService;
 import team.wuming.modules.experts.service.impl.ExpertServiceImpl;
 import team.wuming.modules.users.domain.StudentGrade;
@@ -23,25 +24,38 @@ public class ExpertServlet extends BaseServlet {
 	// 教师登录
 	public String login(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, UserException {
-		Expert form = CommonUtils.toBean(request.getParameterMap(),
-				Expert.class);
+
+		String userId = request.getParameter("userId");
+		String password = request.getParameter("password");
+
+		Expert form = new Expert();
+
+		form.setExpacount(userId);
+		form.setPassword(password);
+
 		String verification = request.getParameter("verification");
+		System.out.println("teacher" + verification);
 		try {
-			Expert expert = expertService.login(form);
 
 			String verificationCode = (String) request.getSession()
 					.getAttribute("verificationCode");
-			if (verification != verificationCode) {
+			if (!(verification.equals(verificationCode))) {
 				request.setAttribute("verificationError", "验证码错误！");
-				request.setAttribute("form", form);
-				return "f:/index.jsp";
+				request.setAttribute("userId", userId);
+				request.setAttribute("password", password);
+				return "f:/jsps/common/login.jsp";
 			}
+
+			Expert expert = expertService.login(form);
+			System.out.println("test" + expert);
 			request.getSession().setAttribute("session_expert", expert);
-			return "r:/jsp/user/index.jsp";
-		} catch (Exception e) {
+			return "f:/jsps/expert/index.jsp";
+
+		} catch (ExpertException e) {
 			request.setAttribute("msg", e.getMessage());
-			request.setAttribute("form", form);
-			return "f:/index.jsp";
+			request.setAttribute("userId", userId);
+			request.setAttribute("password", password);
+			return "f:/jsps/common/login.jsp";
 		}
 	}
 
