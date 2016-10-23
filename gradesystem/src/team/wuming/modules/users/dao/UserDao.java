@@ -1,39 +1,14 @@
 package team.wuming.modules.users.dao;
 
-import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
-
-import javax.enterprise.inject.New;
-
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import team.wuming.modules.users.domain.StudentGrade;
 import team.wuming.modules.users.domain.User;
-import cn.itcast.jdbc.TxQueryRunner;
 
-public class UserDao {
-	private QueryRunner qr = new TxQueryRunner();
+public interface UserDao {
+	public User findByUserid(String userid);
 
-	public User findByUserid(String userid) {
-		try {
-			String sql = "select * from users where user_acount=?";
-			return qr.query(sql, new BeanHandler<User>(User.class), userid);
-		} catch (SQLException e) {
-			throw new RuntimeException();
-		}
-	}
-
-	public User findUserMessageById(String userId) {
-		String sql = "select * from users where user_acount=?";
-		try {
-			return qr.query(sql, new BeanHandler<User>(User.class), userId);
-		} catch (SQLException e) {
-			throw new RuntimeException();
-		}
-	}
+	public User findUserMessageById(String userId);
 
 	/*
 	 * user_acount; password;realname;// 真实姓名 nickname; // 昵称score; //
@@ -50,29 +25,10 @@ public class UserDao {
 	 */
 
 	// 修改用户信息
-	public void updateUserMessageById(User user) {
-		String sql = "update users set ";
+	public void updateUserMessageById(User user);
 
-	}
+	public void updateUserPasswordById(User user);
 
-	public void updateUserPasswordById(User user) {
-		String sql = "update users set password=? where user_acount";
-		try {
-			qr.update(sql, user.getPassword());
-		} catch (SQLException e) {
-			throw new RuntimeException();
-		}
-
-	}
-
-	public List<StudentGrade> queryGradeByUserId(String userId) {
-		String sql = "select * from users where user_count=?";
-		try {
-			return qr.query(sql,
-					new BeanListHandler<StudentGrade>(StudentGrade.class),
-					userId);
-		} catch (SQLException e) {
-			throw new RuntimeException();
-		}
-	}
+	public List<StudentGrade> queryGradeByUserId(String userId);
 }
+

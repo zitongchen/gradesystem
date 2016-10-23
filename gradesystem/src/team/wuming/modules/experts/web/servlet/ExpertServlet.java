@@ -11,13 +11,14 @@ import org.omg.CORBA.UserException;
 
 import team.wuming.modules.experts.domain.Expert;
 import team.wuming.modules.experts.service.ExpertService;
+import team.wuming.modules.experts.service.impl.ExpertServiceImpl;
 import team.wuming.modules.users.domain.StudentGrade;
 import team.wuming.modules.users.domain.User;
 import cn.itcast.commons.CommonUtils;
 import cn.itcast.servlet.BaseServlet;
 
 public class ExpertServlet extends BaseServlet {
-	private ExpertService expertService = new ExpertService();
+	private ExpertService expertService = new ExpertServiceImpl();
 
 	// 教师登录
 	public String login(HttpServletRequest request, HttpServletResponse response)

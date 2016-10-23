@@ -10,11 +10,12 @@ import org.omg.CORBA.UserException;
 
 import team.wuming.modules.admin.domain.Admin;
 import team.wuming.modules.admin.service.AdminService;
+import team.wuming.modules.admin.service.impl.AdminServiceImpl;
 import cn.itcast.commons.CommonUtils;
 import cn.itcast.servlet.BaseServlet;
 
 public class AdminServlet extends BaseServlet {
-	private AdminService adminService = new AdminService();
+	private AdminService adminService = new AdminServiceImpl();
 
 	public String login(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, UserException {

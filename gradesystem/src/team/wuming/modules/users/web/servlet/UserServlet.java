@@ -12,11 +12,12 @@ import org.omg.CORBA.UserException;
 import team.wuming.modules.users.domain.StudentGrade;
 import team.wuming.modules.users.domain.User;
 import team.wuming.modules.users.service.UserService;
+import team.wuming.modules.users.service.impl.UserServiceImpl;
 import cn.itcast.commons.CommonUtils;
 import cn.itcast.servlet.BaseServlet;
 
 public class UserServlet extends BaseServlet {
-	private UserService userService = new UserService();
+	private UserService userService = new UserServiceImpl();
 
 	/**
 	 * @param request
