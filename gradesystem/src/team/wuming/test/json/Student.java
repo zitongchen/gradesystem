@@ -1,4 +1,4 @@
-package team.wuming.test;
+package team.wuming.test.json;
 
 public class Student {
 	private String name;

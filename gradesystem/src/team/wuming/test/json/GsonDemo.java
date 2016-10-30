@@ -1,4 +1,4 @@
-package team.wuming.test;
+package team.wuming.test.json;
 
 import org.junit.Test;
 

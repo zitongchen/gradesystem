@@ -1,9 +1,11 @@
 package team.wuming.modules.users.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
-import team.wuming.modules.users.domain.StudentGrade;
+import team.wuming.common.domain.StudentGrade;
 import team.wuming.modules.users.domain.User;
+import team.wuming.test.page.PageBean;
 
 public interface UserService {
 	public User login(User form) throws UserException;
@@ -21,5 +23,7 @@ public interface UserService {
 	public List<StudentGrade> queryUserGrade(String userId);
 
 	public User findUserMessage(String userId);
+
+	public PageBean<StudentGrade> queryUserGrade(int pc, int ps, String userId);
 
 }

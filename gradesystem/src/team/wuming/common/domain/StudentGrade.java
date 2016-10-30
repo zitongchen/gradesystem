@@ -1,9 +1,8 @@
-package team.wuming.modules.users.domain;
+package team.wuming.common.domain;
 
 import java.io.Serializable;
 import java.util.Date;
 
-import team.wuming.common.domain.Docourse;
 import team.wuming.modules.experts.domain.Expert;
 
 public class StudentGrade implements Serializable {
@@ -11,6 +10,15 @@ public class StudentGrade implements Serializable {
 	// private String visit_count;// 课程编号
 	private Docourse docourse;// 外键
 	private int psgrade;// 平时成绩
+
+	public String getUser_acount() {
+		return user_acount;
+	}
+
+	public void setUser_acount(String user_acount) {
+		this.user_acount = user_acount;
+	}
+
 	private int ksgrade;// 考试成绩
 	private int grade;// 成绩
 	private String nf;// 年级
@@ -22,13 +30,7 @@ public class StudentGrade implements Serializable {
 	private String shenhe;// 审核人员代码
 	private Date optime;// 操作日期
 
-	public String getUser_acount() {
-		return user_acount;
-	}
 
-	public void setUser_acount(String user_acount) {
-		this.user_acount = user_acount;
-	}
 
 
 	public int getPsgrade() {
@@ -107,7 +109,7 @@ public class StudentGrade implements Serializable {
 
 	@Override
 	public String toString() {
-		return "StudentGrade [user_acount=" + user_acount + ", visit_count="
+		return "StudentGrade [user_acount=" + ", visit_count="
 				+ ", psgrade=" + psgrade + ", ksgrade=" + ksgrade
 				+ ", grade=" + grade + ", nf=" + nf + ", gradelei=" + gradelei
  + ", scores="

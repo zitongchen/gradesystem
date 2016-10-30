@@ -50,6 +50,14 @@ public class Docourse implements Serializable {
 		this.state = state;
 	}
 
+	public String getExpacount() {
+		return expacount;
+	}
+
+	public void setExpacount(String expacount) {
+		this.expacount = expacount;
+	}
+
 	@Override
 	public String toString() {
 		return "Docurse [visit_count=" + visit_count + ", title=" + title

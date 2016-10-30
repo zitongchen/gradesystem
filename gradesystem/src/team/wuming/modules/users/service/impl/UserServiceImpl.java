@@ -1,16 +1,22 @@
 package team.wuming.modules.users.service.impl;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import team.wuming.common.dao.StudentGradeDao;
+import team.wuming.common.dao.impl.StudentGradeDaoImpl;
+import team.wuming.common.domain.StudentGrade;
 import team.wuming.modules.users.dao.UserDao;
 import team.wuming.modules.users.dao.impl.UserDaoImpl;
-import team.wuming.modules.users.domain.StudentGrade;
 import team.wuming.modules.users.domain.User;
 import team.wuming.modules.users.service.UserException;
 import team.wuming.modules.users.service.UserService;
+import team.wuming.test.page.PageBean;
 
 public class UserServiceImpl implements UserService {
 	private UserDao userDao = new UserDaoImpl();
+	private StudentGradeDao studentGradeDao = new StudentGradeDaoImpl();
 
 	public User login(User form) throws UserException {
 		User user = userDao.findByUserid(form.getUser_acount());
@@ -39,11 +45,19 @@ public class UserServiceImpl implements UserService {
 	// 学生查询成绩
 	public List<StudentGrade> queryUserGrade(String userId) {
 		return userDao.queryGradeByUserId(userId);
-
 	}
 
 	public User findUserMessage(String userId) {
 		return userDao.findUserMessageById(userId);
+	}
+
+	@Override
+	public PageBean<StudentGrade> queryUserGrade(int pc, int ps, String userId) {
+
+		PageBean<StudentGrade> studentGrades = new PageBean<StudentGrade>();
+		studentGrades = studentGradeDao.queryGradeByUserId(pc, ps, userId);
+
+		return null;
 	}
 
 }

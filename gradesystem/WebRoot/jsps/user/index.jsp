@@ -30,5 +30,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    		<c:out value="${sessionScope.session_user.nickname}"></c:out>
 	    		
 	    	</c:if>
+	    	<br>
+	    	<a href="${pageContext.request.contextPath}/UserServlet?method=exit">
+	    	<button>退出</button></a><br>
+	    	<a href="${pageContext.request.contextPath}/UserServlet?method=findUserMessage&user_acount=${sessionScope.session_user.user_acount}">
+	    	<button>显示学生信息</button></a>
+	    	<div>
+	    		<c:if test="${not empty requestScope.request_user}">
+	    			<c:out value="requestSession test"></c:out>
+	    			<c:out value="${requestScope.request_user.user_acount}"></c:out>
+	    			<c:out value="${requestScope.request_user.realname}"></c:out>
+	    			<c:out value="${requestScope.request_user.nickname}"></c:out>
+	    		</c:if>
+	    	</div>
+	    	<a href="${pageContext.request.contextPath}/UserServlet?method=queryUserGrade&user_acount=${sessionScope.session_user.user_acount}">
+	    	<button>显示学生成绩</button></a>
+	    	<div>
+	    		<c:if test="${not empty requestScope.gradeList}">
+	    			<c:forEach	var="item" items="${requestScope.gradeList}">
+	    				<c:out value="${item.user_acount}"></c:out>
+	    				<c:out value="${item.docourse.visit_count}"></c:out>
+	    				<c:out value="${item.docourse.title}"></c:out>
+	    				<c:out value="${item.expert.name}"></c:out>
+	    				<c:out value="${item.psgrade}"></c:out>
+	    			</c:forEach>
+	    		</c:if>
+	    	</div>
+	    	<a href="jsps/user/updateuserpassword.jsp"><button>修改密码</button></a>
   </body>
+  
 </html>
