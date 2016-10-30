@@ -1,10 +1,18 @@
-package team.wuming.test.page;
+package team.wuming.common.domain;
 
 import java.util.List;
 
+/**
+ * @author Tony
+ * 
+ * @param <T>
+ *            分页类
+ */
 public class PageBean<T> {
+
 	private List<T> beanList;// 当前页面记录
 	private int tr;// 总记录数
+
 	private int pc;// /当前页面码
 	private int ps;// 每页记录数
 	private String url;// 它就是url后的条件

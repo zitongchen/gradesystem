@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.enterprise.inject.spi.Bean;
 import javax.management.Query;
 
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
@@ -15,22 +17,22 @@ import cn.itcast.commons.CommonUtils;
 import cn.itcast.jdbc.TxQueryRunner;
 import team.wuming.common.dao.StudentGradeDao;
 import team.wuming.common.domain.Docourse;
+import team.wuming.common.domain.PageBean;
 import team.wuming.common.domain.StudentGrade;
 import team.wuming.modules.experts.domain.Expert;
-import team.wuming.test.page.PageBean;
 
 public class StudentGradeDaoImpl implements StudentGradeDao {
 
 	private QueryRunner qr = new TxQueryRunner();
+
 	@Override
-	public PageBean<StudentGrade> queryGradeByUserId(int pc, int ps,
+	public List<StudentGrade> queryGradeByUserId(int pc, int ps,
 			String userId) throws RuntimeException {
-		String sql = "select count(*) from studentgrade";
+
 		List<StudentGrade> studentGrades = new ArrayList<StudentGrade>();
+		String sql = "select * from studentgrade where user_acount=? limit ?,?";
 		try {
-			// 获取总记录数
-			int tr = ((Number) qr.query(sql, new ScalarHandler())).intValue();
-			sql = "select * from studentgrade where user_acount=? limit ?,?";
+
 			List<Map<String, Object>> maps = qr.query(sql,
 					new MapListHandler(), userId, (pc - 1) * ps, ps);
 			for (Map<String, Object> map : maps) {
@@ -42,14 +44,47 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 				studentGrade.setExpert(expert);
 				studentGrades.add(studentGrade);
 			}
-			PageBean<StudentGrade> pb = new PageBean<StudentGrade>();
-			pb.setPc(pc);
-			pb.setPs(ps);
-			pb.setTr(tr);
-			pb.setBeanList(studentGrades);
-			return pb;
+			return studentGrades;
 
 		} catch (SQLException e) {
+			throw new RuntimeException();
+		}
+	}
+
+	@Override
+	public int queryTrByUserId(String userId) {
+		// TODO Auto-generated method stub
+		String sql = "select count(*) from studentgrade where user_acount=?";
+		try {
+			return ((Number) qr.query(sql, new ScalarHandler(), userId))
+					.intValue();
+
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+
+	}
+
+	@Override
+	public Docourse queryDocourse(String visit_count) {
+		String sql = "select * from docourse where visit_count=?";
+
+		try {
+			return qr.query(sql, new BeanHandler<Docourse>(Docourse.class),
+					visit_count);
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+	}
+
+	@Override
+	public Expert queryExpert(String expacount) {
+		String sql = "select * from experts where expacount=?";
+
+		try {
+			return qr.query(sql, new BeanHandler<Expert>(Expert.class),
+					expacount);
+		} catch (Exception e) {
 			throw new RuntimeException();
 		}
 	}

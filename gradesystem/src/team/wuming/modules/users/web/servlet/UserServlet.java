@@ -9,16 +9,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.omg.CORBA.UserException;
 
+import team.wuming.common.domain.PageBean;
 import team.wuming.common.domain.StudentGrade;
+import team.wuming.common.service.StudentGradeService;
+import team.wuming.common.service.impl.StudentGradeServiceImpl;
 import team.wuming.modules.users.domain.User;
 import team.wuming.modules.users.service.UserService;
 import team.wuming.modules.users.service.impl.UserServiceImpl;
-import team.wuming.test.page.PageBean;
 import cn.itcast.commons.CommonUtils;
 import cn.itcast.servlet.BaseServlet;
 
 public class UserServlet extends BaseServlet {
 	private UserService userService = new UserServiceImpl();
+	private StudentGradeService studentGradeService = new StudentGradeServiceImpl();
 
 	/**
 	 * @param request
@@ -143,7 +146,8 @@ public class UserServlet extends BaseServlet {
 		String userId = request.getParameter("user_acount");
 		int pc = getPc(request);
 		int ps = 3;// 给定ps的值，每页显示3条记录
-		PageBean<StudentGrade> pb = userService.queryUserGrade(pc, ps, userId);
+		PageBean<StudentGrade> pb = studentGradeService.queryUserGrade(pc, ps,
+				userId);
 		/*
 		 * List<StudentGrade> studentGradeList = userService
 		 * .queryUserGrade(userId);
@@ -174,7 +178,6 @@ public class UserServlet extends BaseServlet {
 		String contextPath = request.getContextPath();
 		String servletPath = request.getServletPath();
 		String quesyString = request.getQueryString();
-		System.out.println(servletPath);
 		if (quesyString.contains("&pc=")) {
 			int endIndex = quesyString.lastIndexOf("&pc=");
 			quesyString = quesyString.substring(0, endIndex);

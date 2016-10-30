@@ -3,9 +3,9 @@ package team.wuming.modules.users.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import team.wuming.common.domain.PageBean;
 import team.wuming.common.domain.StudentGrade;
 import team.wuming.modules.users.domain.User;
-import team.wuming.test.page.PageBean;
 
 public interface UserDao {
 	public User findByUserid(String userid);

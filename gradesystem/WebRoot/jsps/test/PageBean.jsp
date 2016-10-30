@@ -28,7 +28,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<table border="1" width="70%" align="center">
   		<tr>
   			<th>学号</th>
-  			<th>科目</th>
+  			<th>科目编号</th>
+  			<th>科目名称</th>
   			<th>分数</th>
   			<th>老师</th>
   		</tr>
@@ -36,8 +37,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			<tr>
   				<td>${grade.user_acount}</td>
   				<td>${grade.docourse.visit_count}</td>
+  				<td>${grade.docourse.title}</td>
   				<td>${grade.psgrade}</td>
-  				<td>${grade.docourse.expacount}</td>
+  				<td>${grade.expert.name}</td>
   			</tr>
   		</c:forEach>
   	</table>

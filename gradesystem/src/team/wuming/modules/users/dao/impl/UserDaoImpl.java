@@ -16,11 +16,11 @@ import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import team.wuming.common.domain.Docourse;
+import team.wuming.common.domain.PageBean;
 import team.wuming.common.domain.StudentGrade;
 import team.wuming.modules.experts.domain.Expert;
 import team.wuming.modules.users.dao.UserDao;
 import team.wuming.modules.users.domain.User;
-import team.wuming.test.page.PageBean;
 import cn.itcast.commons.CommonUtils;
 import cn.itcast.jdbc.TxQueryRunner;
 
