@@ -11,13 +11,7 @@ public class StudentGrade implements Serializable {
 	private Docourse docourse;// 外键
 	private int psgrade;// 平时成绩
 
-	public String getUser_acount() {
-		return user_acount;
-	}
 
-	public void setUser_acount(String user_acount) {
-		this.user_acount = user_acount;
-	}
 
 	private int ksgrade;// 考试成绩
 	private int grade;// 成绩
@@ -30,6 +24,13 @@ public class StudentGrade implements Serializable {
 	private String shenhe;// 审核人员代码
 	private Date optime;// 操作日期
 
+	public String getUser_acount() {
+		return user_acount;
+	}
+
+	public void setUser_acount(String user_acount) {
+		this.user_acount = user_acount;
+	}
 
 
 

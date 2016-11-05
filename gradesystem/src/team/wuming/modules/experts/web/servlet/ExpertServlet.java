@@ -1,15 +1,20 @@
 package team.wuming.modules.experts.web.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.omg.CORBA.UserException;
 
 import team.wuming.common.domain.StudentGrade;
+import team.wuming.common.service.StudentGradeService;
+import team.wuming.common.service.impl.StudentGradeServiceImpl;
 import team.wuming.modules.experts.domain.Expert;
 import team.wuming.modules.experts.service.ExpertException;
 import team.wuming.modules.experts.service.ExpertService;
@@ -20,6 +25,7 @@ import cn.itcast.servlet.BaseServlet;
 
 public class ExpertServlet extends BaseServlet {
 	private ExpertService expertService = new ExpertServiceImpl();
+	private StudentGradeService studentGradeService = new StudentGradeServiceImpl();
 
 	// 教师登录
 	public String login(HttpServletRequest request, HttpServletResponse response)
@@ -34,7 +40,6 @@ public class ExpertServlet extends BaseServlet {
 		form.setPassword(password);
 
 		String verification = request.getParameter("verification");
-		System.out.println("teacher" + verification);
 		try {
 
 			String verificationCode = (String) request.getSession()
@@ -47,7 +52,6 @@ public class ExpertServlet extends BaseServlet {
 			}
 
 			Expert expert = expertService.login(form);
-			System.out.println("test" + expert);
 			request.getSession().setAttribute("session_expert", expert);
 			return "f:/jsps/expert/index.jsp";
 
@@ -58,6 +62,7 @@ public class ExpertServlet extends BaseServlet {
 			return "f:/jsps/common/login.jsp";
 		}
 	}
+
 
 	// 教师退出
 	public String exit(HttpServletRequest request, HttpServletResponse response)
@@ -76,8 +81,8 @@ public class ExpertServlet extends BaseServlet {
 		return "r:/ExpertServlet?method=findExpertMessage";
 	}
 
-	// 教师查找数据
-	public String findUserMessage(HttpServletRequest request,
+	// 获取教师信息
+	public String findExpertMessage(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			UserException {
 		String expertId = request.getParameter("expacount");
@@ -92,9 +97,10 @@ public class ExpertServlet extends BaseServlet {
 			UserException {
 		Expert form = CommonUtils.toBean(request.getParameterMap(),
 				Expert.class);
-		if (form.getPassword() != request.getSession().getAttribute("password")) {
+		if (form.getPassword().equals(
+				request.getSession().getAttribute("password"))) {
 			request.setAttribute("passwordError", "原密码输入有误");
-			return "f:/jsp/expert/updateexpertpassword.jsp";
+			return "f:/jsps/expert/updateexpertpassword.jsp";
 		} else {
 			form.setPassword(request.getParameter("newPassword"));
 		}
@@ -103,6 +109,42 @@ public class ExpertServlet extends BaseServlet {
 		return "r:/index.jsp";
 	}
 
+	// 显示自己所教班级名称
+	public String findClassNameByExpert(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		String expacount = request.getParameter("expacount");
+		List<Object> class_ids = expertService.findClassNameByExpert(expacount);
+		List<String> classes = new ArrayList<String>();
+		Iterator<Object> iterator = class_ids.iterator();
+		while (iterator.hasNext()) {
+			classes.add(String.valueOf(iterator.next()));
+		}
+		/*
+		 * for (Object class_id : class_ids) {
+		 * class_ids.add(String.valueOf(class_id)); }
+		 */
+		request.setAttribute("class_id", class_ids);
+
+		return "f:/jsps/expert/index.jsp" ;
+	}
+
+	// 显示所教班级学生
+	public String findClassStudentByClass(HttpServletRequest request,HttpServletResponse response){
+		String classId=request.getParameter("classId");
+		List<StudentGrade> studentGrades = studentGradeService
+				.findClassStudentByClass(classId);
+		request.setAttribute("studentgrades", studentGrades);
+		return "f:/jsps/expert/student_list.jsp";
+	}
+
+	public String updateClassStudentMessage(HttpServletRequest request,
+			HttpServletResponse response) {
+		List<User> userList = (List<User>) CommonUtils.toBean(
+				request.getParameterMap(), User.class);
+
+		return null;
+	}
 
 
 }

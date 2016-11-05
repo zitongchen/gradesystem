@@ -41,4 +41,40 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 		pb.setBeanList(studentGrades);
 		return pb;
 	}
+
+	@Override
+	public List<StudentGrade> queryUserFail(String userId) {
+		List<StudentGrade> studentGrades = studentGradeDao
+				.queryFailGradeByUserId(userId);
+		Docourse docourse = new Docourse();
+		Expert expert = new Expert();
+		for (StudentGrade studentGrade : studentGrades) {
+
+			docourse = studentGradeDao.queryDocourse(studentGrade.getDocourse()
+					.getVisit_count());
+			studentGrade.setDocourse(docourse);
+			expert = studentGradeDao.queryExpert(studentGrade.getDocourse()
+					.getExpacount());
+			studentGrade.setExpert(expert);
+		}
+
+		return studentGrades;
+	}
+
+	@Override
+	public List<StudentGrade> findClassStudentByClass(String classId) {
+		List<StudentGrade> studentGrades = studentGradeDao
+				.findClassStudentByClass(classId);
+		Docourse docuourse = new Docourse();
+		Expert expert = new Expert();
+		for (StudentGrade studentGrade : studentGrades) {
+			docuourse = studentGradeDao.queryDocourse(studentGrade
+					.getDocourse().getVisit_count());
+			studentGrade.setDocourse(docuourse);
+			expert = studentGradeDao.queryExpert(studentGrade.getDocourse()
+					.getExpacount());
+			studentGrade.setExpert(expert);
+		}
+		return studentGrades;
+	}
 }

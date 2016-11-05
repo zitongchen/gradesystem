@@ -44,7 +44,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!--  action="${pageContext.servletContext.contextPath}/ExpertServlet?method=login" -->
 <body>
 <form id="form" method="post"
- action="${pageContext.servletContext.contextPath}/UserServlet?method=login" >
+ action="${pageContext.servletContext.contextPath}/ExpertServlet?method=login" >
 	<div >
 	  <p>${msg}</p>
 	  <label>学号</label>

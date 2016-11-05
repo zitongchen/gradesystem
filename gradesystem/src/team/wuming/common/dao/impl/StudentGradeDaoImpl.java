@@ -2,7 +2,10 @@ package team.wuming.common.dao.impl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import javax.enterprise.inject.spi.Bean;
@@ -87,6 +90,51 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}
+	}
+
+	@Override
+	public List<StudentGrade> queryFailGradeByUserId(String userId) {
+		String sql = "select * from studentgrade where user_acount=? and grade<60";
+		List<StudentGrade> studentGrades = new ArrayList<StudentGrade>();
+		try {
+			List<Map<String,Object>> maps=qr.query(sql, new MapListHandler(),userId);
+			for (Map<String, Object> map : maps) {
+				Docourse docourse = CommonUtils.toBean(map, Docourse.class);
+				Expert expert = CommonUtils.toBean(map, Expert.class);
+				StudentGrade studentGrade = CommonUtils.toBean(map,
+						StudentGrade.class);
+				studentGrade.setDocourse(docourse);
+				studentGrade.setExpert(expert);
+				studentGrades.add(studentGrade);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException();
+		}
+		return studentGrades;
+	}
+
+	@Override
+	public List<StudentGrade> findClassStudentByClass(String classId) {
+		String sql = " select * from studentgrade where user_acount in"
+				+ " (select user_acount from users where class_id =?)";
+		List<StudentGrade> studentGrades = new ArrayList<StudentGrade>();
+		try {
+			List<Map<String, Object>> maps = qr.query(sql,
+					new MapListHandler(), classId);
+			for (Map<String, Object> map : maps) {
+				Docourse docourse = CommonUtils.toBean(map, Docourse.class);
+				Expert expert = CommonUtils.toBean(map, Expert.class);
+				StudentGrade studentGrade = CommonUtils.toBean(map,
+						StudentGrade.class);
+				studentGrade.setDocourse(docourse);
+				studentGrade.setExpert(expert);
+				studentGrades.add(studentGrade);
+			}
+
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return studentGrades;
 	}
 
 }

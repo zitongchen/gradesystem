@@ -1,5 +1,7 @@
 package team.wuming.modules.experts.service.impl;
 
+import java.util.List;
+
 import team.wuming.modules.experts.dao.ExpertDao;
 import team.wuming.modules.experts.dao.impl.ExpertDaoImpl;
 import team.wuming.modules.experts.domain.Expert;
@@ -33,5 +35,11 @@ public class ExpertServiceImpl implements ExpertService {
 	public void updateExpertPassword(Expert form) {
 		expertDao.updateExpertPassword(form);
 
+	}
+
+	@Override
+	public List<Object> findClassNameByExpert(String expacount) {
+
+		return expertDao.findClassNameByExpert(expacount);
 	}
 }

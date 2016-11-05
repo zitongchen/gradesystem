@@ -36,4 +36,8 @@ public interface StudentGradeDao {
 	 */
 	public Expert queryExpert(String expacount);
 
+	public List<StudentGrade> queryFailGradeByUserId(String userId);
+
+	public List<StudentGrade> findClassStudentByClass(String classId);
+
 }

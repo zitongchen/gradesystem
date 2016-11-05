@@ -160,6 +160,20 @@ public class UserServlet extends BaseServlet {
 
 	/**
 	 * @param request
+	 * @param response
+	 * @return 按照学号查询学生本身补考的科目
+	 */
+	public String queryUserFail(HttpServletRequest request,
+			HttpServletResponse response) {
+		String userId = request.getParameter("user_acount");
+		List<StudentGrade> studentGradeList = studentGradeService
+				.queryUserFail(userId);
+		request.setAttribute("studentGradeFail", studentGradeList);
+		return "f:/**.jsp";
+	}
+
+	/**
+	 * @param request
 	 * @return 获取pc,获取要请求的页面的页面数
 	 */
 	private int getPc(HttpServletRequest request) {

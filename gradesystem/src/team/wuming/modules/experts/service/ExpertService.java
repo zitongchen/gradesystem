@@ -1,5 +1,7 @@
 package team.wuming.modules.experts.service;
 
+import java.util.List;
+
 import team.wuming.modules.experts.domain.Expert;
 
 public interface ExpertService {
@@ -10,4 +12,6 @@ public interface ExpertService {
 	public Expert findExpertMessage(String expertId);
 
 	public void updateExpertPassword(Expert form);
+
+	public List<Object> findClassNameByExpert(String expacount);
 }

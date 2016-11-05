@@ -28,7 +28,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    		<c:out value="${sessionScope.session_expert.expacount}"></c:out>
 	    		<c:out value="${sessionScope.session_expert.name}"></c:out>
 	    		<c:out value="${sessionScope.session_expert.nickname}"></c:out>
-	    		
+	    	</c:if>
+	    	</br>
+	    	<button><a href="${pageContext.request.contextPath}/ExpertServlet?method=exit">退出</a></button>
+	    	</br>
+	    	<button><a href="jsps/expert/update_expert_password.jsp">修改密码</a></button>
+	    	</br>
+	    	<button><a href="${pageContext.request.contextPath}/ExpertServlet?method=findClassNameByExpert&expacount=${sessionScope.session_expert.expacount}">显示班级</a></button>
+	    	<c:if test="${not empty requestScope.class_id}">
+	    		<c:forEach items="${requestScope.class_id}" var="className">
+	    			<a href='<c:url value="/ExpertServlet?method=findClassStudentByClass&classId=${className}"/>'><c:out value="${className}"></c:out></a>
+	    		</c:forEach>
 	    	</c:if>
   </body>
 </html>

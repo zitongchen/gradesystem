@@ -19,10 +19,9 @@ public interface UserService {
 	// 忘记密码
 	public void forgetUserPassword(User user);
 
-	// 学生查询成绩
-	public List<StudentGrade> queryUserGrade(String userId);
-
+	// 查询学生信息
 	public User findUserMessage(String userId);
+
 
 
 
