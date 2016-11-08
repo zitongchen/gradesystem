@@ -1,5 +1,6 @@
 package team.wuming.common.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.text.Document;
@@ -62,9 +63,10 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 	}
 
 	@Override
-	public List<StudentGrade> findClassStudentByClass(String classId) {
+	public List<StudentGrade> findClassStudentByClass(String classId,
+			String expacount) {
 		List<StudentGrade> studentGrades = studentGradeDao
-				.findClassStudentByClass(classId);
+				.findClassStudentByClass(classId, expacount);
 		Docourse docuourse = new Docourse();
 		Expert expert = new Expert();
 		for (StudentGrade studentGrade : studentGrades) {
@@ -77,4 +79,38 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 		}
 		return studentGrades;
 	}
+
+	@Override
+	public List<Object> queryUserName(String classId) {
+		return studentGradeDao.queryUserName(classId);
+	}
+
+	@Override
+	public void saveClassStudentGrade(String[] userId,
+ String[] psGrades,
+			String[] ksGrades, String paecetime,
+			String terminal) {
+
+		List<StudentGrade> newStudentGrade = new ArrayList<StudentGrade>();
+
+		for (int index = 0; index < userId.length; index++) {
+			StudentGrade studentGrade = new StudentGrade();
+			/*
+			 * int grades = Integer.parseInt(psGrades[index])
+			 * Integer.parseInt(paecetime) + Integer.parseInt(ksGrades[index])
+			 * Integer.parseInt(terminal);
+			 */
+			int grades = (int) (Float.parseFloat(psGrades[index])
+					* Float.parseFloat(paecetime) + Float
+					.parseFloat(ksGrades[index]) * Float.parseFloat(terminal));
+
+			studentGrade.setUser_acount(userId[index]);
+			studentGrade.setPsgrade(psGrades[index]);
+			studentGrade.setKsgrade(ksGrades[index]);
+			studentGrade.setGrade(String.valueOf(grades));
+			newStudentGrade.add(studentGrade);
+		}
+		studentGradeDao.saveStudentGrades(newStudentGrade);
+	}
+
 }

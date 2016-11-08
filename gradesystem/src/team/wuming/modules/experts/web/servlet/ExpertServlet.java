@@ -129,21 +129,40 @@ public class ExpertServlet extends BaseServlet {
 		return "f:/jsps/expert/index.jsp" ;
 	}
 
-	// 显示所教班级学生
+	// 根据班级号，教师编号，录入教师所教班级的成绩
 	public String findClassStudentByClass(HttpServletRequest request,HttpServletResponse response){
 		String classId=request.getParameter("classId");
+		String expacount = request.getParameter("expacount");
 		List<StudentGrade> studentGrades = studentGradeService
-				.findClassStudentByClass(classId);
+				.findClassStudentByClass(classId, expacount);
+		
+		List<Object> userNameObjectList = studentGradeService
+				.queryUserName(classId);
+		List<String> userNameList=new ArrayList<String>();
+		for (Object object : userNameObjectList) {
+			userNameList.add(String.valueOf(object));
+		}
 		request.setAttribute("studentgrades", studentGrades);
-		return "f:/jsps/expert/student_list.jsp";
+		request.setAttribute("studentNameList", userNameList);
+		
+		return "f:/jsps/expert/index.jsp";
 	}
 
-	public String updateClassStudentMessage(HttpServletRequest request,
+	//保存学生成绩
+	public String saveClassStudentGrade(HttpServletRequest request,
 			HttpServletResponse response) {
-		List<User> userList = (List<User>) CommonUtils.toBean(
-				request.getParameterMap(), User.class);
+		String[] userId = request.getParameterValues("userId");
+		String[] psGrades=request.getParameterValues("psgrade");
+		String[] ksGrades=request.getParameterValues("ksgrade");
+		String paecetime = request.getParameter("paecetime");
+		String terminal = request.getParameter("terminal");
 
-		return null;
+		studentGradeService.saveClassStudentGrade(userId, psGrades,
+ ksGrades,
+				paecetime, terminal);
+	
+		return "f:/ExpertServlet?method=findClassNameByExpert&expacount="
+				+ request.getAttribute("expacount");
 	}
 
 

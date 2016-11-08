@@ -38,6 +38,11 @@ public interface StudentGradeDao {
 
 	public List<StudentGrade> queryFailGradeByUserId(String userId);
 
-	public List<StudentGrade> findClassStudentByClass(String classId);
+	public List<StudentGrade> findClassStudentByClass(String classId,
+			String expacount);
+
+	public List<Object> queryUserName(String classId);
+
+	public void saveStudentGrades(List<StudentGrade> newStudentGrade);
 
 }

@@ -9,12 +9,12 @@ public class StudentGrade implements Serializable {
 	private String user_acount;// 学号
 	// private String visit_count;// 课程编号
 	private Docourse docourse;// 外键
-	private int psgrade;// 平时成绩
+	private String psgrade;// 平时成绩
 
 
 
-	private int ksgrade;// 考试成绩
-	private int grade;// 成绩
+	private String ksgrade;// 考试成绩
+	private String grade;// 成绩
 	private String nf;// 年级
 	private String gradelei;// 考核类型（正考补考重修换证免考）
 	private int scores;// 积分
@@ -34,27 +34,27 @@ public class StudentGrade implements Serializable {
 
 
 
-	public int getPsgrade() {
+	public String getPsgrade() {
 		return psgrade;
 	}
 
-	public void setPsgrade(int psgrade) {
+	public void setPsgrade(String psgrade) {
 		this.psgrade = psgrade;
 	}
 
-	public int getKsgrade() {
+	public String getKsgrade() {
 		return ksgrade;
 	}
 
-	public void setKsgrade(int ksgrade) {
+	public void setKsgrade(String ksgrade) {
 		this.ksgrade = ksgrade;
 	}
 
-	public int getGrade() {
+	public String getGrade() {
 		return grade;
 	}
 
-	public void setGrade(int grade) {
+	public void setGrade(String grade) {
 		this.grade = grade;
 	}
 

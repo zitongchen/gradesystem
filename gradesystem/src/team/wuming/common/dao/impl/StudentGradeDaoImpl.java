@@ -13,6 +13,7 @@ import javax.management.Query;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.ColumnListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
@@ -114,13 +115,14 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 	}
 
 	@Override
-	public List<StudentGrade> findClassStudentByClass(String classId) {
+	public List<StudentGrade> findClassStudentByClass(String classId,
+			String expacount) {
 		String sql = " select * from studentgrade where user_acount in"
-				+ " (select user_acount from users where class_id =?)";
+				+ " (select user_acount from users where class_id =?) and expacount=?";
 		List<StudentGrade> studentGrades = new ArrayList<StudentGrade>();
 		try {
 			List<Map<String, Object>> maps = qr.query(sql,
-					new MapListHandler(), classId);
+					new MapListHandler(), classId, expacount);
 			for (Map<String, Object> map : maps) {
 				Docourse docourse = CommonUtils.toBean(map, Docourse.class);
 				Expert expert = CommonUtils.toBean(map, Expert.class);
@@ -135,6 +137,43 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 			throw new RuntimeException();
 		}
 		return studentGrades;
+	}
+
+	@Override
+	public List<Object> queryUserName(String classId) {
+		String sql = "select realname from users where class_id=?";
+
+		try {
+			return qr.query(sql, new ColumnListHandler(), classId);
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+	}
+
+	@Override
+	public void saveStudentGrades(List<StudentGrade> newStudentGrade) {
+
+		String sql = "update studentgrade set psgrade=? ,ksgrade=?,grade=? where user_acount=?";
+		try {
+			for (StudentGrade studentGrade : newStudentGrade) {
+
+				qr.update(sql, studentGrade.getPsgrade(),
+						studentGrade.getKsgrade(), studentGrade.getGrade(),
+						studentGrade.getUser_acount());
+			}
+			/*
+			 * Object[][] params = new Object[newStudentGrade.size()][]; for
+			 * (int index = 0; index < newStudentGrade.size(); index++) {
+			 * params[index] = new Object[] {
+			 * newStudentGrade.get(index).getPsgrade(),
+			 * newStudentGrade.get(index).getKsgrade(),
+			 * newStudentGrade.get(index).getGrade(),
+			 * newStudentGrade.get(index).getUser_acount() }; } qr.batch(sql,
+			 * params);
+			 */
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
 	}
 
 }

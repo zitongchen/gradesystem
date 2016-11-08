@@ -10,39 +10,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <base href="<%=basePath%>">
     
     <title>My JSP 'GsonDemo.jsp' starting page</title>
-    <!--script src="js/jquery-3.1.1.min.js"></script>  -->
+  
     <script src="js/jquery-3.1.1.min.js"></script>
     <script  type="text/javascript" language="javascript">
-	function postMessage(){
-       var student ={"name":"CZT","age":22};
-        $.ajax(
-                {
-                    url:"<%=basePath%>GsonServlet", //访问路径
-                    type:"POST",    //访问方式
-                   //传入服务端的数据
-                    data:{name:'Tony'},
-                    dataType:"json",
-                    cache : false,
-                    contentType:"application/json;charset=utf-8",
-                    success : function(data){
-                          alert("success");
-                    },
-                    error:function(e){
-                    	alert("error")
-                    }
-                     
-                }       
-                );
-    }
+	function saveData(){
+		var student=[{"name":"tony","age":21},{"name":"chenzitong","age":22}];
+		$.ajax({
+			type:"POST",
+			url:"<%=basePath%>/GsonServlet",
+			data:{"datalist":JSON.stringify(student)},
+			dataType:"json",
+			success:function(data){
+			alert("success");},
+			error:function(){
+				alert("insert error");
+			}
+		});
+	}
 	</script>
   </head>
-  
-  <body>
-    
-    <button id="demo" onclick="postMessage()">Click</button><br>
-    <form action="${pageContext.request.contextPath}/GsonServlet" method="post">
-    	<input type="text" name="student" value="Tony"/><br>
-    	<input type="submit" value="提交"/>
-    </form>
+    <body>
+    <button id="demo" onclick="saveData()">Click</button><br>
   </body>
 </html>

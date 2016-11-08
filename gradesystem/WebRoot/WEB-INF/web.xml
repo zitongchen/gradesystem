@@ -26,11 +26,11 @@ id="WebApp_ID" version="3.0">
   </servlet>
   <servlet>
     <servlet-name>TestUserServlet</servlet-name>
-    <servlet-class>team.wuming.test.TestUserServlet</servlet-class>
+    <servlet-class>team.wuming.test.json.TestUserServlet</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>GsonServlet</servlet-name>
-    <servlet-class>team.wuming.test.GsonServlet</servlet-class>
+    <servlet-class>team.wuming.test.json.GsonServlet</servlet-class>
   </servlet>
 
   

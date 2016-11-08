@@ -25,16 +25,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
     <c:if test="${not empty requestScope.studentgrades }">
-    	<c:forEach items="${requestScope.studentgrades}" var="studentList">
-    		<c:out value="${studentList.user_acount}"></c:out>
-    		<c:out value="${studentList.docourse.title }"></c:out>
-    		<c:out value="${studentList.psgrade }"></c:out>
-    		<br>
-    		<input type="text" name="user_acount" value="${studentList.user_acount}">
-    		<input type="text" name="title" value="${studentList.docourse.title}">
-    		<input type="text" name="psgrade" value="${studentList.psgrade}">
-    		<br>
-    	</c:forEach>
+    	<table border="1"width="50%" align="center" >
+    		<thead>
+    			<tr>
+					<th>学号</th>
+					<th>课程名称</th>
+					<th>平时成绩</th>
+				</tr>
+    			
+    		</thead>
+    		<tbody>
+    			
+			    <c:forEach items="${requestScope.studentgrades}" var="studentList">
+			    	<tr>
+			    		<td>${studentList.user_acount}</td>
+			    		<td><input type="text" name="title" value="${studentList.docourse.title}"></td>
+			    		<td><input type="text" name="psgrade" value="${studentList.psgrade}"></td>
+    				</tr>
+			    </c:forEach>
+    		</tbody>
+    	</table>
     </c:if>
   </body>
 </html>

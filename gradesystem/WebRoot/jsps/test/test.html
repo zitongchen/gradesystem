@@ -7,11 +7,101 @@
     <meta http-equiv="description" content="this is my page">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     
-    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
-
+    <script src="jquery-3.1.1.min.js"></script>
+    <script type="text/javascript">
+    	$.fn.serializeObject=function(){
+    		var json={};
+    		var map=this.serializeArray();
+    		$.each(map,function(){
+    			if(json[this.name]){
+    				if(!json[this.name].push){
+    					json[this.name]=[json[this.name]];
+    				}
+    				json[this.name].push(this.value ||'');
+    			}else{
+    				json[this.name]=this.value||'';
+    			}
+    		});
+    		return json;
+    	};
+    	
+    	
+    	function test1(){
+    		var jsonuserinfo=$("#form1").serializeObject();
+    		alert(JSON.stringify(jsonuserinfo));
+    		//{"username":["tony","czt"],"age":["12","22"]}
+    		
+    		//var data=$("#form1").serializeArray();
+    		//var datastring=JSON.stringify(data);
+    		//alert(datastring);
+    		
+    		//var obj1=eval(datastring);
+    		//alert(obj1[0].name+":"+obj1[0].value);
+    		//for(var i=0,len=boj1.length;i<len;i++){
+    		//	alert(obj1[i].name+":"+obj1[i].value);
+    		//}
+    		
+    		
+    		
+    		//alert(datastring.length);
+    		//[{"name":"username","value":"tony"},{"name":"age","value":"12"}]
+    	};
+    	function test2(){
+    		var data=$("#form1").serialize();
+    		alert(data);
+    	};
+    	function test3(){
+    		var data=$("#form1").serializeArray();
+    		var datastring=JSON.stringify(data);
+    		alert(datastring);
+    		//alert(data);
+    		var json={};
+    		var bean=[];
+    		var name=data[0].name;
+    		//alert(name);
+    		$.each(data,function(i,item){
+    			//alert(item.name+" :"+item.value);
+    			if(this.name!=name){
+    				json[this.name]=this.value;
+    				//alert(JSON.stringify(json));
+    				//bean.push(json);
+    			}else if(this.name==name){
+    				
+    				json[this.name]=this.value;
+    				//alert(JSON.stringify(json));
+    				bean.push(json);
+    			}
+    			
+    			/*if(json[this.name]){
+    				if(!json[this.name].push){
+    					json[this.name]=[json[this.name]];
+    				}
+    				json[this.name].push(this.value ||'');
+    			}else{
+    				json[this.name]=this.value||'';
+    			}*/
+    		});
+    		//alert(JSON.stringify(json));
+    		alert(JSON.stringify(bean));
+    		alert("end");
+    		
+    	}
+    </script>
   </head>
-  
   <body>
-    
+    <form action="" id="form1" method="post">
+    	姓名：<input type="text" name="username" value="tony"/>
+    	年龄：<input type="text" name="age" value="12"/>
+    	年龄：<input type="text" name="acount" value="001"/>
+    	
+    	<br>
+    	姓名：<input type="text" name="username" value="czt"/>
+    	年龄：<input type="text" name="age" value="22"/>
+    	年龄：<input type="text" name="acount" value="001"/>
+    	<br>
+    	<input type="submit" onclick="test1()" value="提交">
+    	<input type="submit" onclick="test2()" value="提交">
+    	<input type="submit" onclick="test3()" value="提交">
+    </form>
   </body>
 </html>

@@ -12,5 +12,13 @@ public interface StudentGradeService {
 	// 根据学号差学生的补考情况
 	public List<StudentGrade> queryUserFail(String userId);
 
-	public List<StudentGrade> findClassStudentByClass(String classId);
+	public List<StudentGrade> findClassStudentByClass(String classId,
+			String expacount);
+
+	public List<Object> queryUserName(String classId);
+
+	public void saveClassStudentGrade(String[] userId,
+ String[] psGrades,
+			String[] ksGrades, String paecetime,
+			String terminal);
 }
