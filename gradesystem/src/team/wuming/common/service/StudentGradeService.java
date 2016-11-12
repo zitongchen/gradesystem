@@ -21,4 +21,6 @@ public interface StudentGradeService {
  String[] psGrades,
 			String[] ksGrades, String paecetime,
 			String terminal);
+
+	public void createGradeSheet(String classId, String expacount);
 }

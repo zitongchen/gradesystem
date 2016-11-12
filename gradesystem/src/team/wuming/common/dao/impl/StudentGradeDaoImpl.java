@@ -29,6 +29,9 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 
 	private QueryRunner qr = new TxQueryRunner();
 
+	/**
+	 * 根据学生的编号查询学生本人成绩
+	 */
 	@Override
 	public List<StudentGrade> queryGradeByUserId(int pc, int ps,
 			String userId) throws RuntimeException {
@@ -36,20 +39,18 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 		List<StudentGrade> studentGrades = new ArrayList<StudentGrade>();
 		String sql = "select * from studentgrade where user_acount=? limit ?,?";
 		try {
-
 			List<Map<String, Object>> maps = qr.query(sql,
 					new MapListHandler(), userId, (pc - 1) * ps, ps);
 			for (Map<String, Object> map : maps) {
 				Docourse docourse = CommonUtils.toBean(map, Docourse.class);
 				Expert expert = CommonUtils.toBean(map, Expert.class);
 				StudentGrade studentGrade = CommonUtils.toBean(map,
-						StudentGrade.class);
+						StudentGrade.class); // 通过CommonUtils把Map集合的内容转化为响应的对象
 				studentGrade.setDocourse(docourse);
 				studentGrade.setExpert(expert);
 				studentGrades.add(studentGrade);
 			}
 			return studentGrades;
-
 		} catch (SQLException e) {
 			throw new RuntimeException();
 		}
@@ -69,6 +70,9 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 
 	}
 
+	/**
+	 * 根据课程编号查询课程表
+	 */
 	@Override
 	public Docourse queryDocourse(String visit_count) {
 		String sql = "select * from docourse where visit_count=?";
@@ -81,10 +85,12 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 		}
 	}
 
+	/**
+	 * 根据教师编号查询教师
+	 */
 	@Override
 	public Expert queryExpert(String expacount) {
 		String sql = "select * from experts where expacount=?";
-
 		try {
 			return qr.query(sql, new BeanHandler<Expert>(Expert.class),
 					expacount);
@@ -93,6 +99,9 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 		}
 	}
 
+	/**
+	 * 根据学号查询学生补考成绩信息
+	 */
 	@Override
 	public List<StudentGrade> queryFailGradeByUserId(String userId) {
 		String sql = "select * from studentgrade where user_acount=? and grade<60";
@@ -114,6 +123,9 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 		return studentGrades;
 	}
 
+	/**
+	 * 根据班级编号，教师编号查询教师所教的成绩信息
+	 */
 	@Override
 	public List<StudentGrade> findClassStudentByClass(String classId,
 			String expacount) {
@@ -132,17 +144,18 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 				studentGrade.setExpert(expert);
 				studentGrades.add(studentGrade);
 			}
-
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}
 		return studentGrades;
 	}
 
+	/**
+	 * 根据班级编号查询学生姓名
+	 */
 	@Override
 	public List<Object> queryUserName(String classId) {
 		String sql = "select realname from users where class_id=?";
-
 		try {
 			return qr.query(sql, new ColumnListHandler(), classId);
 		} catch (Exception e) {
@@ -150,27 +163,19 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 		}
 	}
 
+	/**
+	 * 保存学生成绩
+	 */
 	@Override
 	public void saveStudentGrades(List<StudentGrade> newStudentGrade) {
 
 		String sql = "update studentgrade set psgrade=? ,ksgrade=?,grade=? where user_acount=?";
 		try {
-			for (StudentGrade studentGrade : newStudentGrade) {
-
+			for (StudentGrade studentGrade : newStudentGrade) {// 循环保存学生信息
 				qr.update(sql, studentGrade.getPsgrade(),
 						studentGrade.getKsgrade(), studentGrade.getGrade(),
 						studentGrade.getUser_acount());
 			}
-			/*
-			 * Object[][] params = new Object[newStudentGrade.size()][]; for
-			 * (int index = 0; index < newStudentGrade.size(); index++) {
-			 * params[index] = new Object[] {
-			 * newStudentGrade.get(index).getPsgrade(),
-			 * newStudentGrade.get(index).getKsgrade(),
-			 * newStudentGrade.get(index).getGrade(),
-			 * newStudentGrade.get(index).getUser_acount() }; } qr.batch(sql,
-			 * params);
-			 */
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}

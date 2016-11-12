@@ -12,6 +12,9 @@ import team.wuming.modules.users.domain.User;
 public class ExpertServiceImpl implements ExpertService {
 	private ExpertDao expertDao = new ExpertDaoImpl();
 
+	/**
+	 * 教师登陆验证
+	 */
 	public Expert login(Expert form) throws ExpertException {
 		Expert expert = expertDao.findExertByExperId(form);
 		if (expert == null) {
@@ -37,6 +40,9 @@ public class ExpertServiceImpl implements ExpertService {
 
 	}
 
+	/**
+	 * 查询教师所教班级序列
+	 */
 	@Override
 	public List<Object> findClassNameByExpert(String expacount) {
 

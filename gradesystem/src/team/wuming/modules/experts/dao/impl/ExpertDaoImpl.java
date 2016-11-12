@@ -15,6 +15,9 @@ import cn.itcast.jdbc.TxQueryRunner;
 public class ExpertDaoImpl implements ExpertDao {
 	private QueryRunner qr = new TxQueryRunner();
 
+	/**
+	 * 根据教师编号获取教师对象
+	 */
 	public Expert findExertByExperId(Expert form) {
 		String sql = "select * from experts where expacount=?";
 		try {
@@ -23,7 +26,6 @@ public class ExpertDaoImpl implements ExpertDao {
 		} catch (SQLException e) {
 			throw new RuntimeException();
 		}
-
 	}
 
 	public void updateExpertMessageById(Expert form) {
@@ -46,6 +48,9 @@ public class ExpertDaoImpl implements ExpertDao {
 		}
 	}
 
+	/**
+	 * 更新教师密码
+	 */
 	public void updateExpertPassword(Expert form) {
 		String sql = "update experts set password=? where expacount=?";
 		try {
@@ -53,9 +58,11 @@ public class ExpertDaoImpl implements ExpertDao {
 		} catch (SQLException e) {
 			throw new RuntimeException();
 		}
-
 	}
 
+	/**
+	 * 通过教师的编号查询教师所教的所有班级
+	 */
 	@Override
 	public List<Object> findClassNameByExpert(String expacount) {
 		String sql = "select  DISTINCT class_id from users where user_acount in "
@@ -66,7 +73,6 @@ public class ExpertDaoImpl implements ExpertDao {
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}
-
 	}
 
 }

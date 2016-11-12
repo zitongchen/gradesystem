@@ -11,6 +11,10 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+/**
+ * 
+ * @author Tony 图片验证码对象的创建
+ */
 public class NumberCode {
 
 	private int w=95;//设置 图片的宽度

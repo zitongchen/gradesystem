@@ -12,19 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import team.wuming.common.util.NumberCode;
 
 public class VerificationServlet extends HttpServlet {
-
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		// 创建一个NumberCode对象
 		NumberCode nc=new NumberCode();
-		BufferedImage image=nc.getImage();
-		String text=nc.getTest();
-		
-		request.getSession().setAttribute("verificationCode", text);
-		
-		nc.output(image, response.getOutputStream());
-
+		BufferedImage image = nc.getImage();// 获取图片
+		String text = nc.getTest();// 获取图片上面的字符串
+		request.getSession().setAttribute("verificationCode", text);// 把字符串保存到session中
+		nc.output(image, response.getOutputStream());// 输出图片到前端
 	};
 
 }

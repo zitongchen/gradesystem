@@ -17,7 +17,7 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 	StudentGradeDao studentGradeDao = new StudentGradeDaoImpl();
 
 	/**
-	 * 学生按照自己学号查询自己的成绩
+	 * 学生按照学生成绩查询本人成绩
 	 */
 	@Override
 	public PageBean<StudentGrade> queryUserGrade(int pc, int ps, String userId) {
@@ -43,6 +43,9 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 		return pb;
 	}
 
+	/**
+	 * 学生根据本人学号查询补考信息
+	 */
 	@Override
 	public List<StudentGrade> queryUserFail(String userId) {
 		List<StudentGrade> studentGrades = studentGradeDao
@@ -50,7 +53,6 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 		Docourse docourse = new Docourse();
 		Expert expert = new Expert();
 		for (StudentGrade studentGrade : studentGrades) {
-
 			docourse = studentGradeDao.queryDocourse(studentGrade.getDocourse()
 					.getVisit_count());
 			studentGrade.setDocourse(docourse);
@@ -62,13 +64,16 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 		return studentGrades;
 	}
 
+	/**
+	 * 根据班级编号，教师编号查询学生成绩信息
+	 */
 	@Override
 	public List<StudentGrade> findClassStudentByClass(String classId,
 			String expacount) {
 		List<StudentGrade> studentGrades = studentGradeDao
 				.findClassStudentByClass(classId, expacount);
-		Docourse docuourse = new Docourse();
-		Expert expert = new Expert();
+		Docourse docuourse = new Docourse(); // 创建课表对象
+		Expert expert = new Expert(); // 创建教师对象
 		for (StudentGrade studentGrade : studentGrades) {
 			docuourse = studentGradeDao.queryDocourse(studentGrade
 					.getDocourse().getVisit_count());
@@ -80,30 +85,26 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 		return studentGrades;
 	}
 
+	/**
+	 * 根据班级编号查询学生姓名
+	 */
 	@Override
 	public List<Object> queryUserName(String classId) {
 		return studentGradeDao.queryUserName(classId);
 	}
 
+	/**
+	 * 教师保存学生的成绩
+	 */
 	@Override
-	public void saveClassStudentGrade(String[] userId,
- String[] psGrades,
-			String[] ksGrades, String paecetime,
-			String terminal) {
-
-		List<StudentGrade> newStudentGrade = new ArrayList<StudentGrade>();
-
+	public void saveClassStudentGrade(String[] userId, String[] psGrades,
+			String[] ksGrades, String paecetime, String terminal) {
+		List<StudentGrade> newStudentGrade = new ArrayList<StudentGrade>();// 创建一个保存学生成绩的List集合
 		for (int index = 0; index < userId.length; index++) {
 			StudentGrade studentGrade = new StudentGrade();
-			/*
-			 * int grades = Integer.parseInt(psGrades[index])
-			 * Integer.parseInt(paecetime) + Integer.parseInt(ksGrades[index])
-			 * Integer.parseInt(terminal);
-			 */
-			int grades = (int) (Float.parseFloat(psGrades[index])
+			int grades = (int) (Float.parseFloat(psGrades[index]) // 根据公式计算学生的总评成绩，把各项成绩的占比转化为小数进行计算
 					* Float.parseFloat(paecetime) + Float
 					.parseFloat(ksGrades[index]) * Float.parseFloat(terminal));
-
 			studentGrade.setUser_acount(userId[index]);
 			studentGrade.setPsgrade(psGrades[index]);
 			studentGrade.setKsgrade(ksGrades[index]);
@@ -111,6 +112,12 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 			newStudentGrade.add(studentGrade);
 		}
 		studentGradeDao.saveStudentGrades(newStudentGrade);
+	}
+
+	@Override
+	public void createGradeSheet(String classId, String expacount) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

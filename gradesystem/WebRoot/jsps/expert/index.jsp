@@ -131,6 +131,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </table>
 			<input type="submit"  value="保存"/>
     </form>
+    <form action="${pageContext.request.contextPath}/ExpertServlet" method="post">
+    	<input type="hidden" name="method" value="printStudentGrade"/>
+    	<input type="submit" value="打印"/>
+    </form>
 </div>
 
 <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>

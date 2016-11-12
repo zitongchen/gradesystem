@@ -23,29 +23,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var imgEle=document.getElementById("vCode");
 		imgEle.src="${pageContext.request.contextPath}/VerificationServlet?"+new Date().getTime();
 	}
-	function _type(){
-		var formEle=document.getElementById("form");
-		var radioEle=document.getElementByTagName("radio");
-		var value=radioEle.value();
-		if(value[0]!=null){
-			
-		formEle.action="${pageContext.servletContext.contextPath}/UserServlet?method=login"
-				alert(user)
-		}else if(value[1]!=null){
-		formEle.action="${pageContext.servletContext.contextPath}/ExpertServlet?method=login"
-				alert(teacher);
-			
-		}else if(value[2]!=null){}
-		formEle.action="${pageContext.servletContext.contextPath}/AdminServlet?method=login"
-				alert(admin)
-	}
+	
 	</script>
 </head>
 <!--  action="${pageContext.servletContext.contextPath}/ExpertServlet?method=login" -->
 <body>
 <form id="form" method="post"
- action="${pageContext.servletContext.contextPath}/ExpertServlet?method=login" >
-	<div >
+ action="${pageContext.servletContext.contextPath}/BaseLoginServlet?method=login" >
+	
+	<div align="center" >
 	  <p>${msg}</p>
 	  <label>学号</label>
 	  <input type="text"  placeholder="PremiumPixel" 
@@ -58,15 +44,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  <input type="text" name="verification">
 	  <p>${verificationError}</p>
 	  <img id="vCode" src="${pageContext.request.contextPath}/VerificationServlet">
-    <a href="javascript:_change()">看不清，换一张</a>
-    <br>
-    <input type="radio" name="type" value="user">学生
-    <input type="radio" name="type" value="teacher">教师
-    <input type="radio" name="type" value="admin">管理员
-    
-    <br>
+	    <a href="javascript:_change()">看不清，换一张</a>
+	    <br>
+	    <input type="radio" name="type" value="1" checked="checked">学生
+	    <input type="radio" name="type" value="2">教师
+	    <input type="radio" name="type" value="3">管理员
+	    
+	    <br>
 	  <input type="submit"  value="登录" tabindex="4">
 	</div>
+	
 </form>
 
 </body>
