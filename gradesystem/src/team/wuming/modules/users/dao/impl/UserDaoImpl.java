@@ -27,6 +27,9 @@ import cn.itcast.jdbc.TxQueryRunner;
 public class UserDaoImpl implements UserDao {
 	private QueryRunner qr = new TxQueryRunner();
 
+	/**
+	 * 根据用户账号查询用户
+	 */
 	public User findByUserid(String userid) {
 		try {
 			String sql = "select * from users where user_acount=?";
@@ -52,6 +55,9 @@ public class UserDaoImpl implements UserDao {
 
 	}
 
+	/**
+	 * 更新用户密码
+	 */
 	public void updateUserPasswordById(User user) {
 		String sql = "update users set password=? where user_acount=?";
 		try {
@@ -62,6 +68,9 @@ public class UserDaoImpl implements UserDao {
 
 	}
 
+	/**
+	 * 查询学生本人成绩
+	 */
 	public List<StudentGrade> queryGradeByUserId(String userId)
  {
 		String sql = "select * from studentgrade where user_acount=?";
@@ -83,7 +92,4 @@ public class UserDaoImpl implements UserDao {
 			throw new RuntimeException();
 		}
 	}
-
-
-
 }

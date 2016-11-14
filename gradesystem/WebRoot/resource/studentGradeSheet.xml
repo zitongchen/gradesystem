@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<excel id="student" code="student" name="学生成绩信息">
+    <colgroup><!-- 电子表格的列的宽度 -->
+        <col index="A" width='12em'></col>
+        <col index="B" width='12em'></col>
+        <col index="C" width='12em'></col>
+        <col index="D" width='12em'></col>
+        <col index="E" width='12em'></col>
+        <col index="F" width='12em'></col>        
+        <col index="G" width='12em'></col>        
+    </colgroup>
+    <!-- 电子表格的标题：设置表格的高度，行数，列数，内容 -->
+    <title>
+        <tr height="16px">
+            <td rowspan="1" colspan="7" value="学生成绩信息" />
+        </tr>
+    </title>
+    <!-- 电子表格的表头：设置高度，表头的内容 -->
+    <thead>
+        <tr height="16px">
+        	<th value="序号" />
+            <th value="班级名称" />
+            <th value="学号" />
+            <th value="姓名" />
+            <th value="平时成绩"/>
+            <th value="考试成绩"/>            
+            <th value="总评成绩"/>            
+        </tr>
+    </thead>
+    <!--表格内容的类型格式：表格内容的高度，开始行，开始列，repeat表示重复的行数，
+    	表格的类型，是否允许为空，长度是多少  -->
+    <tbody>
+        <tr height="16px" firstrow="2" firstcol="0" repeat="5">
+            <td type="string" isnullable="false" maxlength="30" /><!--序号 -->
+            <td type="string" isnullable="false" maxlength="30" /><!--班级名称 -->
+            <td type="string" isnullable="false" maxlength="30" /><!--学号 -->
+            <td type="string" isnullable="false" maxlength="30" /><!--姓名 -->
+            <td type="string" isnullable="false" maxlength="30" /><!--平时成绩 -->
+            <td type="string" isnullable="false" maxlength="30" /><!--考试成绩 -->
+            <td type="string" isnullable="false" maxlength="30" /><!--总评成绩 -->
+        </tr>
+    </tbody>
+</excel>
+

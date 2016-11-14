@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.swing.text.Document;
 
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import team.wuming.common.dao.StudentGradeDao;
 import team.wuming.common.dao.impl.StudentGradeDaoImpl;
 import team.wuming.common.domain.Docourse;
@@ -114,9 +117,13 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 		studentGradeDao.saveStudentGrades(newStudentGrade);
 	}
 
+	/**
+	 * 创建成绩表
+	 */
 	@Override
 	public void createGradeSheet(String classId, String expacount) {
-		// TODO Auto-generated method stub
+		XSSFWorkbook workBook = new XSSFWorkbook();
+		XSSFSheet sheet = workBook.createSheet();
 
 	}
 

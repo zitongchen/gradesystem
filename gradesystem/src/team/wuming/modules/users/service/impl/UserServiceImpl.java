@@ -17,6 +17,9 @@ import team.wuming.modules.users.service.UserService;
 public class UserServiceImpl implements UserService {
 	private UserDao userDao = new UserDaoImpl();
 
+	/**
+	 * 学生登陆，验证用户是否存在
+	 */
 	public User login(User form) throws UserException {
 		User user = userDao.findByUserid(form.getUser_acount());
 		if (user == null)
@@ -31,7 +34,9 @@ public class UserServiceImpl implements UserService {
 		userDao.updateUserMessageById(user);
 	}
 
-	// 更新学生密码
+	/**
+	 * 学生密码修改功能
+	 */
 	public void updateUserPassword(User user) {
 		userDao.updateUserPasswordById(user);
 	}
@@ -41,7 +46,12 @@ public class UserServiceImpl implements UserService {
 
 	}
 
-	// 学生查询成绩
+	/**
+	 * 学生成绩查询
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	public List<StudentGrade> queryUserGrade(String userId) {
 		return userDao.queryGradeByUserId(userId);
 	}

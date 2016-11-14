@@ -33,6 +33,11 @@
     <servlet-name>BaseLoginServlet</servlet-name>
     <servlet-class>team.wuming.common.web.servlet.BaseLoginServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>StudentGradeSheetServlet</servlet-name>
+    <servlet-class>team.wuming.common.web.servlet.StudentGradeSheetServlet</servlet-class>
+  </servlet>
+
 
   <servlet-mapping>
     <servlet-name>UserServlet</servlet-name>
@@ -65,6 +70,10 @@
   <servlet-mapping>
     <servlet-name>BaseLoginServlet</servlet-name>
     <url-pattern>/BaseLoginServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>StudentGradeSheetServlet</servlet-name>
+    <url-pattern>/StudentGradeSheetServlet</url-pattern>
   </servlet-mapping>
   <filter>
     <filter-name>UserLoginFilter</filter-name>

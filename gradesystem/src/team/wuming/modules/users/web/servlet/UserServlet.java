@@ -24,23 +24,22 @@ public class UserServlet extends BaseServlet {
 	private StudentGradeService studentGradeService = new StudentGradeServiceImpl();
 
 	/**
+	 * 学生登陆到成绩关系系统
+	 * 
 	 * @param request
 	 * @param response
 	 * @return
 	 * @throws ServletException
 	 * @throws IOException
 	 * @throws UserException
-	 *             学生登录到成绩管理系统
 	 */
 	public String login(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, UserException {
 		String userId = request.getParameter("userId");
 		String password = request.getParameter("password");
-
 		User form = new User();
 		form.setUser_acount(userId);
 		form.setPassword(password);
-
 		String verification = request.getParameter("verification");
 		try {
 
@@ -56,12 +55,10 @@ public class UserServlet extends BaseServlet {
 				return "f:/jsps/common/login.jsp";
 			}
 			User user = userService.login(form);
-
 			request.getSession().setAttribute("session_user", user);
 			return "f:/jsps/user/index.jsp";
-
 		} catch (team.wuming.modules.users.service.UserException e) {
-			request.setAttribute("msg", e.getMessage());
+			request.setAttribute("msg", e.getMessage());// 账号密码有误，保存错误信息并回原来的账号跟密码
 			request.setAttribute("userId", userId);
 			request.setAttribute("password", password);
 			return "f:/jsps/common/login.jsp";
@@ -69,6 +66,7 @@ public class UserServlet extends BaseServlet {
 	}
 
 	/**
+	 * 注销登陆
 	 * 
 	 * @param request
 	 * @param response
@@ -76,7 +74,6 @@ public class UserServlet extends BaseServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 * @throws UserException
-	 *             退出登录
 	 */
 	public String exit(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, UserException {
@@ -105,9 +102,16 @@ public class UserServlet extends BaseServlet {
 		return "f:/jsps/user/index.jsp";
 		// return "f:/jsps/user/usermessage.jsp";
 	}
+
 	/**
-	 * 学生修改密码
+	 * 学生修改密码功能
 	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws ServletException
+	 * @throws IOException
+	 * @throws UserException
 	 */
 	public String updateUserPassword(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
@@ -137,8 +141,14 @@ public class UserServlet extends BaseServlet {
 	}
 
 	/**
-	 * 学生查询成绩信息（按学年，学期）
+	 * 学生成绩查询
 	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws ServletException
+	 * @throws IOException
+	 * @throws UserException
 	 */
 	public String queryUserGrade(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
@@ -154,14 +164,15 @@ public class UserServlet extends BaseServlet {
 		 */
 		pb.setUrl(getUrl(request));
 		request.setAttribute("pb", pb);
-
 		return "f:/jsps/test/PageBean.jsp";
 	}
 
 	/**
+	 * 学生补考科目查询
+	 * 
 	 * @param request
 	 * @param response
-	 * @return 按照学号查询学生本身补考的科目
+	 * @return
 	 */
 	public String queryUserFail(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -173,8 +184,10 @@ public class UserServlet extends BaseServlet {
 	}
 
 	/**
+	 * 获取pc,获取要请求的页面的页面数
+	 * 
 	 * @param request
-	 * @return 获取pc,获取要请求的页面的页面数
+	 * @return
 	 */
 	private int getPc(HttpServletRequest request) {
 		String value = request.getParameter("pc");
@@ -185,8 +198,10 @@ public class UserServlet extends BaseServlet {
 	}
 
 	/**
+	 * 获取请求路径，把pc的值处理掉然后返回pc值前的路径
+	 * 
 	 * @param request
-	 * @return 获取请求路径，把pc的值处理掉然后返回pc值前的路径
+	 * @return
 	 */
 	private String getUrl(HttpServletRequest request) {
 		String contextPath = request.getContextPath();

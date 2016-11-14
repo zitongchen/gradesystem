@@ -4,9 +4,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 import team.wuming.modules.experts.domain.Expert;
+import team.wuming.modules.users.domain.User;
 
 public class StudentGrade implements Serializable {
 	private String user_acount;// 学号
+
+
+
 	// private String visit_count;// 课程编号
 	private Docourse docourse;// 外键
 	private String psgrade;// 平时成绩
@@ -24,6 +28,10 @@ public class StudentGrade implements Serializable {
 	private String shenhe;// 审核人员代码
 	private Date optime;// 操作日期
 
+
+
+
+
 	public String getUser_acount() {
 		return user_acount;
 	}
@@ -31,9 +39,6 @@ public class StudentGrade implements Serializable {
 	public void setUser_acount(String user_acount) {
 		this.user_acount = user_acount;
 	}
-
-
-
 	public String getPsgrade() {
 		return psgrade;
 	}

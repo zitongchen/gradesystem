@@ -135,6 +135,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<input type="hidden" name="method" value="printStudentGrade"/>
     	<input type="submit" value="打印"/>
     </form>
+    <a href="${pageContext.request.contextPath}/StudentGradeSheetServlet?classId=1&expacount=1405553127">
+    <button>打印</button>
+    </a>
 </div>
 
 <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>

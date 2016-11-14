@@ -1,5 +1,8 @@
 package team.wuming.modules.users.service;
 
+/**
+ * @author Tony 继承Exception自定义错误类
+ */
 public class UserException extends Exception {
 
 	public UserException() {

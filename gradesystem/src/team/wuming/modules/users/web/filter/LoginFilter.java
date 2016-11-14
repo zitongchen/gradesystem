@@ -20,6 +20,9 @@ public class LoginFilter implements Filter {
 
 	}
 
+	/**
+	 * 验证学生用户是否登陆了，还没有登陆便转发到底登陆页面
+	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
