@@ -1,0 +1,24 @@
+主页面是homepage
+
+class：班级成绩页面（需要使用iframe载入）
+header：头部页面（需要使用iframe载入）
+inform：首页 > 通知文件（需要使用iframe载入）
+modifyPassword 个人中心 > 修改密码
+personal 个人中心 > 基本信息
+personal_table 个人中心 > 基本信息下的表格（需要使用iframe载入）
+scoreInput：成绩录入页面
+
+
+
+teacherCSS：支持不需要iframe的页面
+teacherCSS2：支持iframe的页面
+（注意区分）
+
+
+尤其注意，由于页面是基于bootstrap写的，在IE8及其以下版本兼容性不友好。目前还没找到优化的方法。
+
+如有代码块没有注释的，请随时联系。
+
+
+
+

@@ -23,6 +23,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
    
-    <jsp:forward page="/jsps/common/login.jsp"></jsp:forward>
+    <jsp:forward page="/jsps/common/login_system.jsp"></jsp:forward>
   </body>
 </html>

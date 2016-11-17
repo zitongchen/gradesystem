@@ -4,46 +4,18 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>首页</title>
+<title>计算机科学与技术15(1)</title>
 
 <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
-<link href="teacherCSS.css" rel="stylesheet" style="text/css">
+<link href="../css/teacherCSS2.css" rel="stylesheet" style="text/css">
 </head>
 <body>
-<!-- 以下是头部header -->
-<div class="header">
-  <div class="logo">继续教育学院成绩管理系统</div>
-  <div class="right_nav">
-    <div class="text_right">
-            <ul class="nav_return">
-                <li> [<a href="login.html" target="_top">退出</a>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-            </ul>
-    </div>
-  </div>
-<div class="under_header"> 
-<span>XXX</span>,您好！职工号：<span>000620</span>&nbsp;&nbsp;学院：<span>医药信息工程学院</span>&nbsp;&nbsp;职称：<span>讲师</span> </div>
-</div>
-
-<!-- 以下是菜单menu以及左侧的二级菜单 -->
-<div id="tabs">
-    <ul id="nav0">
-        <li><a href="homepage.html">首页</a></li>
-        <li class="on"><a href="scoresInput.html">成绩录入</a></li>
-        <li><a href="personal.html">个人中心</a></li>
-    </ul>
-    <div>  
-         <p class="left_title">相关操作</p>
-         <ul>
-             <li><a href="#">数据结构与算法实训【计算机科学与技术15(1)】</a></li>
-         </ul>
-    </div>
-</div>
 
 <!-- 以下是内容主体部分mainbody -->  
 <div class="mainbody">
-    <p>当前位置：教师-->教师成绩录入</p>
+    <p>当前位置：教师-->教师成绩录入-->计算机科学与技术15(1)</p>
     <div>
-    <form  name="" id="" method="post" action="">
+    <form  name="" id="" metdod="post" action="">
             <!-- 第一个表格 -->
             <table class="table table-bordered table-condensed">
                 <option>教师基本信息：</option>
@@ -72,15 +44,17 @@
             <table class="table table-bordered table-condensed"> 
                 <option>成绩输入前期处理：</option>         
                 <tr>
-                    <td style="width: 80%">
+                    <!-- bootstrap在ie8的宽度根据内容自适应，十分不好看，增加空的td标签可以解决这个问题，原理不明 -->
+                    <td style="width: 100%">
                         <label>平时(%):</label>
-                        <input type="text" name="" id="" size="4">    
+                        <input type="text" name="" id="text_formula_1" size="4">    
                         <label>期中(%):</label>
-                        <input type="text" name="" id="" size="4">
+                        <input type="text" name="" id="text_formula_2" size="4">
                         <label>实验(%):</label>
-                        <input type="text" name="" id="" size="4">
+                        <input type="text" name="" id="text_formula_3" size="4">
                         <label>期末(%):</label>
-                        <input type="text" name="" id="" size="4">
+                        <input type="text" name="" id="text_formula_4" size="4">
+                        <input type="submit" name="" value="确定" class="input_bgc" style="width: 50px;margin:0 10px;" onclick="text_formula()">
                         <font color="red">折算总评成绩之前请清空总评成绩</font>
                         <input type="reset" name="" value="清空总评成绩" class="input_bgc">
                     </td>
@@ -89,19 +63,19 @@
 
 
         <!-- 第三个表格 -->
-        <table class="table table-striped table-condensed">
+        <table class="table table-bordered table-condensed">
         <option>成绩输入：</option>
         <tbody>
             <tr>
-                <th>序号</th>
-                <th>班级名称</th>
-                <th>学号</th>
-                <th>姓名</th>
-                <th>平时成绩</th>
-                <th>期中成绩</th>
-                <th>实验成绩</th>
-                <th>期末成绩</th>
-                <th>总评成绩</th>
+                <td>序号</td>
+                <td>班级名称</td>
+                <td>学号</td>
+                <td>姓名</td>
+                <td>平时成绩</td>
+                <td>期中成绩</td>
+                <td>实验成绩</td>
+                <td>期末成绩</td>
+                <td>总评成绩</td>
             </tr>
             <tr>
                 <td>1</td>
@@ -161,10 +135,20 @@
         </tbody>
         </table>
 
+        <table class="table table-bordered table-condensed">
+            <tr>
+                <td style="width: 100%">
+                    <input type="submit" name="" value="成绩校对稿打印" class="input_bgc">
+                    <input type="submit" name="" value="成绩输出打印" class="input_bgc">
+                    <input type="submit" name="" value="学生照片查看" class="input_bgc">
+                </td>
+            </tr>
+        </table>
     </form>
 </div>
 
 <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="teacherJS.js"></script>
 </body>
 </html>

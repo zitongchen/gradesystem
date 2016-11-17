@@ -22,7 +22,7 @@ public class BaseLoginServlet extends HttpServlet {
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String type = request.getParameter("type");
+		String type = request.getParameter("loginType");
 		if (type.equals("1")) {
 			request.getRequestDispatcher("/UserServlet").forward(request,
 					response);

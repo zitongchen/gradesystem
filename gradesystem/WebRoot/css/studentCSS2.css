@@ -132,11 +132,10 @@ div{
 	  list-style:none; 
 	  padding: 0;
 } 
-#nav0 li {
-	
+#tabs li {
      float:left; 
 	 margin:0; 
-	 padding:2px 10px 0 10px;
+	 padding:2px 35px 0 30px;
 	 line-height:24px;
 	 font-weight:bold;
 	 cursor:pointer;
@@ -152,10 +151,7 @@ div{
 	top:69px;   /*因为是定值，可能最后要修改*/
 	left:10px;	/*因为是定值，可能最后要修改*/
 }
-
-#tabs > div > ul{
-	padding: 0 10px;
-}
+.hide{display: none;}
 #tabs .left_title
 {
 	width:100%;
@@ -165,8 +161,8 @@ div{
 	background-color:#d5dedb;
 	color:#666666;
 	font-size:13px;	
+	margin-top:-0px;	/*奇怪的很*/
 }
-
 /*修饰菜单menu完毕*/
 
 
@@ -176,18 +172,8 @@ div{
 	width:83%;
 	height:500px;  /*暂设*/
 	border:1px solid #d5dedb;  
-	position:absolute;
+	/*position:absolute;
 	top:105px;	
-	left:220px;	
+	left:220px;	*/
 }
 
-/*教师成绩录入*/
-.input_bgc
-{
-	background-color: #c1e3ff;
-	border: 1px solid blue;
-	display:inline-block;
-	height: 23px;
-	line-height: 20px;
-	width: 85px;
-}

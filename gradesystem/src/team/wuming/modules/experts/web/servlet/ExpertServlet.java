@@ -62,16 +62,16 @@ public class ExpertServlet extends BaseServlet {
 				request.setAttribute("verificationError", "验证码错误！");
 				request.setAttribute("userId", userId);
 				request.setAttribute("password", password);
-				return "f:/jsps/common/login.jsp";
+				return "f:/jsps/common/login_system.jsp";
 			}
 			Expert expert = expertService.login(form);// 验证输入的用户名跟密码时候正确
 			request.getSession().setAttribute("session_expert", expert);
-			return "f:/jsps/expert/index.jsp";
+			return "f:/jsps/expert/expert_homepage.jsp";
 		} catch (ExpertException e) {
 			request.setAttribute("msg", e.getMessage());
 			request.setAttribute("userId", userId);
 			request.setAttribute("password", password);
-			return "f:/jsps/common/login.jsp";
+			return "f:/jsps/common/login_system.jsp";
 		}
 	}
 
@@ -156,7 +156,7 @@ public class ExpertServlet extends BaseServlet {
 			classes.add(String.valueOf(iterator.next()));
 		}
 		request.setAttribute("class_id", class_ids);
-		return "f:/jsps/expert/index.jsp" ;
+		return "f:/jsps/expert/show_classes.jsp";
 	}
 
 	/**
