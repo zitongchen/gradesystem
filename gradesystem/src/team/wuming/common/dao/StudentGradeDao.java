@@ -2,6 +2,7 @@ package team.wuming.common.dao;
 
 import java.util.List;
 
+import team.wuming.common.domain.Classes;
 import team.wuming.common.domain.Docourse;
 import team.wuming.common.domain.PageBean;
 import team.wuming.common.domain.StudentGrade;
@@ -44,5 +45,9 @@ public interface StudentGradeDao {
 	public List<Object> queryUserName(String classId);
 
 	public void saveStudentGrades(List<StudentGrade> newStudentGrade);
+
+	public List<Classes> findClassNameByClassId(List<Object> classIdList);
+
+	public Classes findClassNameByClassId(String classId);
 
 }

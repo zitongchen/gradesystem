@@ -10,6 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import team.wuming.modules.experts.domain.Expert;
 
@@ -34,12 +35,12 @@ public class ExpertFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		Expert expert = (Expert) httpRequest.getSession().getAttribute(
 				"session_expert");
+		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		if (expert != null) {
 			chain.doFilter(httpRequest, response);
 		} else {
-			httpRequest.getRequestDispatcher("/jsps/common/login.jsp").forward(
-					httpRequest,
-					response);
+			httpResponse.sendRedirect(httpRequest.getContextPath()
+					+ "/index.jsp");// 重定向到登录页面
 		}
 	}
 

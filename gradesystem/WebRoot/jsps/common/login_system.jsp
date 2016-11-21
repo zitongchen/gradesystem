@@ -9,8 +9,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0" />
 <title>登录界面</title>
+<base target="_parent"/>
 
-<!-- <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css"> -->
+
+
 <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/loginCSS.css">
 <script type="text/javascript">
@@ -19,6 +21,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var imgEle=document.getElementById("vCode");
 		imgEle.src="${pageContext.request.contextPath}/VerificationServlet?"+new Date().getTime();
 	}
+	
+	//若登录页面不是主窗口变为主窗口
+	if(window!=top){
+		top.location.href=location.href;
+	}
+</script>
 	</script>
 </head>
 
@@ -30,7 +38,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 			<div class="login-content ">
 			<div class="form">
-			<form action="${pageContext.servletContext.contextPath}/BaseLoginServlet?method=login" method="post">
+			<form action="${pageContext.servletContext.contextPath}/BaseLoginServlet" method="post">
+				<input type="hidden" name="method" value="login"/>
             	<!-- 以下描述的是用户输入框 -->
 				<div class="form-group">
 					<div class="col-xs-12  ">
@@ -95,9 +104,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 	</div>
 </div>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-parent.js"></script><!-- 本地的bootstrap资源链接 -->
-<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+<script src="${pageContext.request.contextPath }/js/jquery-3.1.1.min.js"></script>
+<script src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>

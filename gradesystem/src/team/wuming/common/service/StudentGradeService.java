@@ -2,6 +2,7 @@ package team.wuming.common.service;
 
 import java.util.List;
 
+import team.wuming.common.domain.Classes;
 import team.wuming.common.domain.PageBean;
 import team.wuming.common.domain.StudentGrade;
 
@@ -23,4 +24,6 @@ public interface StudentGradeService {
 			String terminal);
 
 	public void createGradeSheet(String classId, String expacount);
+
+	public Classes findClassNameByClassId(String classId);
 }

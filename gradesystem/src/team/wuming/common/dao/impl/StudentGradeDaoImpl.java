@@ -20,6 +20,7 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import cn.itcast.commons.CommonUtils;
 import cn.itcast.jdbc.TxQueryRunner;
 import team.wuming.common.dao.StudentGradeDao;
+import team.wuming.common.domain.Classes;
 import team.wuming.common.domain.Docourse;
 import team.wuming.common.domain.PageBean;
 import team.wuming.common.domain.StudentGrade;
@@ -130,7 +131,7 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 	public List<StudentGrade> findClassStudentByClass(String classId,
 			String expacount) {
 		String sql = " select * from studentgrade where user_acount in"
-				+ " (select user_acount from users where class_id =?) and expacount=?";
+				+ " (select user_acount from users where class_id =?) and expacount=? order by user_acount asc";
 		List<StudentGrade> studentGrades = new ArrayList<StudentGrade>();
 		try {
 			List<Map<String, Object>> maps = qr.query(sql,
@@ -176,6 +177,33 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 						studentGrade.getKsgrade(), studentGrade.getGrade(),
 						studentGrade.getUser_acount());
 			}
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+	}
+
+	@Override
+	public List<Classes> findClassNameByClassId(List<Object> classIdList) {
+		String sql = "select * from classes where class_id=?";
+		List<Classes> classList = new ArrayList<Classes>();
+		try {
+			for (Object classId : classIdList) {
+				Classes classes = qr.query(sql, new BeanHandler<Classes>(
+						Classes.class), String.valueOf(classId));
+				classList.add(classes);
+			}
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+		return classList;
+	}
+
+	@Override
+	public Classes findClassNameByClassId(String classId) {
+		String sql = "select * from classes where class_id=?";
+		try {
+			return qr.query(sql, new BeanHandler<Classes>(Classes.class),
+					classId);
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}

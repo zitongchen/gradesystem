@@ -52,16 +52,16 @@ public class UserServlet extends BaseServlet {
 				request.setAttribute("verificationError", "验证码错误！");
 				request.setAttribute("userId", userId);
 				request.setAttribute("password", password);
-				return "f:/jsps/common/login.jsp";
+				return "f:/jsps/common/login_system.jsp";
 			}
 			User user = userService.login(form);
 			request.getSession().setAttribute("session_user", user);
-			return "f:/jsps/user/index.jsp";
+			return "f:/jsps/user/user_homepage.jsp";
 		} catch (team.wuming.modules.users.service.UserException e) {
 			request.setAttribute("msg", e.getMessage());// 账号密码有误，保存错误信息并回原来的账号跟密码
 			request.setAttribute("userId", userId);
 			request.setAttribute("password", password);
-			return "f:/jsps/common/login.jsp";
+			return "f:/jsps/common/login_system.jsp";
 		}
 	}
 

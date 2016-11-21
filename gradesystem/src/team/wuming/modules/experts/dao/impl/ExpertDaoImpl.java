@@ -64,7 +64,7 @@ public class ExpertDaoImpl implements ExpertDao {
 	 * 通过教师的编号查询教师所教的所有班级
 	 */
 	@Override
-	public List<Object> findClassNameByExpert(String expacount) {
+	public List<Object> findClassIdByExpert(String expacount) {
 		String sql = "select  DISTINCT class_id from users where user_acount in "
 				+ "(select user_acount from studentgrade where expacount=?)";
 		try {

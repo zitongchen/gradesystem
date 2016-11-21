@@ -85,7 +85,7 @@
     <filter-name>UserLoginFilter</filter-name>
     <url-pattern>/jsps/user/*</url-pattern>
   </filter-mapping>
-  <!--  
+  
   <filter>
   	<filter-name>ExpertLoginFilter</filter-name>
   	<filter-class>team.wuming.modules.experts.web.filter.ExpertFilter</filter-class>
@@ -93,6 +93,7 @@
   <filter-mapping>
   	<filter-name>ExpertLoginFilter</filter-name>
   	<url-pattern>/jsps/expert/*</url-pattern>
+  	<url-pattern>/ExpertServlet</url-pattern>
   </filter-mapping>
-  -->
+  
 </web-app>

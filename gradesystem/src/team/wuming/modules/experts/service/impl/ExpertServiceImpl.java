@@ -2,6 +2,9 @@ package team.wuming.modules.experts.service.impl;
 
 import java.util.List;
 
+import team.wuming.common.dao.StudentGradeDao;
+import team.wuming.common.dao.impl.StudentGradeDaoImpl;
+import team.wuming.common.domain.Classes;
 import team.wuming.modules.experts.dao.ExpertDao;
 import team.wuming.modules.experts.dao.impl.ExpertDaoImpl;
 import team.wuming.modules.experts.domain.Expert;
@@ -11,6 +14,7 @@ import team.wuming.modules.users.domain.User;
 
 public class ExpertServiceImpl implements ExpertService {
 	private ExpertDao expertDao = new ExpertDaoImpl();
+	private StudentGradeDao studentGradeDao = new StudentGradeDaoImpl();
 
 	/**
 	 * 教师登陆验证
@@ -44,8 +48,10 @@ public class ExpertServiceImpl implements ExpertService {
 	 * 查询教师所教班级序列
 	 */
 	@Override
-	public List<Object> findClassNameByExpert(String expacount) {
+	public List<Classes> findClassNameByExpert(String expacount) {
 
-		return expertDao.findClassNameByExpert(expacount);
+		List<Object> classIdList = expertDao.findClassIdByExpert(expacount);
+		return studentGradeDao.findClassNameByClassId(classIdList);
+
 	}
 }

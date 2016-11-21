@@ -10,6 +10,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import team.wuming.common.dao.StudentGradeDao;
 import team.wuming.common.dao.impl.StudentGradeDaoImpl;
+import team.wuming.common.domain.Classes;
 import team.wuming.common.domain.Docourse;
 import team.wuming.common.domain.PageBean;
 import team.wuming.common.domain.StudentGrade;
@@ -106,8 +107,10 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 		for (int index = 0; index < userId.length; index++) {
 			StudentGrade studentGrade = new StudentGrade();
 			int grades = (int) (Float.parseFloat(psGrades[index]) // 根据公式计算学生的总评成绩，把各项成绩的占比转化为小数进行计算
-					* Float.parseFloat(paecetime) + Float
-					.parseFloat(ksGrades[index]) * Float.parseFloat(terminal));
+					* Float.parseFloat(paecetime) / 100 + Float
+					.parseFloat(ksGrades[index])
+					* Float.parseFloat(terminal)
+					/ 100);
 			studentGrade.setUser_acount(userId[index]);
 			studentGrade.setPsgrade(psGrades[index]);
 			studentGrade.setKsgrade(ksGrades[index]);
@@ -125,6 +128,12 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 		XSSFWorkbook workBook = new XSSFWorkbook();
 		XSSFSheet sheet = workBook.createSheet();
 
+	}
+
+	@Override
+	public Classes findClassNameByClassId(String classId) {
+
+		return studentGradeDao.findClassNameByClassId(classId);
 	}
 
 }

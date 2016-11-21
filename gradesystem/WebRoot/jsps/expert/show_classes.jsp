@@ -28,9 +28,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
 </div>
 -->
+<!-- 
 <li><a href="${pageContext.request.contextPath }/jsps/expert/class1.jsp" target="body">数据结构与算法实训【计算机科学与技术15(1)】</a></li>
 <li><a href="${pageContext.request.contextPath }/jsps/expert/class2.jsp" target="body">数据结构与算法实训【计算机科学与技术15(2)】</a></li>
 <li><a href="${pageContext.request.contextPath }/jsps/expert/class3.jsp" target="body">数据结构与算法实训【第一次补考】</a></li>
+ -->
+<c:if test="${not empty requestScope.classList}">
+	    <c:forEach items="${requestScope.classList}" var="classList">
+	    		<li>
+		    		<a href='<c:url value="/ExpertServlet?method=findClassStudentByClass&classId=${classList.class_id}&expacount=${sessionScope.session_expert.expacount}"/>'>
+		    			<c:out value="${classList.className}"></c:out>
+		    		</a>
+	    		</li>
+	    </c:forEach>
+</c:if>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-parent.js"></script><!-- 本地的bootstrap资源链接 -->
 <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>

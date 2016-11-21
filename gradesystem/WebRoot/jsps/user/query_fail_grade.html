@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>成绩查询</title>
+
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link href="../css/studentCSS.css" rel="stylesheet" style="text/css">
+</head>
+<body>
+
+<!-- 以下是内容主体部分mainbody -->	
+<div>
+	<div class="col-xs-10">
+
+    <!-- 面包屑导航 -->
+    <ol class="breadcrumb">
+        <li>成绩查询</li>
+        <li class="active">学生补考成绩查询</li>
+    </ol>
+
+    <!-- 查询条件按钮 -->     
+    <form style="margin-top:-25px; margin-left: -12px;">
+        <div class="btn">
+            <button id="user_qbcx" type="button" class="btn btn-default">全部学期查询</button>
+        </div>
+        <label>按学年学期查询：
+                <select  id="user_cxxx" name="按学年学期查询" onchange="showscore(this.value)" style="font-family: verdana">
+                    <option value="2013-2014-1">2013-2014-1</option>
+                    <option value="2013-2014-2">2013-2014-2</option>
+                    <option value="2014-2015-1">2014-2015-1</option>
+                    <option value="2014-2015-2">2014-2015-2</option> 
+                    <option value="2015-2016-1">2015-2016-1</option>
+                    <option value="2015-2016-2">2015-2016-2</option> 
+                </select>
+        </label> 
+    </form>
+
+      
+      <div id="t3">
+           <!-- 先定义一个表格，利用ajax首先加载一次数据。 -->
+          <table id="t3" class="table table-striped" >
+                <thead>
+                    <tr>
+                         <th>课程编号</th>
+                         <th>课程名称</th>           
+                         <th>补考成绩</th>
+                         <th>年级</th>
+                         <th>考核类型</th>         
+                         <th>任课教师号</th>
+                         <th>操作员代码</th>
+                         <th>审核人代码</th>         
+                         <th>操作日期</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    
+                  </tr>
+
+               </tbody>
+           </table>
+
+
+
+        </div> 
+    </div>
+</div>
+
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

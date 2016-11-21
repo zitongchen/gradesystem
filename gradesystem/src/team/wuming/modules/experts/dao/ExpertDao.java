@@ -16,6 +16,6 @@ public interface ExpertDao {
 
 	public void updateExpertPassword(Expert form);
 
-	public List<Object> findClassNameByExpert(String expacount);
+	public List<Object> findClassIdByExpert(String expacount);
 
 }

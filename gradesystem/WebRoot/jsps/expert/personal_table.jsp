@@ -13,7 +13,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title>个人中心表格</title>
 
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
-    <link href="${pageContext.request.contextPath }/css/teacherCSS2.css" rel="stylesheet" style="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/teacherCSS2.css" >
 </head>
 <body>
 
@@ -21,26 +21,61 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <h4 class="text-center">教师基本信息</h4>
   <div class="container-fluid" >
       <div class="col-xs-10" >
+      	<c:if test="${not empty sessionScope.session_expert}">
+      		<c:set var="expert" value="${sessionScope.session_expert}"></c:set>
+      		
+      	</c:if>
           <table class="table table-striped table-bordered" style="table-layout:fixed">
               <tbody >
                   <tr>
                       <td class="col-xs-1">教师号</td>
-                      <td >xxxxxxxxx</td>
+                      <td >${expert.expacount}</td>
                       <td class="col-xs-1">姓名</td>
-                      <td >xxx</td>  
+                      <td >${expert.name}</td>  
                       <td class="col-xs-1">出生年月</td>
-                      <td >xxxx-xx-xx</td>          
+                      <td ></td>          
                   </tr>
+                   <tr>
+			            <td >性别</td>
+			            <td>${expert.sex}</td>
+			            <td >职称</td>
+			            <td>${expert.title}</td>   
+			            <td >注册时间</td>
+			            <td>${expert.regtime}</td>                  
+			        </tr>
+			        <tr>
+			            <td >学历</td>
+			            <td >${expert.education}</td>
+			            <td >QQ号码</td>
+			            <td>${expert.qq}</td>   
+			            <td >电话</td>
+			            <td>${expert.telephone}</td>                  
+			        </tr>
+			       <tr>
+			            <td >E-mail</td>
+			            <td >${expert.email}</td>
+			            <td >微信号</td>
+			            <td>${expert.misigal}</td>   
+			            <td >城市</td>
+			            <td>${expert.city}</td>                  
+			        </tr>
+			        <tr>
+			            <td >状态</td>
+			            <td>${expert.state}</td>
+			            <td >专家类型编码</td>
+			            <td>${expert.expcode}</td>   
+			            <td >简介</td>
+			            <td>${expert.description}</td>                  
+			        </tr>
               </tbody>
           </table>
       </div>
       <div class="col-xs-1"></div>
       <div class="col-xs-offset-1">
-          <img src="images/ljc.jpg" width="135" height="180">
+          <img src="${pageContext.request.contextPath}/resource/images/ljc.jpg" width="135" height="180">
       </div>
   </div>	
 </div>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-parent.js"></script><!-- 本地的bootstrap资源链接 -->
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="myJS.js"></script>

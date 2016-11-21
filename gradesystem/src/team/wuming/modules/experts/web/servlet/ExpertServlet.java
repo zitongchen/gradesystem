@@ -23,6 +23,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.omg.CORBA.UserException;
 
+import team.wuming.common.domain.Classes;
 import team.wuming.common.domain.StudentGrade;
 import team.wuming.common.service.StudentGradeService;
 import team.wuming.common.service.impl.StudentGradeServiceImpl;
@@ -102,7 +103,7 @@ public class ExpertServlet extends BaseServlet {
 		return "r:/ExpertServlet?method=findExpertMessage";
 	}
 
-	// 获取教师信息
+	// 获取教师信息(直接通过session获取教师的信息)
 	public String findExpertMessage(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			UserException {
@@ -125,16 +126,21 @@ public class ExpertServlet extends BaseServlet {
 	public String updateExpertPassword(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			UserException {
-		Expert form = CommonUtils.toBean(request.getParameterMap(),
-				Expert.class);
-		if (form.getPassword().equals(
-				request.getSession().getAttribute("password"))) {// 判断输入的原密码是否跟session中的密码一致，不一致回显错误信息
+		Expert form = new Expert();
+		form.setPassword(request.getParameter("password"));
+
+		Expert expert = (Expert) request.getSession().getAttribute(
+				"session_expert");
+		form.setExpacount(expert.getExpacount());
+		if (!form.getPassword().equals(expert.getPassword())) {// 判断输入的原密码是否跟session中的密码一致，不一致回显错误信息
 			request.setAttribute("passwordError", "原密码输入有误");
-			return "f:/jsps/expert/updateexpertpassword.jsp";
+			return "f:/jsps/expert/update_password.jsp";
 		} else {
 			form.setPassword(request.getParameter("newPassword"));
 		}
+
 		expertService.updateExpertPassword(form);
+
 		request.getSession().invalidate();// 销毁session并让用户重新登录
 		return "r:/index.jsp";
 	}
@@ -149,14 +155,19 @@ public class ExpertServlet extends BaseServlet {
 	public String findClassNameByExpert(HttpServletRequest request,
 			HttpServletResponse response) {
 		String expacount = request.getParameter("expacount");
-		List<Object> class_ids = expertService.findClassNameByExpert(expacount);
-		List<String> classes = new ArrayList<String>();
-		Iterator<Object> iterator = class_ids.iterator();// 创建一个Object迭代器，并把Object转化为String对象并存入到List集合中
-		while (iterator.hasNext()) {
-			classes.add(String.valueOf(iterator.next()));
-		}
-		request.setAttribute("class_id", class_ids);
+		List<Classes> classList = expertService
+				.findClassNameByExpert(expacount);
+		request.setAttribute("classList", classList);
 		return "f:/jsps/expert/show_classes.jsp";
+		/*
+		 * List<Object> class_ids =
+		 * expertService.findClassNameByExpert(expacount); List<String> classes
+		 * = new ArrayList<String>(); Iterator<Object> iterator =
+		 * class_ids.iterator();// 创建一个Object迭代器，并把Object转化为String对象并存入到List集合中
+		 * while (iterator.hasNext()) {
+		 * classes.add(String.valueOf(iterator.next())); }
+		 * request.setAttribute("class_id", class_ids);
+		 */
 	}
 
 	/**
@@ -169,17 +180,20 @@ public class ExpertServlet extends BaseServlet {
 	public String findClassStudentByClass(HttpServletRequest request,HttpServletResponse response){
 		String classId=request.getParameter("classId");
 		String expacount = request.getParameter("expacount");
+		String className = request.getParameter("className");
 		List<StudentGrade> studentGrades = studentGradeService // 创建学生成绩集合
 				.findClassStudentByClass(classId, expacount);
 		List<Object> userNameObjectList = studentGradeService // 创建学生姓名集合
 				.queryUserName(classId);
+		Classes classes = studentGradeService.findClassNameByClassId(classId);
 		List<String> userNameList=new ArrayList<String>();
 		for (Object object : userNameObjectList) {
 			userNameList.add(String.valueOf(object));
 		}
 		request.setAttribute("studentgrades", studentGrades);
 		request.setAttribute("studentNameList", userNameList);
-		return "f:/jsps/expert/index.jsp";
+		request.setAttribute("classes", classes);
+		return "f:/jsps/expert/class_normal.jsp";
 	}
 
 	/**
@@ -196,11 +210,16 @@ public class ExpertServlet extends BaseServlet {
 		String[] ksGrades = request.getParameterValues("ksgrade");// 考试成绩
 		String paecetime = request.getParameter("paecetime");// 平时成绩占比率
 		String terminal = request.getParameter("terminal");// 考试成绩占比率
+		Expert expert = (Expert) request.getSession().getAttribute(
+				"session_expert");
+		String classId = request.getParameter("classId");
 		studentGradeService.saveClassStudentGrade(userId, psGrades, ksGrades,
 				paecetime, terminal);
-		return "f:/ExpertServlet?method=findClassNameByExpert&expacount="
-				+ ((Expert) request.getSession().getAttribute("session_expert"))
-						.getExpacount();
+
+		return "f:/ExpertServlet?method=findClassStudentByClass&classId="
+				+ request.getParameter("classId") + "&expacount="
+				+ expert.getExpacount();
+
 	}
 
 

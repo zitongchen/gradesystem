@@ -173,6 +173,7 @@ public class StudentGradeSheetServlet extends HttpServlet {
 			List<Element> tds = tr.getChildren("td");
 			HSSFCellStyle cellStyle = wb.createCellStyle();
 			cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+
 			int gradeListNumber = studentGrades.size();
 			for (int i = 0; i < gradeListNumber; i++) {
 				HSSFRow row = sheet.createRow(rownum);
@@ -182,6 +183,7 @@ public class StudentGradeSheetServlet extends HttpServlet {
 					setType(wb, cell, td);// 设置数据区类型
 					cell.setCellValue("test");
 					cell.setCellType(HSSFCell.CELL_TYPE_STRING);
+
 					cell.setCellStyle(cellStyle);// 设置单元格样式
 				}
 				sheet.getRow(rownum).getCell(0)

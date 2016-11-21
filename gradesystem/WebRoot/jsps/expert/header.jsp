@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 	</div>
 <div class="under_header"> 
-<span>${sessionScope.session_expert.name}</span>,您好！职工号：<span>${sessonScope.session_expert.expacount}</span>&nbsp;&nbsp;学院：<span>医药信息工程学院</span>&nbsp;&nbsp;职称：<span>讲师</span> </div>
+<span>${sessionScope.session_expert.name}</span>,您好！职工号：<span>${sessionScope.session_expert.expacount}</span>&nbsp;&nbsp;学院：<span>医药信息工程学院</span>&nbsp;&nbsp;职称：<span>${sessionScope.session_expert.title}</span> </div>
 </div>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-parent.js"></script><!-- 本地的bootstrap资源链接 -->
 <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
