@@ -1,4 +1,9 @@
- 
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%> 
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
@@ -8,47 +13,48 @@
 <title>个人中心</title>
 
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
-    <link href="../css/studentCSS.css" rel="stylesheet" style="text/css">
+    <link href="${pageContext.request.contextPath}/css/studentCSS.css" rel="stylesheet" style="text/css">
 </head>
 <body>
 
 
 <!--div class="mainbody"-->
 <div>
- <form  name="xgmm" id="form_xgmm" method="post" onsubmit="return doupdate();" >
+ <form  action="${pageContext.request.contextPath}/UserServlet" name="xgmm" id="form_xgmm" method="post" onsubmit="return doupdate();"  >
           <input type="hidden" name="id" id="id" value="">
+          <input type="hidden" name="method" value="updateUserPassword">
           <h4 class="text-center">修改密码</h4>
           <table id="t3" align="center">
             <tr>
               <td> 登陆账号： </td>
-              <td><input type="text" disabled="disabled"  name="id" id="id" readonly value=""  size=30 maxlength="30">
+             <td><input type="text" name="userId" readonly="readonly" style="border: 0px;background: 0000"  value="${sessionScope.session_user.user_acount}"  size=20 maxlength="20">
                 </input></td>
             </tr>
               </tr>
             
             <tr>
               <td> 旧密码： </td>
-              <td><input type="password" name="oldpassword" maxlength="20" id="oldpassword" value="" size=20>
+              <td><input type="password" name="password" maxlength="20" id="password" value="" size=20>
                 </input>
                 <font color="red">*必填</font></td>
             </tr>
             <tr>
               <td> 新密码： </td>
-              <td><input type="password" name="password1" maxlength="20" id="password1" value="" size=20 >
+              <td><input type="password" name="newPassword" maxlength="20" id="newPassword" value="" size=20 >
                 </input>
                 <font color="red">*必填</font></td>
             </tr>
             <tr>
               <td> 确认新密码： </td>
-              <td><input type="password" name="password2" maxlength="20" id="password2" value="" size=20>
+              <td><input type="password" name="password2" maxlength="20" id="password2" value=""  size=20>
                 </input>
                 <font color="red"> *必填 </font></td>
             </tr>
             <tr>
-              <td colspan="2"><input type="submit" class="button info" value="保存" id="button1" name="button1">
+              <td colspan="2"><input type="submit" class="button info" value="保存" id="button1"  name="button1">
                 </input>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="reset" class="button info" value="重 置" id="button2" name=button2>
+                <input type="reset" class="button info" value="重 置" id="button2"  name=button2>
                 </input></td>
             </tr>
             <tr>
@@ -61,10 +67,10 @@
 <script>   
 function doupdate()
 {
-  var op = document.getElementById('oldpassword').value;
-  var p1=document.getElementById('password1').value;
+  var op = document.getElementById('password').value;
+  var p1=document.getElementById('newPassword').value;
   var p2=document.getElementById('password2').value;
-  var uname = document.getElementById("id").value;
+  //var uname = document.getElementById("userId").value;
 
   if(op == "" || p1 =="" ) {
                               alert("请输入完整信息!");
@@ -73,9 +79,9 @@ function doupdate()
 
   if (op == p1){
                   alert("您输入的新密码和原密码一致，请重新输入!");
-                  document.getElementById('password1').value = "";
+                  document.getElementById('newPassword').value = "";
                   document.getElementById('password2').value = "";
-                  document.getElementById('password1').focus();
+                  document.getElementById('newPassword').focus();
                   return false;
                 }
 
@@ -84,16 +90,16 @@ function doupdate()
                 return false;
               }
 
-   if(uname == p1){
+   /*if(uname == p1){
                     alert("用户名与新密码不能一样!");
                     return false;
                     }
-
+ */
    if (p1.length < 8){
                         alert("您输入的密码过短，至少8位字符或数字!");
-                         document.getElementById('password1').value = "";
+                         document.getElementById('newPassword').value = "";
                          document.getElementById('password2').value = "";
-                         document.getElementById('password1').focus();
+                         document.getElementById('newPassword').focus();
                          return false;
                        }
 
@@ -106,8 +112,8 @@ function doupdate()
                                 }
 
      try {
-            if(!checkStringLen(document.getElementById('oldpassword'),'旧密码',20)){return false; }
-            if(!checkStringLen(document.getElementById('password1'),'新密码',20)){ return false; }
+            if(!checkStringLen(document.getElementById('password'),'旧密码',20)){return false; }
+            if(!checkStringLen(document.getElementById('newPassword'),'新密码',20)){ return false; }
             if(!checkStringLen(document.getElementById('password2'),'确认密码',20)){return false;}
          }
       catch(e) {  window.alert(e.message); }

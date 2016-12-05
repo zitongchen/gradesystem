@@ -1,15 +1,23 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>成绩查询</title>
+<title>首页</title>
+<base target="body"/>
 
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
-    <link href="../css/studentCSS.css" rel="stylesheet" style="text/css">
+    <link href="${pageContext.request.contextPath}/css/studentCSS.css" rel="stylesheet" style="text/css">
 </head>
 <body>
+
 
 <!-- 以下是内容主体部分mainbody -->	
 <div>
@@ -18,7 +26,7 @@
     <!-- 面包屑导航 -->
     <ol class="breadcrumb">
         <li>成绩查询</li>
-        <li class="active">学生补考成绩查询</li>
+        <li class="active">学生成绩查询</li>
     </ol>
 
     <!-- 查询条件按钮 -->     
@@ -45,8 +53,10 @@
                 <thead>
                     <tr>
                          <th>课程编号</th>
-                         <th>课程名称</th>           
-                         <th>补考成绩</th>
+                         <th>课程名称</th>
+                         <th>平时成绩</th>           
+                         <th>考试成绩</th>
+                         <th>成绩</th>
                          <th>年级</th>
                          <th>考核类型</th>         
                          <th>任课教师号</th>
@@ -63,6 +73,9 @@
                </tbody>
            </table>
 
+     </div>
+       <p>累计总学分：<span id="Ljsf"></span>分</p>
+     </div>
 
 
         </div> 

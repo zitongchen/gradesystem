@@ -1,4 +1,9 @@
-
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
@@ -8,7 +13,7 @@
 <title>个人中心</title>
 <base target="body">
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
-    <link href="../css/studentCSS.css" rel="stylesheet" style="text/css">
+    <link href="${pageContext.request.contextPath}/css/studentCSS.css" rel="stylesheet" style="text/css">
 </head>
 <body>
 
@@ -24,8 +29,8 @@
 -->
 <div>
     <ul>
-        <li><a href="personal_table.html">学生基本信息</a></li>
-        <li><a href="update_password.html">密码修改</a></li>
+        <li><a href="${pageContext.request.contextPath}/jsps/user/personal_table.jsp">学生基本信息</a></li>
+        <li><a href="${pageContext.request.contextPath}/jsps/user/update_password.jsp">密码修改</a></li>
     </ul>
 </div>
 

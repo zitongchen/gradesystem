@@ -23,7 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- 以下是菜单menu以及左侧的二级菜单 -->
 <div id="tabs">
     <ul id="nav0">
-        <li ><a href="${pageContext.request.contextPath}/jsps/user/sidebar.html">首页</a></li>
+        <li ><a href="${pageContext.request.contextPath}/jsps/user/sidebar.jsp" target="sidebar">首页</a></li>
         <li><a href="${pageContext.request.contextPath}/jsps/user/query.jsp" target="sidebar">成绩查询</a></li>
         <li><a href="${pageContext.request.contextPath}/jsps/user/personal.jsp" target="sidebar">个人中心</a></li>
     </ul>
