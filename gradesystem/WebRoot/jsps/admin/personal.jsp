@@ -27,9 +27,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
 </div>
 -->
-            <li><a href="${pageContext.request.contextPath}/jsps/admin/personal_table.jsp">教师基本信息</a></li>
+            <li><a href="${pageContext.request.contextPath}/jsps/admin/personal_table.jsp">管理员基本信息</a></li>
             <li><a href="${pageContext.request.contextPath}/jsps/admin/update_password.jsp">密码修改</a></li>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-parent.js"></script><!-- 本地的bootstrap资源链接 -->
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 	<script src="myJS.js"></script>

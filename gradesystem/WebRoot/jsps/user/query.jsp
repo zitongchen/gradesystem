@@ -22,8 +22,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
 <div>	
     <ul>
-        <li><a href="${pageContext.request.contextPath}/jsps/user/query_grade.jsp">学生成绩查询</a></li>
-        <li><a href="${pageContext.request.contextPath}/jsps/user/query_fail_grade.jsp">学生补考成绩查询</a></li>
+        <li><a href="${pageContext.request.contextPath}/UserServlet?method=queryUserGrade&user_acount=${session_user.user_acount}">学生成绩查询</a></li>
+        <li><a href="${pageContext.request.contextPath}/UserServlet?method=queryUserFail&user_acount=${session_user.user_acount}">学生补考成绩查询</a></li>
     </ul>
 </div>
 

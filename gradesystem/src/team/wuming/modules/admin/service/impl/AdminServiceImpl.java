@@ -1,9 +1,12 @@
 package team.wuming.modules.admin.service.impl;
 
+import java.util.List;
+
 import team.wuming.modules.admin.dao.AdminDao;
 import team.wuming.modules.admin.dao.impl.AdminDaoImpl;
 import team.wuming.modules.admin.domain.Admin;
 import team.wuming.modules.admin.service.AdminService;
+import team.wuming.modules.users.domain.User;
 
 public class AdminServiceImpl implements AdminService {
 	private AdminDao adminDao = new AdminDaoImpl();
@@ -24,12 +27,14 @@ public class AdminServiceImpl implements AdminService {
 
 	}
 
-	public Admin findAdminMessage(String AdminId) {
-		return adminDao.findAdminMessageById(AdminId);
-	}
 
 	public void updateAdminPassword(Admin form) {
 		adminDao.updateAdminPassword(form);
 
+	}
+
+	@Override
+	public void inputStudentMessage(List<User> userList) {
+		adminDao.inputStudentMessage(userList);
 	}
 }

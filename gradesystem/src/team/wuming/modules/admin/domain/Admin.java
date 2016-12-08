@@ -3,7 +3,7 @@ package team.wuming.modules.admin.domain;
 import java.io.Serializable;
 
 public class Admin implements Serializable {
-	private String admin_account;// 管理员账号（主键）
+	private String admin_acount;// 管理员账号（主键）
 	private String password;// 管理员密码
 	private String name;// 管理员姓名
 	private String sex;// 管理员性别
@@ -53,12 +53,12 @@ public class Admin implements Serializable {
 		this.regtime = regtime;
 	}
 
-	public String getAdmin_account() {
-		return admin_account;
+	public String getAdmin_acount() {
+		return admin_acount;
 	}
 
-	public void setAdmin_account(String admin_account) {
-		this.admin_account = admin_account;
+	public void setAdmin_acount(String admin_acount) {
+		this.admin_acount = admin_acount;
 	}
 
 	public String getPassword() {
@@ -153,7 +153,7 @@ public class Admin implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Admin [admin_account=" + admin_account + ", password="
+		return "Admin [admin_account=" + ", password="
 				+ password + ", name=" + name + ", sex=" + sex
 				+ ", description=" + description + ", photo=" + photo
 				+ ", title=" + title + ", education=" + education + ", qq="

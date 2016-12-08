@@ -1,6 +1,7 @@
 package team.wuming.modules.users.web.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -153,18 +154,12 @@ public class UserServlet extends BaseServlet {
 	public String queryUserGrade(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			UserException {
+
 		String userId = request.getParameter("user_acount");
-		int pc = getPc(request);
-		int ps = 3;// 给定ps的值，每页显示3条记录
-		PageBean<StudentGrade> pb = studentGradeService.queryUserGrade(pc, ps,
-				userId);
-		/*
-		 * List<StudentGrade> studentGradeList = userService
-		 * .queryUserGrade(userId);
-		 */
-		pb.setUrl(getUrl(request));
-		request.setAttribute("pb", pb);
-		return "f:/jsps/test/PageBean.jsp";
+		List<StudentGrade> studentGradeList = new ArrayList<StudentGrade>();
+		studentGradeList = studentGradeService.queryUserGrade(userId);
+		request.setAttribute("studentGradeList", studentGradeList);
+		return "f:/jsps/user/query_grade.jsp";
 	}
 
 	/**
@@ -180,37 +175,8 @@ public class UserServlet extends BaseServlet {
 		List<StudentGrade> studentGradeList = studentGradeService
 				.queryUserFail(userId);
 		request.setAttribute("studentGradeFail", studentGradeList);
-		return "f:/**.jsp";
+		return "f:/jsps/user/query_fail_grade.jsp";
 	}
 
-	/**
-	 * 获取pc,获取要请求的页面的页面数
-	 * 
-	 * @param request
-	 * @return
-	 */
-	private int getPc(HttpServletRequest request) {
-		String value = request.getParameter("pc");
-		if (value == null || value.trim().isEmpty()) {
-			return 1;
-		}
-		return Integer.parseInt(value);
-	}
 
-	/**
-	 * 获取请求路径，把pc的值处理掉然后返回pc值前的路径
-	 * 
-	 * @param request
-	 * @return
-	 */
-	private String getUrl(HttpServletRequest request) {
-		String contextPath = request.getContextPath();
-		String servletPath = request.getServletPath();
-		String quesyString = request.getQueryString();
-		if (quesyString.contains("&pc=")) {
-			int endIndex = quesyString.lastIndexOf("&pc=");
-			quesyString = quesyString.substring(0, endIndex);
-		}
-		return contextPath + servletPath + "?" + quesyString;
-	}
 }

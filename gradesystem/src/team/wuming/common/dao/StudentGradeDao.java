@@ -16,8 +16,7 @@ public interface StudentGradeDao {
 	 * @param userId
 	 * @return 通过用户的学号，结合分页查询学生若干条数的成绩信息
 	 */
-	public List<StudentGrade> queryGradeByUserId(int pc, int ps,
-			String userId);
+	public List<StudentGrade> queryGradeByUserId(String userId);
 
 	/**
 	 * @param userId
@@ -49,5 +48,7 @@ public interface StudentGradeDao {
 	public List<Classes> findClassNameByClassId(List<Object> classIdList);
 
 	public Classes findClassNameByClassId(String classId);
+
+	public List<Object> querySexName(String classId);
 
 }

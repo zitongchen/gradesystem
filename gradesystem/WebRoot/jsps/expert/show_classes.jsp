@@ -17,26 +17,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
 
-<!-- 以下是菜单menu以及左侧的二级菜单 
-<div id="tabs">
-    <div>  
-         <ul>
-             <li><a href="class1.html" target="body">数据结构与算法实训【计算机科学与技术15(1)】</a></li>
-             <li><a href="class2.html" target="body">数据结构与算法实训【计算机科学与技术15(2)】</a></li>
-             <li><a href="class3.html" target="body">数据结构与算法实训【第一次补考】</a></li>
-         </ul>
-    </div>
-</div>
--->
-<!-- 
-<li><a href="${pageContext.request.contextPath }/jsps/expert/class1.jsp" target="body">数据结构与算法实训【计算机科学与技术15(1)】</a></li>
-<li><a href="${pageContext.request.contextPath }/jsps/expert/class2.jsp" target="body">数据结构与算法实训【计算机科学与技术15(2)】</a></li>
-<li><a href="${pageContext.request.contextPath }/jsps/expert/class3.jsp" target="body">数据结构与算法实训【第一次补考】</a></li>
- -->
+
 <c:if test="${not empty requestScope.classList}">
 	    <c:forEach items="${requestScope.classList}" var="classList">
 	    		<li>
-		    		<a href='<c:url value="/ExpertServlet?method=findClassStudentByClass&classId=${classList.class_id}&expacount=${sessionScope.session_expert.expacount}"/>'>
+		    		<a href='<c:url value="/ExpertServlet?method=findClassStudentByClass&classId=${classList.bh}&expacount=${sessionScope.session_expert.expacount}"/>'>
 		    			<c:out value="${classList.className}"></c:out>
 		    		</a>
 	    		</li>

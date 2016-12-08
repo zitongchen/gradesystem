@@ -65,10 +65,10 @@ public class ExpertDaoImpl implements ExpertDao {
 	 */
 	@Override
 	public List<Object> findClassIdByExpert(String expacount) {
-		String sql = "select  DISTINCT class_id from users where user_acount in "
+		String sql = "select  DISTINCT bh from users where user_acount in "
 				+ "(select user_acount from studentgrade where expacount=?)";
 		try {
-			return qr.query(sql, new ColumnListHandler("class_id"),
+			return qr.query(sql, new ColumnListHandler("bh"),
 					expacount);
 		} catch (Exception e) {
 			throw new RuntimeException();

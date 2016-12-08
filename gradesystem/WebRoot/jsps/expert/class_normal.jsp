@@ -24,7 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div>
     <form target="body" name="" id="" metdod="post" action="${pageContext.request.contextPath}/ExpertServlet">
 			<input type="hidden"  name="method" value="saveClassStudentGrade"/>
-			<input type="hidden" name="classId" value="${requestScope.classes.class_id}"/>
+			<input type="hidden" name="classId" value="${requestScope.classes.bh}"/>
             <!-- 第一个表格 -->
             <table class="table table-bordered table-condensed">
                 <option>教师基本信息：</option>
@@ -121,7 +121,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </form>
         
 	<form action="${pageContext.request.contextPath}/StudentGradeSheetServlet">
-	<input type="hidden" name="classId" value="${requestScope.classes.class_id}"/>
+	<input type="hidden" name="classId" value="${requestScope.classes.bh}"/>
 	<input type="hidden" name="expacount" value="${sessionScope.session_expert.expacount}"/>
         <table class="table table-bordered table-condensed">
             <tr>

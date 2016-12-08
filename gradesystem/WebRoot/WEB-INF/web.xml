@@ -37,8 +37,6 @@
     <servlet-name>StudentGradeSheetServlet</servlet-name>
     <servlet-class>team.wuming.common.web.servlet.StudentGradeSheetServlet</servlet-class>
   </servlet>
-
-
   <servlet-mapping>
     <servlet-name>UserServlet</servlet-name>
     <url-pattern>/UserServlet</url-pattern>
@@ -75,8 +73,6 @@
     <servlet-name>StudentGradeSheetServlet</servlet-name>
     <url-pattern>/StudentGradeSheetServlet</url-pattern>
   </servlet-mapping>
-  
-  <!-- 拦截器 -->
   <filter>
     <filter-name>UserLoginFilter</filter-name>
     <filter-class>team.wuming.modules.users.web.filter.LoginFilter</filter-class>
@@ -85,15 +81,20 @@
     <filter-name>UserLoginFilter</filter-name>
     <url-pattern>/jsps/user/*</url-pattern>
   </filter-mapping>
-  
   <filter>
-  	<filter-name>ExpertLoginFilter</filter-name>
-  	<filter-class>team.wuming.modules.experts.web.filter.ExpertFilter</filter-class>
+    <filter-name>ExpertLoginFilter</filter-name>
+    <filter-class>team.wuming.modules.experts.web.filter.ExpertFilter</filter-class>
   </filter>
   <filter-mapping>
-  	<filter-name>ExpertLoginFilter</filter-name>
-  	<url-pattern>/jsps/expert/*</url-pattern>
-  	<url-pattern>/ExpertServlet</url-pattern>
+    <filter-name>ExpertLoginFilter</filter-name>
+    <url-pattern>/jsps/expert/*</url-pattern>
   </filter-mapping>
-  
+  <filter>
+  	<filter-name>AdminLoginFilter</filter-name>
+  	<filter-class>team.wuming.modules.admin.web.filter.AdminFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>AdminLoginFilter</filter-name>
+  	<url-pattern>/jsps/admin/*</url-pattern>
+  </filter-mapping>
 </web-app>

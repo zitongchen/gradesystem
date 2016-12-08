@@ -33,37 +33,28 @@ public class User implements Serializable {
 	private String postCode;// 邮编
 	private String paymethod;// '在线支付' COMMENT '支付方法'
 	private int user_type;// 用户类型1-操作和编辑（要批准）
-	private String username;
-	private String dzyj;
-	private String lxdh;
-	private String name;
-	private int sex;// 性别
-	private Date birthday;// 出生年月
-	private String class_id;// 所在班级编号
-	private String nj;// 年级
-	private String zkzh;// 准考证号
+	private int sex;// 性别码
+	private Date csrq;// 出生年月
+	private String bh;// 所在班别编号
+	private String dqszj;// 年级
 	private String ksh;// 考生号
 	private String mz;// 民族
 	private String zzmm;// 政治面貌
-	private Date byrq;// 已毕业日期
-	private Date gzrq;// 工作日期
-	private String byxx;// 毕业学校
-	private String dw;// 工作单位
-	private String zhiwu;// 职务
 	private String photo;// 照片
 	private String xxdd;// 学习地点
-	private String wyyz;// 外语语种
 	private String sfzh;// 身份证号
-	private String xfzh;// 行政区号代码
-	private String lqzy;// 专业代码
-	private String tdzyh;// 投档志愿号
-	private int rxcj;// 入学成绩
-	private String studyform;// 学习形式
+	private String zydm;// 专业代码
+	private String zymc;// 专业名称
+	private String yxdm;// 院校代码
+	private String yxmc;// 院校名称
+	private String xxxs;// 学习形式
 	private Date rxrq;// 入学日期
-	private int ljsf;// 累积学分
-	private Date bysj;// 毕业日期
+	private Date yjbyrq;// 预计毕业日期
 	private String swzh;// 学位书号
-
+	private String xb;// 性别
+	private String cc;// 层次
+	private String xz;// 学制
+	private String zczt;// 注册状态
 
 	public String getUser_acount() {
 		return user_acount;
@@ -265,38 +256,6 @@ public class User implements Serializable {
 		this.user_type = user_type;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getDzyj() {
-		return dzyj;
-	}
-
-	public void setDzyj(String dzyj) {
-		this.dzyj = dzyj;
-	}
-
-	public String getLxdh() {
-		return lxdh;
-	}
-
-	public void setLxdh(String lxdh) {
-		this.lxdh = lxdh;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public int getSex() {
 		return sex;
 	}
@@ -305,36 +264,28 @@ public class User implements Serializable {
 		this.sex = sex;
 	}
 
-	public Date getBirthday() {
-		return birthday;
+	public Date getCsrq() {
+		return csrq;
 	}
 
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
+	public void setCsrq(Date csrq) {
+		this.csrq = csrq;
 	}
 
-	public String getClass_id() {
-		return class_id;
+	public String getBh() {
+		return bh;
 	}
 
-	public void setClass_id(String class_id) {
-		this.class_id = class_id;
+	public void setBh(String bh) {
+		this.bh = bh;
 	}
 
-	public String getNj() {
-		return nj;
+	public String getDqszj() {
+		return dqszj;
 	}
 
-	public void setNj(String nj) {
-		this.nj = nj;
-	}
-
-	public String getZkzh() {
-		return zkzh;
-	}
-
-	public void setZkzh(String zkzh) {
-		this.zkzh = zkzh;
+	public void setDqszj(String dqszj) {
+		this.dqszj = dqszj;
 	}
 
 	public String getKsh() {
@@ -361,46 +312,6 @@ public class User implements Serializable {
 		this.zzmm = zzmm;
 	}
 
-	public Date getByrq() {
-		return byrq;
-	}
-
-	public void setByrq(Date byrq) {
-		this.byrq = byrq;
-	}
-
-	public Date getGzrq() {
-		return gzrq;
-	}
-
-	public void setGzrq(Date gzrq) {
-		this.gzrq = gzrq;
-	}
-
-	public String getByxx() {
-		return byxx;
-	}
-
-	public void setByxx(String byxx) {
-		this.byxx = byxx;
-	}
-
-	public String getDw() {
-		return dw;
-	}
-
-	public void setDw(String dw) {
-		this.dw = dw;
-	}
-
-	public String getZhiwu() {
-		return zhiwu;
-	}
-
-	public void setZhiwu(String zhiwu) {
-		this.zhiwu = zhiwu;
-	}
-
 	public String getPhoto() {
 		return photo;
 	}
@@ -417,14 +328,6 @@ public class User implements Serializable {
 		this.xxdd = xxdd;
 	}
 
-	public String getWyyz() {
-		return wyyz;
-	}
-
-	public void setWyyz(String wyyz) {
-		this.wyyz = wyyz;
-	}
-
 	public String getSfzh() {
 		return sfzh;
 	}
@@ -433,44 +336,44 @@ public class User implements Serializable {
 		this.sfzh = sfzh;
 	}
 
-	public String getXfzh() {
-		return xfzh;
+	public String getZydm() {
+		return zydm;
 	}
 
-	public void setXfzh(String xfzh) {
-		this.xfzh = xfzh;
+	public void setZydm(String zydm) {
+		this.zydm = zydm;
 	}
 
-	public String getLqzy() {
-		return lqzy;
+	public String getZymc() {
+		return zymc;
 	}
 
-	public void setLqzy(String lqzy) {
-		this.lqzy = lqzy;
+	public void setZymc(String zymc) {
+		this.zymc = zymc;
 	}
 
-	public String getTdzyh() {
-		return tdzyh;
+	public String getYxdm() {
+		return yxdm;
 	}
 
-	public void setTdzyh(String tdzyh) {
-		this.tdzyh = tdzyh;
+	public void setYxdm(String yxdm) {
+		this.yxdm = yxdm;
 	}
 
-	public int getRxcj() {
-		return rxcj;
+	public String getYxmc() {
+		return yxmc;
 	}
 
-	public void setRxcj(int rxcj) {
-		this.rxcj = rxcj;
+	public void setYxmc(String yxmc) {
+		this.yxmc = yxmc;
 	}
 
-	public String getStudyform() {
-		return studyform;
+	public String getXxxs() {
+		return xxxs;
 	}
 
-	public void setStudyform(String studyform) {
-		this.studyform = studyform;
+	public void setXxxs(String xxxs) {
+		this.xxxs = xxxs;
 	}
 
 	public Date getRxrq() {
@@ -481,20 +384,12 @@ public class User implements Serializable {
 		this.rxrq = rxrq;
 	}
 
-	public int getLjsf() {
-		return ljsf;
+	public Date getYjbyrq() {
+		return yjbyrq;
 	}
 
-	public void setLjsf(int ljsf) {
-		this.ljsf = ljsf;
-	}
-
-	public Date getBysj() {
-		return bysj;
-	}
-
-	public void setBysj(Date bysj) {
-		this.bysj = bysj;
+	public void setYjbyrq(Date yjbyrq) {
+		this.yjbyrq = yjbyrq;
 	}
 
 	public String getSwzh() {
@@ -505,29 +400,39 @@ public class User implements Serializable {
 		this.swzh = swzh;
 	}
 
-	@Override
-	public String toString() {
-		return "User [user_acount=" + user_acount + ", password=" + password
-				+ ", realname=" + realname + ", nickname=" + nickname
-				+ ", score=" + score + ", tlelphone=" + tlelphone + ", qq="
-				+ qq + ", email=" + email + ", weixin=" + weixin + ", age="
-				+ age + ", city=" + city + ", occupation=" + occupation
-				+ ", education=" + education + ", level=" + level + ", scores="
-				+ scores + ", state=" + state + ", regist_time=" + regist_time
-				+ ", usercode=" + usercode + ", marry=" + marry + ", hobby="
-				+ hobby + ", province=" + province + ", address=" + address
-				+ ", postCode=" + postCode + ", paymethod=" + paymethod
-				+ ", user_type=" + user_type + ", username=" + username
-				+ ", dzyj=" + dzyj + ", lxdh=" + lxdh + ", name=" + name
-				+ ", sex=" + sex + ", birthday=" + birthday + ", class_id="
-				+ class_id + ", nj=" + nj + ", zkzh=" + zkzh + ", ksh=" + ksh
-				+ ", mz=" + mz + ", zzmm=" + zzmm + ", byrq=" + byrq
-				+ ", gzrq=" + gzrq + ", byxx=" + byxx + ", dw=" + dw
-				+ ", zhiwu=" + zhiwu + ", photo=" + photo + ", xxdd=" + xxdd
-				+ ", wyyz=" + wyyz + ", sfzh=" + sfzh + ", xfzh=" + xfzh
-				+ ", lqzy=" + lqzy + ", tdzyh=" + tdzyh + ", rxcj=" + rxcj
-				+ ", studyform=" + studyform + ", rxrq=" + rxrq + ", ljsf="
-				+ ljsf + ", bysj=" + bysj + ", swzh=" + swzh + "]";
+	public String getXb() {
+		return xb;
 	}
+
+	public void setXb(String xb) {
+		this.xb = xb;
+	}
+
+	public String getCc() {
+		return cc;
+	}
+
+	public void setCc(String cc) {
+		this.cc = cc;
+	}
+
+	public String getXz() {
+		return xz;
+	}
+
+	public void setXz(String xz) {
+		this.xz = xz;
+	}
+
+	public String getZczt() {
+		return zczt;
+	}
+
+	public void setZczt(String zczt) {
+		this.zczt = zczt;
+	}
+
+
+
 
 }

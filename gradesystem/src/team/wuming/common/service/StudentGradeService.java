@@ -7,8 +7,6 @@ import team.wuming.common.domain.PageBean;
 import team.wuming.common.domain.StudentGrade;
 
 public interface StudentGradeService {
-	// 根据学号查询学生成绩
-	public PageBean<StudentGrade> queryUserGrade(int pc, int ps, String userId);
 
 	// 根据学号差学生的补考情况
 	public List<StudentGrade> queryUserFail(String userId);
@@ -26,4 +24,8 @@ public interface StudentGradeService {
 	public void createGradeSheet(String classId, String expacount);
 
 	public Classes findClassNameByClassId(String classId);
+
+	public List<StudentGrade> queryUserGrade(String userId);
+
+	public List<Object> queryUserSex(String classId);
 }

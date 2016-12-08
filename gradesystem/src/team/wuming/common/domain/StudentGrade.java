@@ -8,15 +8,9 @@ import team.wuming.modules.users.domain.User;
 
 public class StudentGrade implements Serializable {
 	private String user_acount;// 学号
-
-
-
 	// private String visit_count;// 课程编号
 	private Docourse docourse;// 外键
 	private String psgrade;// 平时成绩
-
-
-
 	private String ksgrade;// 考试成绩
 	private String grade;// 成绩
 	private String nf;// 年级

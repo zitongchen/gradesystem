@@ -19,32 +19,22 @@ import team.wuming.modules.experts.domain.Expert;
 
 public class StudentGradeServiceImpl implements StudentGradeService {
 	StudentGradeDao studentGradeDao = new StudentGradeDaoImpl();
-
-	/**
-	 * 学生按照学生成绩查询本人成绩
-	 */
 	@Override
-	public PageBean<StudentGrade> queryUserGrade(int pc, int ps, String userId) {
-		PageBean<StudentGrade> pb = new PageBean<StudentGrade>();
-		pb.setPc(pc);
-		pb.setPs(ps);
-		List<StudentGrade> studentGrades = studentGradeDao.queryGradeByUserId(
-				pc, ps, userId);
-		int tr = studentGradeDao.queryTrByUserId(userId);
-		pb.setTr(tr);
+	public List<StudentGrade> queryUserGrade(String userId) {
+		List<StudentGrade> studentGrades = studentGradeDao
+				.queryGradeByUserId(userId);
 		Docourse docourse = new Docourse();
 		Expert expert = new Expert();
 		for (StudentGrade studentGrade : studentGrades) {
-
-			docourse = studentGradeDao.queryDocourse(studentGrade
-					.getDocourse().getVisit_count());
+			docourse = studentGradeDao.queryDocourse(studentGrade.getDocourse()
+					.getVisit_count());
 			studentGrade.setDocourse(docourse);
-			expert = studentGradeDao.queryExpert(studentGrade
-					.getDocourse().getExpacount());
+			expert = studentGradeDao.queryExpert(studentGrade.getDocourse()
+					.getExpacount());
 			studentGrade.setExpert(expert);
 		}
-		pb.setBeanList(studentGrades);
-		return pb;
+
+		return studentGrades;
 	}
 
 	/**
@@ -134,6 +124,11 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 	public Classes findClassNameByClassId(String classId) {
 
 		return studentGradeDao.findClassNameByClassId(classId);
+	}
+
+	@Override
+	public List<Object> queryUserSex(String classId) {
+		return studentGradeDao.querySexName(classId);
 	}
 
 }

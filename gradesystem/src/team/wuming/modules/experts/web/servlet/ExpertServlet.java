@@ -157,17 +157,10 @@ public class ExpertServlet extends BaseServlet {
 		String expacount = request.getParameter("expacount");
 		List<Classes> classList = expertService
 				.findClassNameByExpert(expacount);
+
 		request.setAttribute("classList", classList);
 		return "f:/jsps/expert/show_classes.jsp";
-		/*
-		 * List<Object> class_ids =
-		 * expertService.findClassNameByExpert(expacount); List<String> classes
-		 * = new ArrayList<String>(); Iterator<Object> iterator =
-		 * class_ids.iterator();// 创建一个Object迭代器，并把Object转化为String对象并存入到List集合中
-		 * while (iterator.hasNext()) {
-		 * classes.add(String.valueOf(iterator.next())); }
-		 * request.setAttribute("class_id", class_ids);
-		 */
+
 	}
 
 	/**
@@ -179,6 +172,7 @@ public class ExpertServlet extends BaseServlet {
 	 */
 	public String findClassStudentByClass(HttpServletRequest request,HttpServletResponse response){
 		String classId=request.getParameter("classId");
+
 		String expacount = request.getParameter("expacount");
 		String className = request.getParameter("className");
 		List<StudentGrade> studentGrades = studentGradeService // 创建学生成绩集合

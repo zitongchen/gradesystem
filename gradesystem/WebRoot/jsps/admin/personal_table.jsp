@@ -18,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 
 <div class="mainbody">
-  <h4 class="text-center">教师基本信息</h4>
+  <h4 class="text-center">管理员基本信息</h4>
   <div class="container-fluid" >
       <div class="col-xs-10" >
       	<c:if test="${not empty sessionScope.session_admin}">
@@ -28,8 +28,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <table class="table table-striped table-bordered" style="table-layout:fixed">
               <tbody >
                   <tr>
-                      <td class="col-xs-1">教师号</td>
-                      <td >${admin.expacount}</td>
+                      <td class="col-xs-1">管理员号</td>
+                      <td >${admin.admin_acount}</td>
                       <td class="col-xs-1">姓名</td>
                       <td >${admin.name}</td>  
                       <td class="col-xs-1">出生年月</td>
@@ -63,7 +63,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			            <td >状态</td>
 			            <td>${admin.state}</td>
 			            <td >专家类型编码</td>
-			            <td>${admin.expcode}</td>   
+			            <td>${admin.admincode}</td>   
 			            <td >简介</td>
 			            <td>${admin.description}</td>                  
 			        </tr>

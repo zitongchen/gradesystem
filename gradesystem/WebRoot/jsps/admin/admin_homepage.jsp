@@ -23,7 +23,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div id="tabs">
     <ul id="nav0">
         <li><a href="${pageContext.request.contextPath}/jsps/admin/sidebar.jsp" target="sidebar">首页</a></li>
-        <li><a href="${pageContext.request.contextPath}/adminServlet?method=findClassNameByadmin&expacount=${sessionScope.session_admin.expacount}" target="sidebar">成绩录入</a></li>
+        <li><a href="${pageContext.request.contextPath}/jsps/admin/input_message.jsp" target="sidebar">学生信息导入</a></li>
+        <li><a href="${pageContext.request.contextPath}/jsps/admin/show_classes.jsp" target="sidebar">成绩管理</a></li>
+        <li><a href="${pageContext.request.contextPath}/jsps/admin/personal.jsp" target="sidebar">班级管理</a></li>
         <li><a href="${pageContext.request.contextPath}/jsps/admin/personal.jsp" target="sidebar">个人中心</a></li>
     </ul>
     <div>		
@@ -34,7 +36,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <!-- 以下是内容主体部分mainbody:通知文件 -->	
 <iframe name="body" width="83%" height="550" src="${pageContext.request.contextPath}/jsps/admin/inform.jsp" style="position:absolute; top: 105px; left: 210px;" frameborder="0" ></iframe>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-parent.js"></script><!-- 本地的bootstrap资源链接 -->
 <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 </body>

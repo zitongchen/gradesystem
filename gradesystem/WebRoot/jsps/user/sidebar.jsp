@@ -11,7 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>首页</title>
-	<base target="sidebar"/>
+	<base target="body"/>
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
     <link href="${pageContext.request.contextPath}/css/studentCSS2.css" rel="stylesheet" style="text/css">
 </head>

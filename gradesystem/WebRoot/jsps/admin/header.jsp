@@ -22,14 +22,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div class="right_nav">
 		<div class="text_right">
             <ul class="nav_return">
-                <li> [<a href="${pageContext.request.contextPath}/adminServlet?method=exit" target="_top">退出</a>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <li> [<a href="${pageContext.request.contextPath}/AdminServlet?method=exit" target="_top">退出</a>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
             </ul>
 		</div>
 	</div>
 <div class="under_header"> 
-<span>${sessionScope.session_admin.name}</span>,您好！职工号：<span>${sessionScope.session_admin.expacount}</span>&nbsp;&nbsp;学院：<span>医药信息工程学院</span>&nbsp;&nbsp;职称：<span>${sessionScope.session_admin.title}</span> </div>
+<span>${sessionScope.session_admin.name}</span>,您好！职工号：<span>${sessionScope.session_admin.admin_acount}</span>&nbsp;&nbsp;学院：<span>医药信息工程学院</span>&nbsp;&nbsp;职称：<span>${sessionScope.session_admin.title}</span> </div>
 </div>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-parent.js"></script><!-- 本地的bootstrap资源链接 -->
 <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 </body>

@@ -26,25 +26,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <tbody >
         <tr>
             <td class="col-md-1">学号</td>
-            <td >1405553103</td>
+            <td >${session_user.user_acount}</td>
             <td class="col-md-1">姓名</td>
-            <td >李金城</td>  
+            <td >${session_user.nickname}</td>  
              <td class="col-md-1">出生年月</td>
-            <td >xxx-xx-xx</td>          
+            <td >${session_user.csrq}</td>          
         </tr>
        <tr>
             <td >性别</td>
-            <td>男</td>
+            <td>${session_user.xb}</td>
             <td >贯籍</td>
-            <td>汉</td>   
+            <td></td>   
             <td >入学年月</td>
-            <td>2014</td>                  
+            <td>${session_user.rxrq}</td>                  
         </tr>
         <tr>
             <td >民族</td>
-            <td ></td>
+            <td >${session_user.mz}</td>
             <td >专业</td>
-            <td></td>   
+            <td>${session_user.zymc}</td>   
             <td >专业方向</td>
             <td></td>                  
         </tr>

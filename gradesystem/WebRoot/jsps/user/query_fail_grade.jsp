@@ -27,46 +27,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <li class="active">学生补考成绩查询</li>
     </ol>
 
-    <!-- 查询条件按钮 -->     
-    <form style="margin-top:-25px; margin-left: -12px;">
-        <div class="btn">
-            <button id="user_qbcx" type="button" class="btn btn-default">全部学期查询</button>
-        </div>
-        <label>按学年学期查询：
-                <select  id="user_cxxx" name="按学年学期查询" onchange="showscore(this.value)" style="font-family: verdana">
-                    <option value="2013-2014-1">2013-2014-1</option>
-                    <option value="2013-2014-2">2013-2014-2</option>
-                    <option value="2014-2015-1">2014-2015-1</option>
-                    <option value="2014-2015-2">2014-2015-2</option> 
-                    <option value="2015-2016-1">2015-2016-1</option>
-                    <option value="2015-2016-2">2015-2016-2</option> 
-                </select>
-        </label> 
-    </form>
-
-      
       <div id="t3">
            <!-- 先定义一个表格，利用ajax首先加载一次数据。 -->
           <table id="t3" class="table table-striped" >
                 <thead>
                     <tr>
-                         <th>课程编号</th>
                          <th>课程名称</th>           
-                         <th>补考成绩</th>
-                         <th>年级</th>
-                         <th>考核类型</th>         
                          <th>任课教师号</th>
-                         <th>操作员代码</th>
-                         <th>审核人代码</th>         
-                         <th>操作日期</th>
+                         <th>考核类型</th>         
+                        <th>总评成绩</th>
                     </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    
-                  </tr>
-
-               </tbody>
+               <c:if test="${not empty studentGradeList}">
+               	<c:forEach var="gradeList" items="${requestScope.studentGradeList}">
+	                <tbody>
+	                <tr>
+	                    <td>${gradeList.docourse.title}</td>
+	                    <td>${gradeList.expert.name}</td>
+	                    <td>${gradeList.gradelei }</td>
+	                    <td>${gradeList.grade}</td>
+	                  </tr>
+	               </tbody>
+               	</c:forEach>
+               </c:if>
            </table>
 
 

@@ -21,14 +21,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- 以下是mainbody部分 -->
 <!--<div class="mainbody" >-->
 <div>
- <form  action="${pageContext.request.contextPath}/adminServlet" name="xgmm" id="form_xgmm" method="post"   >
-          <input type="hidden" name="method" value="updateadminPassword">
+ <form  action="${pageContext.request.contextPath}/AdminServlet" name="xgmm" id="form_xgmm" method="post"   >
+          <input type="hidden" name="method" value="updateAdminPassword">
           <h4 class="text-center">修改密码</h4>
           <table id="t3" align="center">
               <p align="center" colspan="2" ><font id="error_message" color="red">${requestScope.passwordError}</font></p>
             <tr>
               <td> 登陆账号： </td>
-             <td><input type="text" name="userId" readonly="readonly" style="border: 0px;background: 0000"  value="${sessionScope.session_admin.expacount}"  size=20 maxlength="20">
+             <td><input type="text" name="userId" readonly="readonly" style="border: 0px;background: 0000"  value="${sessionScope.session_admin.admin_acount}"  size=20 maxlength="20">
                 </input></td>
             </tr>
               

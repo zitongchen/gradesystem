@@ -34,27 +34,26 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 	 * 根据学生的编号查询学生本人成绩
 	 */
 	@Override
-	public List<StudentGrade> queryGradeByUserId(int pc, int ps,
-			String userId) throws RuntimeException {
-
+	public List<StudentGrade> queryGradeByUserId(String userId)
+			throws RuntimeException {
+		String sql = "select * from studentgrade where user_acount=?";
 		List<StudentGrade> studentGrades = new ArrayList<StudentGrade>();
-		String sql = "select * from studentgrade where user_acount=? limit ?,?";
 		try {
 			List<Map<String, Object>> maps = qr.query(sql,
-					new MapListHandler(), userId, (pc - 1) * ps, ps);
+					new MapListHandler(), userId);
 			for (Map<String, Object> map : maps) {
 				Docourse docourse = CommonUtils.toBean(map, Docourse.class);
 				Expert expert = CommonUtils.toBean(map, Expert.class);
 				StudentGrade studentGrade = CommonUtils.toBean(map,
-						StudentGrade.class); // 通过CommonUtils把Map集合的内容转化为响应的对象
+						StudentGrade.class);
 				studentGrade.setDocourse(docourse);
 				studentGrade.setExpert(expert);
 				studentGrades.add(studentGrade);
 			}
-			return studentGrades;
 		} catch (SQLException e) {
 			throw new RuntimeException();
 		}
+		return studentGrades;
 	}
 
 	@Override
@@ -131,7 +130,7 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 	public List<StudentGrade> findClassStudentByClass(String classId,
 			String expacount) {
 		String sql = " select * from studentgrade where user_acount in"
-				+ " (select user_acount from users where class_id =?) and expacount=? order by user_acount asc";
+				+ " (select user_acount from users where bh =?) and expacount=? order by user_acount asc";
 		List<StudentGrade> studentGrades = new ArrayList<StudentGrade>();
 		try {
 			List<Map<String, Object>> maps = qr.query(sql,
@@ -156,7 +155,7 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 	 */
 	@Override
 	public List<Object> queryUserName(String classId) {
-		String sql = "select realname from users where class_id=?";
+		String sql = "select realname from users where bh=?";
 		try {
 			return qr.query(sql, new ColumnListHandler(), classId);
 		} catch (Exception e) {
@@ -184,7 +183,7 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 
 	@Override
 	public List<Classes> findClassNameByClassId(List<Object> classIdList) {
-		String sql = "select * from classes where class_id=?";
+		String sql = "select * from classes where bh=?";
 		List<Classes> classList = new ArrayList<Classes>();
 		try {
 			for (Object classId : classIdList) {
@@ -200,10 +199,20 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 
 	@Override
 	public Classes findClassNameByClassId(String classId) {
-		String sql = "select * from classes where class_id=?";
+		String sql = "select * from classes where bh=?";
 		try {
 			return qr.query(sql, new BeanHandler<Classes>(Classes.class),
 					classId);
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+	}
+
+	@Override
+	public List<Object> querySexName(String classId) {
+		String sql = "select xb from users where bh=?";
+		try {
+			return qr.query(sql, new ColumnListHandler(), classId);
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}

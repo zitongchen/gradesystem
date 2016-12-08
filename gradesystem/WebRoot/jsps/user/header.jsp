@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 	</div>
 <div class="under_header"> 
-<span>${sessionScope.session_user.realname}</span>,你好！专业：<span>${sessionScope.session_user.lqzy}</span>|</span>计算机科学与技术</span>班级：<span>计算机科学与技术（医学应用方向）14（1）</span>学号：<span>${sessionScope.session_user.user_acount}</span> </div>
+<span>${sessionScope.session_user.nickname}</span>,你好！专业：<span>${sessionScope.session_user.zymc}</span>|</span></span>班级：<span>${sessionScope.session_user.bh }</span><span>|</span>学号：<span>${sessionScope.session_user.user_acount}</span> </div>
 </div>
 
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>

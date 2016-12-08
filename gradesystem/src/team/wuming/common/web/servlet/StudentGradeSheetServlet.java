@@ -22,6 +22,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFPrintSetup;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -50,6 +51,12 @@ public class StudentGradeSheetServlet extends HttpServlet {
 		String expacount = request.getParameter("expacount");
 		List<StudentGrade> studentGrades = studentGradeService // 创建学生成绩集合
 				.findClassStudentByClass(classId, expacount);
+		List<Object> userSexObjectList = studentGradeService // 创建学生性别集合
+				.queryUserSex(classId);
+		List<String> userSexList = new ArrayList<String>();
+		for (Object object : userSexObjectList) {
+			userSexList.add(String.valueOf(object));
+		}
 		List<Object> userNameObjectList = studentGradeService // 创建学生姓名集合
 				.queryUserName(classId);
 		List<String> userNameList = new ArrayList<String>();
@@ -62,7 +69,8 @@ public class StudentGradeSheetServlet extends HttpServlet {
 		String path = request.getServletContext().getRealPath(
 				"/resource/studentGradeSheet.xml");
 		// 生成sheet表格
-		HSSFWorkbook workbook = createSheet(path, studentGrades, userNameList);
+		HSSFWorkbook workbook = createSheet(path, studentGrades, userSexList,
+				userNameList);
 		String fileName = "学生成绩表.xls";
 		fileName = new String(fileName.getBytes("GBK"), "ISO-8859-1");
 		response.setContentType("application/vnd.ms-excel");
@@ -80,7 +88,8 @@ public class StudentGradeSheetServlet extends HttpServlet {
 	}
 
 	public static HSSFWorkbook createSheet(String path,
-			List<StudentGrade> studentGrades, List<String> userNameList) {
+			List<StudentGrade> studentGrades, List<String> userSexList,
+			List<String> userNameList) {
 		// 获取解析xml文件路径
 		/*
 		 * String path = System.getProperty("user.dir") +
@@ -96,6 +105,8 @@ public class StudentGradeSheetServlet extends HttpServlet {
 			wb = new HSSFWorkbook();
 			// 创建sheet
 			HSSFSheet sheet = wb.createSheet("Sheet0");
+
+
 			// 获取xml文件跟节点
 			Element root = parse.getRootElement();
 			// 获取模板名称
@@ -141,6 +152,43 @@ public class StudentGradeSheetServlet extends HttpServlet {
 				}
 				rownum++;
 			}
+
+
+			// 设置班级信息
+			Element ml = root.getChild("ml");
+			trs = ml.getChildren("tr");
+			for (int i = 0; i < trs.size(); i++) {
+				Element tr = trs.get(i);
+				List<Element> tds = tr.getChildren("td");
+				HSSFRow row = sheet.createRow(rownum);
+				HSSFCellStyle cellStyle = wb.createCellStyle();// 创建单元格样式
+				for (column = 0; column < tds.size(); column++) {
+					Element td = tds.get(column);
+					Attribute value = td.getAttribute("value");
+					Attribute rowSpan = td.getAttribute("rowspan");
+					Attribute colSpan = td.getAttribute("colspan");
+					int rspan = rowSpan.getIntValue() - 1;
+					int cspan = colSpan.getIntValue() - 1;
+					HSSFCell cell = row.createCell(rspan);// 创建单元格
+					if (value != null) {
+						String val = value.getValue();
+
+						cell.setCellValue(val);// 设置单元格内容
+						// 设置字体
+						HSSFFont font = wb.createFont();
+						font.setFontName("仿宋_GB2312");
+
+						font.setFontHeightInPoints((short) 16);
+						cellStyle.setFont(font);
+						cell.setCellStyle(cellStyle);
+						// 合并单元格/居中
+						sheet.addMergedRegion(new CellRangeAddress(1, 1, rspan,
+								cspan));
+					}
+				}
+				rownum++;
+			}
+
 			// 设置表头
 			Element thead = root.getChild("thead");
 			trs = thead.getChildren("tr");
@@ -181,34 +229,63 @@ public class StudentGradeSheetServlet extends HttpServlet {
 					Element td = tds.get(column);
 					HSSFCell cell = row.createCell(column);
 					setType(wb, cell, td);// 设置数据区类型
-					cell.setCellValue("test");
+					cell.setCellValue(" ");
 					cell.setCellType(HSSFCell.CELL_TYPE_STRING);
 
 					cell.setCellStyle(cellStyle);// 设置单元格样式
 				}
+
 				sheet.getRow(rownum).getCell(0)
-						.setCellValue(String.valueOf(i + 1));
-				sheet.getRow(rownum).getCell(1).setCellValue("医用一班");
-				sheet.getRow(rownum).getCell(2)
 						.setCellValue(studentGrades.get(i).getUser_acount());
+				sheet.getRow(rownum).getCell(1)
+						.setCellValue(userNameList.get(i).toString());
+				sheet.getRow(rownum).getCell(2)
+						.setCellValue(userSexList.get(i).toString());
 				sheet.getRow(rownum).getCell(3)
-						.setCellValue(userNameList.get(i));
-				sheet.getRow(rownum).getCell(4)
 						.setCellValue(studentGrades.get(i).getPsgrade());
-				sheet.getRow(rownum).getCell(5)
+				sheet.getRow(rownum).getCell(4)
 						.setCellValue(studentGrades.get(i).getKsgrade());
-				sheet.getRow(rownum).getCell(6)
+				sheet.getRow(rownum).getCell(5)
 						.setCellValue(studentGrades.get(i).getGrade());
 
 				rownum++;
 			}
 
-			/*
-			 * // 生成Excel导入模板 File tempFile = new File("e:/" + templateName +
-			 * ".xls"); tempFile.delete(); tempFile.createNewFile();
-			 * FileOutputStream stream = FileUtils.openOutputStream(tempFile);
-			 * wb.write(stream); stream.close();
-			 */
+			// 设置教师签名区域
+			Element foot = root.getChild("foot");
+			trs = foot.getChildren("tr");
+			for (int i = 0; i < trs.size(); i++) {
+				tr = trs.get(i);
+				tds = tr.getChildren("td");
+				HSSFRow row = sheet.createRow(rownum);
+				cellStyle = wb.createCellStyle();// 创建单元格样式
+				cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);// 设置单元格水平居中
+				for (column = 0; column < tds.size(); column++) {
+					Element td = tds.get(column);
+					HSSFCell cell = row.createCell(column);// 创建单元格
+					Attribute rowSpan = td.getAttribute("rowspan");
+					Attribute colSpan = td.getAttribute("colspan");
+					Attribute value = td.getAttribute("value");
+					if (value != null) {
+						String val = value.getValue();
+						cell.setCellValue(val);// 设置单元格内容
+						int rspan = rowSpan.getIntValue() - 1;
+						int cspan = colSpan.getIntValue() - 1;
+						// 设置字体
+						HSSFFont font = wb.createFont();
+						font.setFontName("仿宋_GB2312");
+						// font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);// 字体加粗
+						// font.setFontHeight((short)12);
+						font.setFontHeightInPoints((short) 16);
+						cellStyle.setFont(font);
+						cell.setCellStyle(cellStyle);
+						// 合并单元格/居中
+						sheet.addMergedRegion(new CellRangeAddress(rownum,
+								rownum, rspan, cspan));
+					}
+				}
+				rownum++;
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
