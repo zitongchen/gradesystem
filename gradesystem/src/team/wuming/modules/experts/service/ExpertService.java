@@ -14,5 +14,10 @@ public interface ExpertService {
 
 	public void updateExpertPassword(Expert form);
 
-	public List<Classes> findClassNameByExpert(String expacount);
+	public List<Object> findClassNameByExpert(String expacount);
+
+	public void registExpert(Expert expert);
+
+	public int quertExpertNumber();
+
 }

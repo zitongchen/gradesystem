@@ -10,19 +10,81 @@ public class Objecenter implements Serializable {
 	private int visit_count;// 学科课程、知识专题号(主键)(int类型，string类型更大可能)
 	private String title;// 学科、知识专题名称
 	private String description;// 学科、知识专题
-	private Date vreatetime;// 创建日期
+	private Date createtime;// 创建日期
 	private int states; // '1' COMMENT '使用状态'
 	private String remark;// 备注
-	private String pictures;// 图片目录位置
-	private int courseHour;// 课时数
-	private int theoryHour;// 理论课
-	private int labHour;// 实验课时
-	private int doself;// '0' COMMENT '作业课时'
+	private String picture;// 图片目录位置
 	private String zydm;// 专业代码
-	private String courselei;// 课程类型(必修选修限选)
-	private int scores;// 课程学分
-	private int term;// NOT NULL DEFAULT '1' COMMENT '开设学期';
-	private String precourse;// 先行课编号
+	private String termth;// 开课学期
+	private String sthours;// 学习时数
+	private String classhour;// 面授时数
+	private String sbhour;// 实验时数
+	private String lyid;// 分类号
+	private String score;// 学分
+
+	public Date getCreatetime() {
+		return createtime;
+	}
+
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
+	public String getTermth() {
+		return termth;
+	}
+
+	public void setTermth(String termth) {
+		this.termth = termth;
+	}
+
+	public String getSthours() {
+		return sthours;
+	}
+
+	public void setSthours(String sthours) {
+		this.sthours = sthours;
+	}
+
+	public String getClasshour() {
+		return classhour;
+	}
+
+	public void setClasshour(String classhour) {
+		this.classhour = classhour;
+	}
+
+	public String getSbhour() {
+		return sbhour;
+	}
+
+	public void setSbhour(String sbhour) {
+		this.sbhour = sbhour;
+	}
+
+	public String getLyid() {
+		return lyid;
+	}
+
+	public void setLyid(String lyid) {
+		this.lyid = lyid;
+	}
+
+	public String getScore() {
+		return score;
+	}
+
+	public void setScore(String score) {
+		this.score = score;
+	}
 
 	public int getVisit_count() {
 		return visit_count;
@@ -48,13 +110,7 @@ public class Objecenter implements Serializable {
 		this.description = description;
 	}
 
-	public Date getVreatetime() {
-		return vreatetime;
-	}
 
-	public void setVreatetime(Date vreatetime) {
-		this.vreatetime = vreatetime;
-	}
 
 	public int getStates() {
 		return states;
@@ -72,45 +128,7 @@ public class Objecenter implements Serializable {
 		this.remark = remark;
 	}
 
-	public String getPictures() {
-		return pictures;
-	}
 
-	public void setPictures(String pictures) {
-		this.pictures = pictures;
-	}
-
-	public int getCourseHour() {
-		return courseHour;
-	}
-
-	public void setCourseHour(int courseHour) {
-		this.courseHour = courseHour;
-	}
-
-	public int getTheoryHour() {
-		return theoryHour;
-	}
-
-	public void setTheoryHour(int theoryHour) {
-		this.theoryHour = theoryHour;
-	}
-
-	public int getLabHour() {
-		return labHour;
-	}
-
-	public void setLabHour(int labHour) {
-		this.labHour = labHour;
-	}
-
-	public int getDoself() {
-		return doself;
-	}
-
-	public void setDoself(int doself) {
-		this.doself = doself;
-	}
 
 	public String getZydm() {
 		return zydm;
@@ -120,47 +138,16 @@ public class Objecenter implements Serializable {
 		this.zydm = zydm;
 	}
 
-	public String getCourselei() {
-		return courselei;
-	}
-
-	public void setCourselei(String courselei) {
-		this.courselei = courselei;
-	}
-
-	public int getScores() {
-		return scores;
-	}
-
-	public void setScores(int scores) {
-		this.scores = scores;
-	}
-
-	public int getTerm() {
-		return term;
-	}
-
-	public void setTerm(int term) {
-		this.term = term;
-	}
-
-	public String getPrecourse() {
-		return precourse;
-	}
-
-	public void setPrecourse(String precourse) {
-		this.precourse = precourse;
-	}
-
 	@Override
 	public String toString() {
 		return "Objecenter [visit_count=" + visit_count + ", title=" + title
-				+ ", description=" + description + ", vreatetime=" + vreatetime
-				+ ", states=" + states + ", remark=" + remark + ", pictures="
-				+ pictures + ", courseHour=" + courseHour + ", theoryHour="
-				+ theoryHour + ", labHour=" + labHour + ", doself=" + doself
-				+ ", zydm=" + zydm + ", courselei=" + courselei + ", scores="
-				+ scores + ", term=" + term + ", precourse=" + precourse + "]";
+				+ ", description=" + description + ", createtime=" + createtime
+				+ ", states=" + states + ", remark=" + remark + ", picture="
+				+ picture + ", zydm=" + zydm + ", termth=" + termth
+				+ ", sthours=" + sthours + ", classhour=" + classhour
+				+ ", sbhour=" + sbhour + ", lyid=" + lyid + ", score=" + score
+				+ "]";
 	}
+
 
 }

@@ -21,14 +21,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <c:if test="${not empty requestScope.classList}">
 	    <c:forEach items="${requestScope.classList}" var="classList">
 	    		<li>
-		    		<a href='<c:url value="/ExpertServlet?method=findClassStudentByClass&classId=${classList.bh}&expacount=${sessionScope.session_expert.expacount}"/>'>
-		    			<c:out value="${classList.className}"></c:out>
+		    		<a href='<c:url value="/ExpertServlet?method=findClassStudentByClass&classId=${classList}&expacount=${sessionScope.session_expert.expacount}"/>'>
+		    			<c:out value="${classList}"></c:out>
 		    		</a>
 	    		</li>
 	    </c:forEach>
 </c:if>
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-parent.js"></script><!-- 本地的bootstrap资源链接 -->
 <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 </body>

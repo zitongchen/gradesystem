@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import team.wuming.modules.admin.domain.Admin;
 import team.wuming.modules.experts.domain.Expert;
 
 
@@ -35,8 +36,10 @@ public class ExpertFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		Expert expert = (Expert) httpRequest.getSession().getAttribute(
 				"session_expert");
+		Admin admin = (Admin) httpRequest.getSession().getAttribute(
+				"session_admin");
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
-		if (expert != null) {
+		if (expert != null || admin != null) {
 			chain.doFilter(httpRequest, response);
 		} else {
 			httpResponse.sendRedirect(httpRequest.getContextPath()

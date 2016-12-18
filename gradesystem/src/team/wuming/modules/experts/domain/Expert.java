@@ -13,18 +13,35 @@ public class Expert implements Serializable {
 	private String nickname;// 昵称
 	private String sex;// 性别
 	private String description;// 简介
-	private String phote;// 相片
+	private String picture;// 相片
 	private String title;// 职称
 	private String education;// 学历
 	private String qq;// qq
 	private String telephone;// 电话
 	private String email;// email
-	private String misigal;// 微信号
+	private String weixin;// 微信号
 	private String city;// 城市
 	private int state;// 状态
 	private Date regtime;// 注册时间
 	private String expcode;// 专家类型编码
 	private String deparid;// 所属单位编号
+
+
+	public String getWeixin() {
+		return weixin;
+	}
+
+	public void setWeixin(String weixin) {
+		this.weixin = weixin;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
 
 	public String getExpacount() {
 		return expacount;
@@ -74,13 +91,7 @@ public class Expert implements Serializable {
 		this.description = description;
 	}
 
-	public String getPhote() {
-		return phote;
-	}
 
-	public void setPhote(String phote) {
-		this.phote = phote;
-	}
 
 	public String getTitle() {
 		return title;
@@ -122,13 +133,6 @@ public class Expert implements Serializable {
 		this.email = email;
 	}
 
-	public String getMisigal() {
-		return misigal;
-	}
-
-	public void setMisigal(String misigal) {
-		this.misigal = misigal;
-	}
 
 	public String getCity() {
 		return city;
@@ -174,10 +178,10 @@ public class Expert implements Serializable {
 	public String toString() {
 		return "Expert [expacount=" + expacount + ", password=" + password
 				+ ", name=" + name + ", nickname=" + nickname + ", sex=" + sex
-				+ ", description=" + description + ", phote=" + phote
+				+ ", description=" + description + ", phote="
 				+ ", title=" + title + ", education=" + education + ", qq="
 				+ qq + ", telephone=" + telephone + ", email=" + email
-				+ ", misigal=" + misigal + ", city=" + city + ", state="
+				+ ", misigal=" + ", city=" + city + ", state="
 				+ state + ", regtime=" + regtime + ", expcode=" + expcode
 				+ ", deparid=" + deparid + "]";
 	}

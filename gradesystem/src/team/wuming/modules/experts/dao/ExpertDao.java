@@ -18,4 +18,8 @@ public interface ExpertDao {
 
 	public List<Object> findClassIdByExpert(String expacount);
 
+	public void registExpert(Expert expert);
+
+	public int quertExpertNumber();
+
 }

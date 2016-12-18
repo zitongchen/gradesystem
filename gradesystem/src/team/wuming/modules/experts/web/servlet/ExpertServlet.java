@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +19,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadBase;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.IOUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -38,6 +45,65 @@ import cn.itcast.servlet.BaseServlet;
 public class ExpertServlet extends BaseServlet {
 	private ExpertService expertService = new ExpertServiceImpl();
 	private StudentGradeService studentGradeService = new StudentGradeServiceImpl();
+
+	/*
+	 * 教师注册页面
+	 */
+	public void regist(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		/*
+		 * 上传三步曲
+		 */
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload sfu = new ServletFileUpload(factory);
+		sfu.setFileSizeMax(1 * 1024 * 1024);// 设置上传 的图片最大为1M
+		try {
+			List<FileItem> fileItemList = sfu.parseRequest(request);// 获取文件条目
+			Map<String, String> map = new HashMap<String, String>();
+			for (FileItem fileItem : fileItemList) {
+				if (fileItem.isFormField()) {
+					map.put(fileItem.getFieldName(),
+							fileItem.getString("UTF-8"));
+				}
+			}
+			String savepath = this.getServletContext().getRealPath(
+					"/WEB-INF/Expert_picture");
+			String filename = fileItemList.get(1).getName();// 获取照片的名字
+			/*
+			 * 检验文件的扩展名,出错回显
+			 */
+			if (!filename.toLowerCase().endsWith("jpg")) {
+				request.setAttribute("errorMessage", "你上传的图片不是JPG扩展名！");
+				request.getRequestDispatcher("#").forward(request, response);
+			}
+			// 设置图片的名称为uuid+.jpg
+			int point = filename.indexOf(".");
+			int legth = filename.length();
+			filename = CommonUtils.uuid() + filename.substring(point, legth);
+			savepath = savepath + "/" + filename.indexOf(0) + "/";// 目录打散，把图片文件保存到不同的地方n
+			File destFile = new File(savepath, filename);
+			fileItemList.get(1).write(destFile);// 把图片保存到指定的目录里面
+			// 设置教师的编号
+			int expertNumber = expertService.quertExpertNumber();
+			String expacount = String.valueOf(expertNumber + 100100);// 设置教师账号从100100开始
+			// 把表单的信息利用工具封装到javabean里面
+			Expert expert = CommonUtils.toBean(request.getParameterMap(),
+					Expert.class);
+			expert.setPicture(savepath + filename);// 保存教师图片的保存路径
+			expert.setExpacount(expacount);// 保存用户账号
+			expertService.registExpert(expert);
+			request.setAttribute("expacount", expacount);
+			request.getRequestDispatcher("").forward(request, response);
+
+		} catch (Exception e) {
+			if (e instanceof FileUploadBase.FileSizeLimitExceededException) {
+				request.setAttribute("msg", "您上传的文件超出了1M");
+				request.getRequestDispatcher("/adminjsps/admin/book/add.jsp")
+						.forward(request, response);
+			}
+		}
+
+	}
 
 	/**
 	 * @param request
@@ -155,10 +221,14 @@ public class ExpertServlet extends BaseServlet {
 	public String findClassNameByExpert(HttpServletRequest request,
 			HttpServletResponse response) {
 		String expacount = request.getParameter("expacount");
-		List<Classes> classList = expertService
+		List<Object> classLists = expertService
 				.findClassNameByExpert(expacount);
-
-		request.setAttribute("classList", classList);
+		List<String> classNameList = new ArrayList<String>();
+		for (Object object : classLists) {
+			String className = String.valueOf(object);
+			classNameList.add(className);
+		}
+		request.setAttribute("classList", classNameList);
 		return "f:/jsps/expert/show_classes.jsp";
 
 	}
@@ -169,24 +239,26 @@ public class ExpertServlet extends BaseServlet {
 	 * @param request
 	 * @param response
 	 * @return
+	 * @throws Exception
 	 */
-	public String findClassStudentByClass(HttpServletRequest request,HttpServletResponse response){
-		String classId=request.getParameter("classId");
-
+	public String findClassStudentByClass(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String classId = new String(request.getParameter("classId").getBytes(
+				"iso-8859-1"), "utf-8");
 		String expacount = request.getParameter("expacount");
 		String className = request.getParameter("className");
 		List<StudentGrade> studentGrades = studentGradeService // 创建学生成绩集合
 				.findClassStudentByClass(classId, expacount);
 		List<Object> userNameObjectList = studentGradeService // 创建学生姓名集合
 				.queryUserName(classId);
-		Classes classes = studentGradeService.findClassNameByClassId(classId);
+
 		List<String> userNameList=new ArrayList<String>();
 		for (Object object : userNameObjectList) {
 			userNameList.add(String.valueOf(object));
 		}
 		request.setAttribute("studentgrades", studentGrades);
 		request.setAttribute("studentNameList", userNameList);
-		request.setAttribute("classes", classes);
+		request.setAttribute("className", classId);
 		return "f:/jsps/expert/class_normal.jsp";
 	}
 
@@ -229,15 +301,7 @@ public class ExpertServlet extends BaseServlet {
 		String classId = request.getParameter("classId");
 		String expacount = request.getParameter("expacount");
 
-		/*
-		 * List<StudentGrade> studentGrades = studentGradeService
-		 * .findClassStudentByClass(classId, expacount);
-		 * 
-		 * List<Object> userNameObjectList = studentGradeService
-		 * .queryUserName(classId); List<String> userNameList=new
-		 * ArrayList<String>(); for (Object object : userNameObjectList) {
-		 * userNameList.add(String.valueOf(object)); }
-		 */
+
 
 		studentGradeService.createGradeSheet(classId, expacount);
 		// 创建一个空白的工作簿

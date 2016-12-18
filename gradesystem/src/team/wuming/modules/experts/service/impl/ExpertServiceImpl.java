@@ -48,10 +48,21 @@ public class ExpertServiceImpl implements ExpertService {
 	 * 查询教师所教班级序列
 	 */
 	@Override
-	public List<Classes> findClassNameByExpert(String expacount) {
+	public List<Object> findClassNameByExpert(String expacount) {
 
 		List<Object> classIdList = expertDao.findClassIdByExpert(expacount);
-		return studentGradeDao.findClassNameByClassId(classIdList);
+		return classIdList;
 
+	}
+
+	@Override
+	public void registExpert(Expert expert) {
+		expertDao.registExpert(expert);
+
+	}
+
+	@Override
+	public int quertExpertNumber() {
+		return expertDao.quertExpertNumber();
 	}
 }

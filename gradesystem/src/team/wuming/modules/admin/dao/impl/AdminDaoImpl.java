@@ -7,6 +7,8 @@ import java.util.List;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 
+import team.wuming.common.domain.Maijor;
+import team.wuming.common.domain.Objecenter;
 import team.wuming.modules.admin.dao.AdminDao;
 import team.wuming.modules.admin.domain.Admin;
 import team.wuming.modules.users.domain.User;
@@ -76,6 +78,33 @@ public class AdminDaoImpl implements AdminDao {
 			} catch (SQLException e) {
 			throw new RuntimeException();
 			}
+	}
+
+	@Override
+	public void addObjecter(Objecenter obj) {
+		String sql = "insert into objecenter value(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		try {
+			qr.update(sql, obj.getVisit_count(), obj.getTitle(),
+					obj.getDescription(), obj.getCreatetime(), obj.getStates(),
+					obj.getRemark(), obj.getPicture(), obj.getZydm(),
+					obj.getTermth(), obj.getSthours(), obj.getClasshour(),
+					obj.getSbhour(), obj.getLyid(), obj.getScore());
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+
+	}
+
+	@Override
+	public void addMaijor(Maijor maijor) {
+		String sql = "insert into maijor value(?,?,?,?,?,?,?,?)";
+		try {
+			qr.update(sql, maijor.getZydm(), maijor.getZymc(),
+					maijor.getXxxs(), maijor.getPycc(), maijor.getXznx(),
+					maijor.getXz(), maijor.getBz(), maijor.getLyid());
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
 	}
 
 }

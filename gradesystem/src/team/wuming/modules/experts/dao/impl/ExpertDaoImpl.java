@@ -75,4 +75,31 @@ public class ExpertDaoImpl implements ExpertDao {
 		}
 	}
 
+	@Override
+	public void registExpert(Expert expert) {
+		String sql = "insert into experts(expacount,password,name,nickname,sex,description,"
+				+ "picture,title,education,qq,telephone,email,weixin,city) value(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		try {
+			qr.update(sql, expert.getExpacount(), expert.getPassword(),
+					expert.getName(), expert.getNickname(), expert.getSex(),
+					expert.getDescription(), expert.getPicture(),
+					expert.getTitle(), expert.getEducation(), expert.getQq(),
+					expert.getTelephone(), expert.getEmail(),
+					expert.getWeixin(), expert.getCity());
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+
+	}
+
+	@Override
+	public int quertExpertNumber() {
+		String sql = "select count(*) from experts";
+		try {
+			return (Integer) qr.query(sql, new ScalarHandler());
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+	}
+
 }

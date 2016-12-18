@@ -29,9 +29,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
       <div id="t3">
            <!-- 先定义一个表格，利用ajax首先加载一次数据。 -->
-          <table id="t3" class="table table-striped" >
-                <thead>
-                    <tr>
+          <table id="t3" class="table table-striped"  >
+                <thead >
+                    <tr >
                          <th>课程名称</th>           
                          <th>任课教师号</th>
                          <th>考核类型</th>         

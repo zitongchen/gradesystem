@@ -17,7 +17,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link href="${pageContext.request.contextPath }/css/teacherCSS2.css" rel="stylesheet" style="text/css">
 </head>
 <body>
-
+	<form action="${pageContext.request.contextPath}/AdminServlet?method=downloadUserExcel"  method="post">
+	<c:if test="${not empty errorMessage}">
+			<p><script>alert("${errorMessage}")</script> </p>
+		</c:if>
+		<c:if test="${not empty successMessage}">
+			<p><script>alert("${successMessage}")</script></p>
+		</c:if>
+		<input type="submit" value="请下载学生信息导入格式表"/>
+	</form>
 	<form class="form-horizontal" 
 	action="<c:url value="/AdminServlet?method=inputStudentMessage"></c:url>" method="post" enctype="multipart/form-data">
 		
@@ -27,6 +35,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<c:if test="${not empty successMessage}">
 			<p><script>alert("${successMessage}")</script></p>
 		</c:if>
+		
 		<div class="control-group">
 			<label class="control-label" for="inputExcel">请导入学生信息的Excel表</label>
 			<div class="controls">

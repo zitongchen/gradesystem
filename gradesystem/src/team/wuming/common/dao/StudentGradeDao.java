@@ -45,7 +45,7 @@ public interface StudentGradeDao {
 
 	public void saveStudentGrades(List<StudentGrade> newStudentGrade);
 
-	public List<Classes> findClassNameByClassId(List<Object> classIdList);
+
 
 	public Classes findClassNameByClassId(String classId);
 

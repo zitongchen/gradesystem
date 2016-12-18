@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </tr>
                 <tr>
                     <td>班级构成：</td>
-                    <td><span>${requestScope.classes.className}</span></td>
+                    <td><span>${requestScope.className}</span></td>
                     <td>学年学期：</td>
                     <td><span>2016-2017-1(静态数据)</span></td>
                 </tr>
@@ -93,7 +93,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    <c:forEach items="${requestScope.studentgrades}" var="studentList" varStatus="status">
 			    	<tr>
 			    		<td>${status.count}</td>
-		                <td style="width: 20%">${requestScope.classes.className}</td>
+		                <td style="width: 20%">${requestScope.className}</td>
 			    		<td><input type="text" name="userId" value="${studentList.user_acount}" size="12" readonly="readonly" style="border: 0px"></td>
 			    		<c:set var="index" value="${status.index}"></c:set>
 		                <td>${studentNameList[index]}</td>

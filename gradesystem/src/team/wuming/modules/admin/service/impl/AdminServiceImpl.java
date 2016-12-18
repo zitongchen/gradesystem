@@ -2,6 +2,8 @@ package team.wuming.modules.admin.service.impl;
 
 import java.util.List;
 
+import team.wuming.common.domain.Maijor;
+import team.wuming.common.domain.Objecenter;
 import team.wuming.modules.admin.dao.AdminDao;
 import team.wuming.modules.admin.dao.impl.AdminDaoImpl;
 import team.wuming.modules.admin.domain.Admin;
@@ -36,5 +38,17 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void inputStudentMessage(List<User> userList) {
 		adminDao.inputStudentMessage(userList);
+	}
+
+	@Override
+	public void addObjecter(Objecenter objecenter) {
+		adminDao.addObjecter(objecenter);
+
+	}
+
+	@Override
+	public void addMaijor(Maijor maijor) {
+		adminDao.addMaijor(maijor);
+
 	}
 }

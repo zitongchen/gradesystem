@@ -181,21 +181,6 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 		}
 	}
 
-	@Override
-	public List<Classes> findClassNameByClassId(List<Object> classIdList) {
-		String sql = "select * from classes where bh=?";
-		List<Classes> classList = new ArrayList<Classes>();
-		try {
-			for (Object classId : classIdList) {
-				Classes classes = qr.query(sql, new BeanHandler<Classes>(
-						Classes.class), String.valueOf(classId));
-				classList.add(classes);
-			}
-		} catch (Exception e) {
-			throw new RuntimeException();
-		}
-		return classList;
-	}
 
 	@Override
 	public Classes findClassNameByClassId(String classId) {
