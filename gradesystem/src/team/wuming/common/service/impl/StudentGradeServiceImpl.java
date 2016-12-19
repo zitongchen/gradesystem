@@ -10,8 +10,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import team.wuming.common.dao.StudentGradeDao;
 import team.wuming.common.dao.impl.StudentGradeDaoImpl;
-import team.wuming.common.domain.Classes;
-import team.wuming.common.domain.Docourse;
 import team.wuming.common.domain.PageBean;
 import team.wuming.common.domain.StudentGrade;
 import team.wuming.common.service.StudentGradeService;
@@ -19,21 +17,15 @@ import team.wuming.modules.experts.domain.Expert;
 
 public class StudentGradeServiceImpl implements StudentGradeService {
 	StudentGradeDao studentGradeDao = new StudentGradeDaoImpl();
+
+	/*
+	 * 根据学生账号查询自己的成绩
+	 */
 	@Override
 	public List<StudentGrade> queryUserGrade(String userId) {
 		List<StudentGrade> studentGrades = studentGradeDao
 				.queryGradeByUserId(userId);
-		Docourse docourse = new Docourse();
 		Expert expert = new Expert();
-		for (StudentGrade studentGrade : studentGrades) {
-			docourse = studentGradeDao.queryDocourse(studentGrade.getDocourse()
-					.getVisit_count());
-			studentGrade.setDocourse(docourse);
-			expert = studentGradeDao.queryExpert(studentGrade.getDocourse()
-					.getExpacount());
-			studentGrade.setExpert(expert);
-		}
-
 		return studentGrades;
 	}
 
@@ -44,16 +36,9 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 	public List<StudentGrade> queryUserFail(String userId) {
 		List<StudentGrade> studentGrades = studentGradeDao
 				.queryFailGradeByUserId(userId);
-		Docourse docourse = new Docourse();
+
 		Expert expert = new Expert();
-		for (StudentGrade studentGrade : studentGrades) {
-			docourse = studentGradeDao.queryDocourse(studentGrade.getDocourse()
-					.getVisit_count());
-			studentGrade.setDocourse(docourse);
-			expert = studentGradeDao.queryExpert(studentGrade.getDocourse()
-					.getExpacount());
-			studentGrade.setExpert(expert);
-		}
+
 
 		return studentGrades;
 	}
@@ -66,16 +51,9 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 			String expacount) {
 		List<StudentGrade> studentGrades = studentGradeDao
 				.findClassStudentByClass(classId, expacount);
-		Docourse docuourse = new Docourse(); // 创建课表对象
+
 		Expert expert = new Expert(); // 创建教师对象
-		for (StudentGrade studentGrade : studentGrades) {
-			docuourse = studentGradeDao.queryDocourse(studentGrade
-					.getDocourse().getVisit_count());
-			studentGrade.setDocourse(docuourse);
-			expert = studentGradeDao.queryExpert(studentGrade.getDocourse()
-					.getExpacount());
-			studentGrade.setExpert(expert);
-		}
+
 		return studentGrades;
 	}
 
@@ -102,9 +80,9 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 					* Float.parseFloat(terminal)
 					/ 100);
 			studentGrade.setUser_acount(userId[index]);
-			studentGrade.setPsgrade(psGrades[index]);
-			studentGrade.setKsgrade(ksGrades[index]);
-			studentGrade.setGrade(String.valueOf(grades));
+			studentGrade.setPsscore(psGrades[index]);
+			studentGrade.setKsscore(ksGrades[index]);
+			studentGrade.setTotalscores(String.valueOf(grades));
 			newStudentGrade.add(studentGrade);
 		}
 		studentGradeDao.saveStudentGrades(newStudentGrade);
@@ -120,11 +98,6 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 
 	}
 
-	@Override
-	public Classes findClassNameByClassId(String classId) {
-
-		return studentGradeDao.findClassNameByClassId(classId);
-	}
 
 	@Override
 	public List<Object> queryUserSex(String classId) {

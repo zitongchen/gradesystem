@@ -2,8 +2,6 @@ package team.wuming.common.dao;
 
 import java.util.List;
 
-import team.wuming.common.domain.Classes;
-import team.wuming.common.domain.Docourse;
 import team.wuming.common.domain.PageBean;
 import team.wuming.common.domain.StudentGrade;
 import team.wuming.modules.experts.domain.Expert;
@@ -28,7 +26,7 @@ public interface StudentGradeDao {
 	 * @param visit_count
 	 * @return 通过学生的成绩信息查询相关的课程
 	 */
-	public Docourse queryDocourse(String visit_count);
+
 
 	/**
 	 * @param expacount
@@ -47,7 +45,7 @@ public interface StudentGradeDao {
 
 
 
-	public Classes findClassNameByClassId(String classId);
+
 
 	public List<Object> querySexName(String classId);
 

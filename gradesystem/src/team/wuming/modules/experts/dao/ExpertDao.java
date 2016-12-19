@@ -22,4 +22,6 @@ public interface ExpertDao {
 
 	public int quertExpertNumber();
 
+	public void updateExpertPhoto(String expacount, String photoPath);
+
 }

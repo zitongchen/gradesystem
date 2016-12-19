@@ -22,6 +22,7 @@ public interface UserService {
 	// 查询学生信息
 	public User findUserMessage(String userId);
 
+	public void uploadStudentPhoto(String userId, String photo);
 
 
 

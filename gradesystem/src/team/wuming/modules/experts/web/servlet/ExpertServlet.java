@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadBase;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
@@ -30,7 +31,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.omg.CORBA.UserException;
 
-import team.wuming.common.domain.Classes;
 import team.wuming.common.domain.StudentGrade;
 import team.wuming.common.service.StudentGradeService;
 import team.wuming.common.service.impl.StudentGradeServiceImpl;
@@ -167,6 +167,55 @@ public class ExpertServlet extends BaseServlet {
 				Expert.class);
 		expertService.updateExpertMessage(form);
 		return "r:/ExpertServlet?method=findExpertMessage";
+	}
+
+	// 更新教师照片
+	public String updateExpertPhoto(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload sfu = new ServletFileUpload(factory);
+		sfu.setFileSizeMax(1 * 1024 * 1024);
+		try {
+			List<FileItem> fileItemList = sfu.parseRequest(request);
+			FileItem fileItem = fileItemList.get(0);
+			String filename = fileItem.getName();// 获取照片的名字
+			if (filename == null || " ".trim().equals(filename)) {
+				request.setAttribute("errorMessage", "你还没有选择照片，请选择照片后再提交！");
+				return "f:/jsps/expert/..";
+			}
+			if (!filename.endsWith("jpg") || !filename.endsWith("png")) {
+				request.setAttribute("errorMessage",
+						"你上传的照片格式不是jpg或png,请上传指定格式的照片！");
+				return "f:/jsps/expert/..";
+			}
+			String savepath = this.getServletContext().getRealPath(
+					"/WEB-ING/Expert_picture");
+			// 设置图片的名称为uuid+.jpg
+			int point = filename.indexOf(".");
+			int legth = filename.length();
+			filename = CommonUtils.uuid() + filename.substring(point, legth);
+			savepath = savepath + "/" + filename.indexOf(0) + "/";// 目录打散，把图片文件保存到不同的地方n
+			File destFile = new File(savepath, filename);
+			fileItem.write(destFile);// 把图片保存到指定的目录里面
+			Expert expert = (Expert) request.getSession().getAttribute(
+					"session_expert");
+			// 删除原来的图片，减少耗费的空间
+			String absolutePath = this.getServletContext().getRealPath(
+					expert.getPicture());
+			File file = new File(absolutePath);
+			if (file.exists()) {
+				file.delete();
+			}
+			String photoPath = savepath + filename;
+			expertService.updateExpertPhoto(expert.getExpacount(), photoPath);
+		} catch (Exception e) {
+			if (e instanceof FileUploadBase.FileSizeLimitExceededException) {
+				request.setAttribute("errorMessage", "你上次的图片超过了1M，请上传1M一下的图片！");
+				return "f:/jsps/expert...";
+			}
+		}
+		request.setAttribute("successMessage", "照片上传成功！");
+		return "f:/jsps/expert/..";
 	}
 
 	// 获取教师信息(直接通过session获取教师的信息)

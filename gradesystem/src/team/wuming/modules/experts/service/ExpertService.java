@@ -2,7 +2,6 @@ package team.wuming.modules.experts.service;
 
 import java.util.List;
 
-import team.wuming.common.domain.Classes;
 import team.wuming.modules.experts.domain.Expert;
 
 public interface ExpertService {
@@ -19,5 +18,7 @@ public interface ExpertService {
 	public void registExpert(Expert expert);
 
 	public int quertExpertNumber();
+
+	public void updateExpertPhoto(String expacount, String photoPath);
 
 }

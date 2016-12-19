@@ -4,7 +4,6 @@ import java.util.List;
 
 import team.wuming.common.dao.StudentGradeDao;
 import team.wuming.common.dao.impl.StudentGradeDaoImpl;
-import team.wuming.common.domain.Classes;
 import team.wuming.modules.experts.dao.ExpertDao;
 import team.wuming.modules.experts.dao.impl.ExpertDaoImpl;
 import team.wuming.modules.experts.domain.Expert;
@@ -64,5 +63,11 @@ public class ExpertServiceImpl implements ExpertService {
 	@Override
 	public int quertExpertNumber() {
 		return expertDao.quertExpertNumber();
+	}
+
+	@Override
+	public void updateExpertPhoto(String expacount, String photoPath) {
+		expertDao.updateExpertPhoto(expacount, photoPath);
+
 	}
 }

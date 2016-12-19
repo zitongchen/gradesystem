@@ -60,6 +60,11 @@ public class UserServiceImpl implements UserService {
 		return userDao.findUserMessageById(userId);
 	}
 
+	@Override
+	public void uploadStudentPhoto(String userId, String photo) {
+		userDao.uploadStudentPhote(userId, photo);
+
+	}
 
 
 }

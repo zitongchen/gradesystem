@@ -242,11 +242,11 @@ public class StudentGradeSheetServlet extends HttpServlet {
 				sheet.getRow(rownum).getCell(2)
 						.setCellValue(userSexList.get(i).toString());
 				sheet.getRow(rownum).getCell(3)
-						.setCellValue(studentGrades.get(i).getPsgrade());
+						.setCellValue(studentGrades.get(i).getPsscore());
 				sheet.getRow(rownum).getCell(4)
-						.setCellValue(studentGrades.get(i).getKsgrade());
+						.setCellValue(studentGrades.get(i).getKsscore());
 				sheet.getRow(rownum).getCell(5)
-						.setCellValue(studentGrades.get(i).getGrade());
+						.setCellValue(studentGrades.get(i).getTotalscores());
 
 				rownum++;
 			}

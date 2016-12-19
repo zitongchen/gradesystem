@@ -20,8 +20,6 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import cn.itcast.commons.CommonUtils;
 import cn.itcast.jdbc.TxQueryRunner;
 import team.wuming.common.dao.StudentGradeDao;
-import team.wuming.common.domain.Classes;
-import team.wuming.common.domain.Docourse;
 import team.wuming.common.domain.PageBean;
 import team.wuming.common.domain.StudentGrade;
 import team.wuming.modules.experts.domain.Expert;
@@ -42,11 +40,11 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 			List<Map<String, Object>> maps = qr.query(sql,
 					new MapListHandler(), userId);
 			for (Map<String, Object> map : maps) {
-				Docourse docourse = CommonUtils.toBean(map, Docourse.class);
+
 				Expert expert = CommonUtils.toBean(map, Expert.class);
 				StudentGrade studentGrade = CommonUtils.toBean(map,
 						StudentGrade.class);
-				studentGrade.setDocourse(docourse);
+
 				studentGrade.setExpert(expert);
 				studentGrades.add(studentGrade);
 			}
@@ -70,20 +68,7 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 
 	}
 
-	/**
-	 * 根据课程编号查询课程表
-	 */
-	@Override
-	public Docourse queryDocourse(String visit_count) {
-		String sql = "select * from docourse where visit_count=?";
 
-		try {
-			return qr.query(sql, new BeanHandler<Docourse>(Docourse.class),
-					visit_count);
-		} catch (Exception e) {
-			throw new RuntimeException();
-		}
-	}
 
 	/**
 	 * 根据教师编号查询教师
@@ -109,11 +94,9 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 		try {
 			List<Map<String,Object>> maps=qr.query(sql, new MapListHandler(),userId);
 			for (Map<String, Object> map : maps) {
-				Docourse docourse = CommonUtils.toBean(map, Docourse.class);
 				Expert expert = CommonUtils.toBean(map, Expert.class);
 				StudentGrade studentGrade = CommonUtils.toBean(map,
 						StudentGrade.class);
-				studentGrade.setDocourse(docourse);
 				studentGrade.setExpert(expert);
 				studentGrades.add(studentGrade);
 			}
@@ -136,11 +119,11 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 			List<Map<String, Object>> maps = qr.query(sql,
 					new MapListHandler(), classId, expacount);
 			for (Map<String, Object> map : maps) {
-				Docourse docourse = CommonUtils.toBean(map, Docourse.class);
+
 				Expert expert = CommonUtils.toBean(map, Expert.class);
 				StudentGrade studentGrade = CommonUtils.toBean(map,
 						StudentGrade.class);
-				studentGrade.setDocourse(docourse);
+
 				studentGrade.setExpert(expert);
 				studentGrades.add(studentGrade);
 			}
@@ -172,8 +155,9 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 		String sql = "update studentgrade set psgrade=? ,ksgrade=?,grade=? where user_acount=?";
 		try {
 			for (StudentGrade studentGrade : newStudentGrade) {// 循环保存学生信息
-				qr.update(sql, studentGrade.getPsgrade(),
-						studentGrade.getKsgrade(), studentGrade.getGrade(),
+				qr.update(sql, studentGrade.getPsscore(),
+						studentGrade.getKsscore(),
+						studentGrade.getTotalscores(),
 						studentGrade.getUser_acount());
 			}
 		} catch (Exception e) {
@@ -182,16 +166,7 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 	}
 
 
-	@Override
-	public Classes findClassNameByClassId(String classId) {
-		String sql = "select * from classes where bh=?";
-		try {
-			return qr.query(sql, new BeanHandler<Classes>(Classes.class),
-					classId);
-		} catch (Exception e) {
-			throw new RuntimeException();
-		}
-	}
+
 
 	@Override
 	public List<Object> querySexName(String classId) {

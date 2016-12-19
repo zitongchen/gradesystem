@@ -4,6 +4,7 @@ import java.util.List;
 
 import team.wuming.common.domain.Maijor;
 import team.wuming.common.domain.Objecenter;
+import team.wuming.common.domain.Xuexid;
 import team.wuming.modules.admin.domain.Admin;
 import team.wuming.modules.users.domain.User;
 
@@ -20,5 +21,7 @@ public interface AdminDao {
 	public void addObjecter(Objecenter objecenter);
 
 	public void addMaijor(Maijor maijor);
+
+	public void addXuexid(Xuexid xuexid);
 
 }

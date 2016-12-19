@@ -15,7 +15,6 @@ import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
-import team.wuming.common.domain.Docourse;
 import team.wuming.common.domain.PageBean;
 import team.wuming.common.domain.StudentGrade;
 import team.wuming.modules.experts.domain.Expert;
@@ -51,8 +50,19 @@ public class UserDaoImpl implements UserDao {
 
 	// 修改用户信息
 	public void updateUserMessageById(User user) {
-		String sql = "update users set ";
-
+		String sql = "update users set realname=?,telephone=?,qq=?,email=?,weixin=?,"
+				+ "city=?,occupation=?,education=?,marry=?,hobby=?,province=?,"
+				+ "address=?,postCode=? where user_acount=? ";
+		try {
+			qr.update(sql, user.getRealname(), user.getTlelphone(),
+					user.getQq(), user.getEmail(), user.getWeixin(),
+					user.getCity(), user.getOccupation(), user.getEducation(),
+					user.getMarry(), user.getHobby(), user.getProvince(),
+					user.getAddress(), user.getPostCode(),
+					user.getUser_acount());
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
 	}
 
 	/**
@@ -76,20 +86,21 @@ public class UserDaoImpl implements UserDao {
 		String sql = "select * from studentgrade where user_acount=?";
 		List<StudentGrade> studentGrades = new ArrayList<StudentGrade>();
 		try {
-			List<Map<String, Object>> maps = qr.query(sql,
-					new MapListHandler(), userId);
-			for (Map<String, Object> map : maps) {
-				Docourse docourse=CommonUtils.toBean(map, Docourse.class);
-				Expert expert=CommonUtils.toBean(map, Expert.class);
-				StudentGrade studentGrade = CommonUtils.toBean(map,
-						StudentGrade.class);
-				studentGrade.setDocourse(docourse);
-				studentGrade.setExpert(expert);
-				studentGrades.add(studentGrade);
-			}
-			return studentGrades;
-		} catch (SQLException e) {
+			return qr.query(sql, new BeanListHandler<StudentGrade>(
+					StudentGrade.class));
+		} catch (Exception e) {
 			throw new RuntimeException();
 		}
+	}
+
+	@Override
+	public void uploadStudentPhote(String userId, String photo) {
+		String sql = "update users set photo=? where user_acount=?";
+		try {
+			qr.update(sql, photo, userId);
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+
 	}
 }

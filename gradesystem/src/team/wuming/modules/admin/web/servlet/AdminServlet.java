@@ -27,6 +27,7 @@ import org.omg.CORBA.UserException;
 
 import team.wuming.common.domain.Maijor;
 import team.wuming.common.domain.Objecenter;
+import team.wuming.common.domain.Xuexid;
 import team.wuming.modules.admin.domain.Admin;
 import team.wuming.modules.admin.service.AdminService;
 import team.wuming.modules.admin.service.impl.AdminServiceImpl;
@@ -236,11 +237,24 @@ public class AdminServlet extends BaseServlet {
 		return "f:/jsps/admin/#.jsp";
 	}
 
+	// 添加专业
 	public String addMaijor(HttpServletRequest request,
 			HttpServletResponse response) {
-		Maijor maijor = new Maijor();
+		// 把表单内容封装到Maijor对象中
+		Maijor maijor = CommonUtils.toBean(request.getParameterMap(),
+				Maijor.class);
 		adminService.addMaijor(maijor);
 		request.setAttribute("successMessage", "专业设置成功！");
 		return "f:/jsps/admin/#.jsp";
+	}
+
+	// 添加学习地点
+	public String addXuexid(HttpServletRequest request,
+			HttpServletResponse response) {
+		Xuexid xuexid = CommonUtils.toBean(request.getParameterMap(),
+				Xuexid.class);
+		adminService.addXuexid(xuexid);
+		request.setAttribute("successMessage", "学习地点添加成功！");
+		return "f:/jsps/admin/..";
 	}
 }

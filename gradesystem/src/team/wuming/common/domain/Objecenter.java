@@ -7,7 +7,7 @@ import java.util.Date;
  * @author Tony 学科类
  */
 public class Objecenter implements Serializable {
-	private int visit_count;// 学科课程、知识专题号(主键)(int类型，string类型更大可能)
+	private String visit_count;// 学科课程、知识专题号(主键)(int类型，string类型更大可能)
 	private String title;// 学科、知识专题名称
 	private String description;// 学科、知识专题
 	private Date createtime;// 创建日期
@@ -86,11 +86,11 @@ public class Objecenter implements Serializable {
 		this.score = score;
 	}
 
-	public int getVisit_count() {
+	public String getVisit_count() {
 		return visit_count;
 	}
 
-	public void setVisit_count(int visit_count) {
+	public void setVisit_count(String visit_count) {
 		this.visit_count = visit_count;
 	}
 

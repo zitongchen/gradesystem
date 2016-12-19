@@ -33,6 +33,7 @@ public interface UserDao {
 
 	public List<StudentGrade> queryGradeByUserId(String userId);
 
+	public void uploadStudentPhote(String userId, String photo);
 
 			
 }

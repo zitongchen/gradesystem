@@ -8,121 +8,114 @@ import team.wuming.modules.users.domain.User;
 
 public class StudentGrade implements Serializable {
 	private String user_acount;// 学号
-	// private String visit_count;// 课程编号
-	private Docourse docourse;// 外键
-	private String psgrade;// 平时成绩
-	private String ksgrade;// 考试成绩
-	private String grade;// 成绩
-	private String nf;// 年级
-	private String gradelei;// 考核类型（正考补考重修换证免考）
-	private int scores;// 积分
-	// private String expacount;// 任教教师号
-	private Expert expert;// 获取任课教师的信息
+	private String nickname;// 姓名
+	private String title;// 课程名称
+	private String visit_count;// 课程代码
+	private String sthhours;// 学习时数
+	private String gradelei;// 成绩类型
+	private String psscore;// 平时成绩
+	private String syscore;// 实验成绩
+	private String ksscore;// 期末成绩
+	private String totalscores;// 总评成绩
+	private String bh;// 班级
+	private String termth;// 开课学期
+	private Expert expert;// 任课教师
 	private String oper;// 操作员代码
 	private String shenhe;// 审核人员代码
-	private Date optime;// 操作日期
-
-
-
-
-
+	private Date optime;// 操作时间
+	private String remark;// 备注
+	private String state;// 状态字段
 	public String getUser_acount() {
 		return user_acount;
 	}
-
 	public void setUser_acount(String user_acount) {
 		this.user_acount = user_acount;
 	}
-	public String getPsgrade() {
-		return psgrade;
+
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setPsgrade(String psgrade) {
-		this.psgrade = psgrade;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
-	public String getKsgrade() {
-		return ksgrade;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setKsgrade(String ksgrade) {
-		this.ksgrade = ksgrade;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String getGrade() {
-		return grade;
+	public String getVisit_count() {
+		return visit_count;
 	}
 
-	public void setGrade(String grade) {
-		this.grade = grade;
+	public void setVisit_count(String visit_count) {
+		this.visit_count = visit_count;
 	}
 
-	public String getNf() {
-		return nf;
+	public String getSthhours() {
+		return sthhours;
 	}
 
-	public void setNf(String nf) {
-		this.nf = nf;
+	public void setSthhours(String sthhours) {
+		this.sthhours = sthhours;
 	}
-
 	public String getGradelei() {
 		return gradelei;
 	}
-
 	public void setGradelei(String gradelei) {
 		this.gradelei = gradelei;
 	}
 
-	public int getScores() {
-		return scores;
+	public String getPsscore() {
+		return psscore;
 	}
 
-	public void setScores(int scores) {
-		this.scores = scores;
+	public void setPsscore(String psscore) {
+		this.psscore = psscore;
 	}
 
-
-
-	public String getOper() {
-		return oper;
+	public String getSyscore() {
+		return syscore;
 	}
 
-	public void setOper(String oper) {
-		this.oper = oper;
+	public void setSyscore(String syscore) {
+		this.syscore = syscore;
 	}
 
-	public String getShenhe() {
-		return shenhe;
+	public String getKsscore() {
+		return ksscore;
 	}
 
-	public void setShenhe(String shenhe) {
-		this.shenhe = shenhe;
+	public void setKsscore(String ksscore) {
+		this.ksscore = ksscore;
 	}
 
-	public Date getOptime() {
-		return optime;
+	public String getTotalscores() {
+		return totalscores;
 	}
 
-	public void setOptime(Date optime) {
-		this.optime = optime;
+	public void setTotalscores(String totalscores) {
+		this.totalscores = totalscores;
 	}
 
-	@Override
-	public String toString() {
-		return "StudentGrade [user_acount=" + ", visit_count="
-				+ ", psgrade=" + psgrade + ", ksgrade=" + ksgrade
-				+ ", grade=" + grade + ", nf=" + nf + ", gradelei=" + gradelei
- + ", scores="
-				+ scores + ", expacount=" + ", oper="
-				+ oper + ", shenhe=" + shenhe + ", optime=" + optime + "]";
+	public String getBh() {
+		return bh;
 	}
 
-	public Docourse getDocourse() {
-		return docourse;
+	public void setBh(String bh) {
+		this.bh = bh;
 	}
 
-	public void setDocourse(Docourse docourse) {
-		this.docourse = docourse;
+	public String getTermth() {
+		return termth;
+	}
+
+	public void setTermth(String termth) {
+		this.termth = termth;
 	}
 
 	public Expert getExpert() {
@@ -132,5 +125,51 @@ public class StudentGrade implements Serializable {
 	public void setExpert(Expert expert) {
 		this.expert = expert;
 	}
+	public String getOper() {
+		return oper;
+	}
+	public void setOper(String oper) {
+		this.oper = oper;
+	}
+	public String getShenhe() {
+		return shenhe;
+	}
+	public void setShenhe(String shenhe) {
+		this.shenhe = shenhe;
+	}
+	public Date getOptime() {
+		return optime;
+	}
+	public void setOptime(Date optime) {
+		this.optime = optime;
+	}
 
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	@Override
+	public String toString() {
+		return "StudentGrade [user_acount=" + user_acount + ", nickname="
+				+ nickname + ", title=" + title + ", visit_count="
+				+ visit_count + ", sthhours=" + sthhours + ", gradelei="
+				+ gradelei + ", psscore=" + psscore + ", syscore=" + syscore
+				+ ", ksscore=" + ksscore + ", totalscores=" + totalscores
+				+ ", bh=" + bh + ", termth=" + termth + ", expacount="
+				+ ", oper=" + oper + ", shenhe=" + shenhe
+				+ ", optime=" + optime + ", remark=" + remark + ", state="
+				+ state + "]";
+	}
 }

@@ -29,9 +29,12 @@ public class ExpertDaoImpl implements ExpertDao {
 	}
 
 	public void updateExpertMessageById(Expert form) {
-		String sql = "update experts ";
+		String sql = "update experts descpription=?,education=?,qq=?,telephone=?,"
+				+ "email=?,weixin=?,city=? where expacount=?";
 		try {
-			qr.update(sql);
+			qr.update(sql, form.getDescription(), form.getEducation(),
+					form.getQq(), form.getTelephone(), form.getEmail(),
+					form.getWeixin(), form.getCity(), form.getExpacount());
 		} catch (SQLException e) {
 			throw new RuntimeException();
 		}
@@ -100,6 +103,18 @@ public class ExpertDaoImpl implements ExpertDao {
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}
+	}
+
+	// 保存图片路径
+	@Override
+	public void updateExpertPhoto(String expacount, String photoPath) {
+		String sql = "update experts set picture=? where expacount=?";
+		try {
+			qr.update(sql, photoPath, expacount);
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+
 	}
 
 }

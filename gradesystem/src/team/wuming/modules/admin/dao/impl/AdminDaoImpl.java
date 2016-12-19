@@ -9,6 +9,7 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 
 import team.wuming.common.domain.Maijor;
 import team.wuming.common.domain.Objecenter;
+import team.wuming.common.domain.Xuexid;
 import team.wuming.modules.admin.dao.AdminDao;
 import team.wuming.modules.admin.domain.Admin;
 import team.wuming.modules.users.domain.User;
@@ -105,6 +106,20 @@ public class AdminDaoImpl implements AdminDao {
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}
+	}
+
+	@Override
+	public void addXuexid(Xuexid xuexid) {
+		String sql = "insert into xuexid value(?,?,?,?,?,?,?,?,?,?)";
+		try {
+			qr.update(sql, xuexid.getDeparid(), xuexid.getXxdd(),
+					xuexid.getDizhi(), xuexid.getLianxiren(),
+					xuexid.getTelephone(), xuexid.getEmial(), xuexid.getYtdw(),
+					xuexid.getLeixing(), xuexid.getYongdate(), xuexid.getHuze());
+		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+
 	}
 
 }

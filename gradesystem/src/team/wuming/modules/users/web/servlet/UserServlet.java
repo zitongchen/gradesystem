@@ -1,5 +1,6 @@
 package team.wuming.modules.users.web.servlet;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadBase;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.omg.CORBA.UserException;
 
 import team.wuming.common.domain.PageBean;
@@ -91,6 +97,56 @@ public class UserServlet extends BaseServlet {
 		User form = CommonUtils.toBean(request.getParameterMap(), User.class);
 		userService.updateUserMessage(form);
 		return "r:/UserServlet?method=findUserMessage";
+	}
+
+	// 上传学生照片
+	public String uploadStudentPhote(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload sfu = new ServletFileUpload(factory);
+		sfu.setSizeMax(1 * 1024 * 1024);
+		try {
+			List<FileItem> fileItemList = sfu.parseRequest(request);
+			FileItem fileItem = fileItemList.get(0);
+			String filename = fileItem.getName();// 获取上传的图片名称
+			if (filename == null || filename.trim().equals(" ")) {
+				request.setAttribute("errorMessage", "你还没有上传照片，请上传照片以后再提交照片！");
+				return "f:/jsps/user...";
+			}
+			if (!filename.endsWith("jpg") || !filename.endsWith("png")) {
+				request.setAttribute("errorMessage", "请上传格式为jpg或png的照片！");
+				return "f:/jsps/user....";
+			}
+			filename = CommonUtils.uuid() + "_" + filename;
+			String savepath = this.getServletContext().getRealPath(
+					"/WEB-INF/user");
+			File file = new File(savepath, filename);
+			// 进行目录打散
+			String photo = savepath + "/" + filename.indexOf(0) + "/"
+					+ filename;
+			User user = (User) request.getSession()
+					.getAttribute("session_user");
+			String userId = user.getUser_acount();
+			fileItem.write(file);
+			String beforePath = user.getPhoto();// 获取之前的途径
+			// 若先去存在图片，则删除原来的图片
+			if (beforePath != null) {
+				beforePath = this.getServletContext().getRealPath(beforePath);
+				File beforeFile = new File(beforePath);
+				if (beforeFile.exists()) {
+					beforeFile.delete();
+				}
+			}
+			userService.uploadStudentPhoto(userId, photo);
+
+		} catch (Exception e) {
+			if (e instanceof FileUploadBase.FileSizeLimitExceededException) {
+				request.setAttribute("errorMessage", "你上传文件大于1M！");
+				return "f:/jsps/user/..";
+			}
+		}
+		request.setAttribute("successMessage", "上传成功！");
+		return "f:/jsps/user..";
 	}
 
 	// 查询学生信息
