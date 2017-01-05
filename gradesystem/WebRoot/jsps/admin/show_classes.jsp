@@ -13,15 +13,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title>成绩录入</title>
 <base target="body"/>
 <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
-<link href="${pageContext.request.contextPath }/css/teacherCSS.css" rel="stylesheet" style="text/css">
+<link href="${pageContext.request.contextPath }/css/sidebar.css" rel="stylesheet" style="text/css">
 </head>
 <body>
-	
-		<li><a href="${pageContext.request.contextPath}/jsps/admin/search_experts.jsp">代教师管理成绩</a></li>
-		
-		
-	
-<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+	<div>
+		<ul>
+			<li><a href="${pageContext.request.contextPath}/jsps/admin/search_experts.jsp">代教师管理成绩</a></li>
+		</ul>
+	</div>
+	<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -5,7 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -26,7 +28,7 @@ import org.apache.xmlbeans.impl.common.IOUtil;
 import org.omg.CORBA.UserException;
 
 import team.wuming.common.domain.Maijor;
-import team.wuming.common.domain.Objecenter;
+import team.wuming.common.domain.Objcenter;
 import team.wuming.common.domain.Xuexid;
 import team.wuming.modules.admin.domain.Admin;
 import team.wuming.modules.admin.service.AdminService;
@@ -64,7 +66,7 @@ public class AdminServlet extends BaseServlet {
 			}
 			Admin Admin = adminService.login(form);
 			request.getSession().setAttribute("session_admin", Admin);
-			return "f:/jsps/admin/admin_homepage.jsp";
+			return "f:/jsps/common/homepage.jsp";
 		} catch (Exception e) {
 			request.setAttribute("msg", e.getMessage());
 			request.setAttribute("userId", userId);
@@ -190,12 +192,11 @@ public class AdminServlet extends BaseServlet {
 	/*
 	 * 添加学科信息
 	 */
-	public String addObjcenter(HttpServletRequest request,
+	public String addObjcenter_photo(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		DiskFileItemFactory factory=new DiskFileItemFactory();
 		ServletFileUpload sfu=new ServletFileUpload(factory);
 		sfu.setSizeMax(1*1024*1024);//设置上传的图片为1M
-		
 		try {
 			List<FileItem> fileItems=sfu.parseRequest(request);
 			Map<String ,String> mapList=new HashMap<String , String>();
@@ -215,8 +216,7 @@ public class AdminServlet extends BaseServlet {
 					}
 				}
 			}
-			Objecenter objecenter = CommonUtils.toBean(mapList,
-					Objecenter.class);
+			Objcenter objecenter = CommonUtils.toBean(mapList, Objcenter.class);
 			if (uploadFile != null) {
 				String savepath = this.getServletContext().getRealPath(
 						"/WEB-INF/Objcenter");
@@ -225,7 +225,7 @@ public class AdminServlet extends BaseServlet {
 				File file = new File(savepath, filename);
 				uploadFile.write(file);// 保存文件到指定的文职
 			}
-			adminService.addObjecter(objecenter);
+			adminService.addObjcenter(objecenter);
 		} catch (Exception e) {
 			//若文件超出限制便报错
 			if (e instanceof FileUploadBase.FileSizeLimitExceededException) {
@@ -237,6 +237,34 @@ public class AdminServlet extends BaseServlet {
 		return "f:/jsps/admin/#.jsp";
 	}
 
+	// 添加专业，不涉及到图片的上传
+	public String addObjcenter(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		Objcenter objecenter = CommonUtils.toBean(request.getParameterMap(),
+				Objcenter.class);
+		// 把对应字段从字符串类型转换到int类型
+		if (request.getParameter("sthours") != "") {
+			Integer sthours = Integer.valueOf(request.getParameter("sthours"));
+			objecenter.setSthours(sthours);
+		}
+		if (request.getParameter("classhour") != "") {
+			Integer classhour = Integer.valueOf(request
+					.getParameter("classhour"));
+			objecenter.setClasshour(classhour);
+		}
+		if (request.getParameter("sbhour") != "") {
+			Integer sbhour = Integer.valueOf(request.getParameter("sbhour"));
+
+			objecenter.setSbhour(sbhour);
+		}
+		if (request.getParameter("score") != "") {
+			Integer score = Integer.valueOf(request.getParameter("score"));
+			objecenter.setScore(score);
+		}
+		adminService.addObjcenter(objecenter);
+		request.setAttribute("successMessage", "课程添加成功！");
+		return "f:/jsps/admin/active_message.jsp";
+	}
 	// 添加专业
 	public String addMaijor(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -244,17 +272,61 @@ public class AdminServlet extends BaseServlet {
 		Maijor maijor = CommonUtils.toBean(request.getParameterMap(),
 				Maijor.class);
 		adminService.addMaijor(maijor);
-		request.setAttribute("successMessage", "专业设置成功！");
-		return "f:/jsps/admin/#.jsp";
+		request.setAttribute("successMessage", "专业添加成功！");
+		return "f:/jsps/admin/active_message.jsp";
 	}
 
 	// 添加学习地点
 	public String addXuexid(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws ParseException {
 		Xuexid xuexid = CommonUtils.toBean(request.getParameterMap(),
 				Xuexid.class);
+
+		if (request.getParameter("yongdate") != "") {
+			// 把Stringe格式转换为Date格式
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			Date yongdate = formatter.parse(request.getParameter("yongdate"));
+			xuexid.setYongdate(yongdate);
+		}
 		adminService.addXuexid(xuexid);
 		request.setAttribute("successMessage", "学习地点添加成功！");
-		return "f:/jsps/admin/..";
+		return "f:/jsps/admin/active_message.jsp";
 	}
+
+	// 查询专业
+	public String findMaijor(HttpServletRequest request,
+			HttpServletResponse response) {
+		List<Maijor> maijorList = adminService.findMaijor();
+		return null;
+	}
+
+	// 根据专业编号查询课程
+	public String findObjcenterByZydm(HttpServletRequest request,
+			HttpServletResponse response) {
+		String zydm = request.getParameter("zydm");
+		List<Objcenter> objcenterList = adminService.findObjcenterByZydm(zydm);
+		return null;
+	}
+
+	// 根据专业代码查询班级
+	public String findClassByZydm(HttpServletRequest request,
+			HttpServletResponse response) {
+		String zydm = request.getParameter("zydm");
+		List<Object> classNameLists = adminService.findClassByZydm(zydm);
+		List<String> classList = null;
+		for (Object classNameList : classNameLists) {
+			classList.add(String.valueOf(classNameList));// 把Object类型变为String类型
+		}
+		return null;
+	}
+	// 管理员根据情况向studentGrade写入内容
+	public String addStudentGrade(HttpServletRequest request,
+			HttpServletResponse response) {
+		String className = request.getParameter("className");
+		String expacount = request.getParameter("expacount");
+		String visit_count = request.getParameter("visit_count");
+		adminService.addStudentGrade(className, visit_count, expacount);
+		return null;
+	}
+
 }

@@ -88,9 +88,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                  <input type="radio" name="loginType" id="inlineRadio3" value="3"> 管理员
                             </label>
                             
-                            <div class="form-group form-actions">
+                           <div class="form-group form-actions">
 								<div class="col-xs-4 col-xs-offset-4" style="padding:15px;">
-									<input type="submit" class="btn btn-sm btn-info" value="登录"/>
+									<button type="submit" class="btn-color btn btn-sm btn-info">登录</button>
 								</div>
 							</div>
                             
@@ -105,8 +105,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</div>
 </div>
 
-<script src="${pageContext.request.contextPath }/js/jquery-3.1.1.min.js"></script>
-<script src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
 </body>
 

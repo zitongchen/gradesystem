@@ -11,7 +11,7 @@ public class StudentGrade implements Serializable {
 	private String nickname;// 姓名
 	private String title;// 课程名称
 	private String visit_count;// 课程代码
-	private String sthhours;// 学习时数
+	private String sthours;// 学习时数
 	private String gradelei;// 成绩类型
 	private String psscore;// 平时成绩
 	private String syscore;// 实验成绩
@@ -56,12 +56,12 @@ public class StudentGrade implements Serializable {
 		this.visit_count = visit_count;
 	}
 
-	public String getSthhours() {
-		return sthhours;
+	public String getSthours() {
+		return sthours;
 	}
 
-	public void setSthhours(String sthhours) {
-		this.sthhours = sthhours;
+	public void setSthours(String sthours) {
+		this.sthours = sthours;
 	}
 	public String getGradelei() {
 		return gradelei;
@@ -164,7 +164,7 @@ public class StudentGrade implements Serializable {
 	public String toString() {
 		return "StudentGrade [user_acount=" + user_acount + ", nickname="
 				+ nickname + ", title=" + title + ", visit_count="
-				+ visit_count + ", sthhours=" + sthhours + ", gradelei="
+				+ visit_count + ", sthhours=" + ", gradelei="
 				+ gradelei + ", psscore=" + psscore + ", syscore=" + syscore
 				+ ", ksscore=" + ksscore + ", totalscores=" + totalscores
 				+ ", bh=" + bh + ", termth=" + termth + ", expacount="

@@ -12,7 +12,7 @@ public class Maijor implements Serializable {
 	private String lyid;// 领域大类
 	private String pycc; // 培养层次代码
 	private String xznx;// 学制年限
-	private int xz;// 学制
+	private String xz;// 学制
 	private String bz;// 备注
 
 	public String getZydm() {
@@ -57,11 +57,11 @@ public class Maijor implements Serializable {
 		this.xznx = xznx;
 	}
 
-	public int getXz() {
+	public String getXz() {
 		return xz;
 	}
 
-	public void setXz(int xz) {
+	public void setXz(String xz) {
 		this.xz = xz;
 	}
 
