@@ -40,70 +40,10 @@ import team.wuming.modules.experts.service.ExpertService;
 import team.wuming.modules.experts.service.impl.ExpertServiceImpl;
 import team.wuming.modules.users.domain.User;
 import cn.itcast.commons.CommonUtils;
-import cn.itcast.servlet.BaseServlet;
 
-public class ExpertServlet extends BaseServlet {
+public class ExpertServlet extends cn.itcast.servlet.BaseServlet {
 	private ExpertService expertService = new ExpertServiceImpl();
 	private StudentGradeService studentGradeService = new StudentGradeServiceImpl();
-
-	/*
-	 * 教师注册页面
-	 */
-	public void regist(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		/*
-		 * 上传三步曲
-		 */
-		DiskFileItemFactory factory = new DiskFileItemFactory();
-		ServletFileUpload sfu = new ServletFileUpload(factory);
-		sfu.setFileSizeMax(1 * 1024 * 1024);// 设置上传 的图片最大为1M
-		try {
-			List<FileItem> fileItemList = sfu.parseRequest(request);// 获取文件条目
-			Map<String, String> map = new HashMap<String, String>();
-			for (FileItem fileItem : fileItemList) {
-				if (fileItem.isFormField()) {
-					map.put(fileItem.getFieldName(),
-							fileItem.getString("UTF-8"));
-				}
-			}
-			String savepath = this.getServletContext().getRealPath(
-					"/WEB-INF/Expert_picture");
-			String filename = fileItemList.get(1).getName();// 获取照片的名字
-			/*
-			 * 检验文件的扩展名,出错回显
-			 */
-			if (!filename.toLowerCase().endsWith("jpg")) {
-				request.setAttribute("errorMessage", "你上传的图片不是JPG扩展名！");
-				request.getRequestDispatcher("#").forward(request, response);
-			}
-			// 设置图片的名称为uuid+.jpg
-			int point = filename.indexOf(".");
-			int legth = filename.length();
-			filename = CommonUtils.uuid() + filename.substring(point, legth);
-			savepath = savepath + "/" + filename.indexOf(0) + "/";// 目录打散，把图片文件保存到不同的地方n
-			File destFile = new File(savepath, filename);
-			fileItemList.get(1).write(destFile);// 把图片保存到指定的目录里面
-			// 设置教师的编号
-			int expertNumber = expertService.quertExpertNumber();
-			String expacount = String.valueOf(expertNumber + 100100);// 设置教师账号从100100开始
-			// 把表单的信息利用工具封装到javabean里面
-			Expert expert = CommonUtils.toBean(request.getParameterMap(),
-					Expert.class);
-			expert.setPicture(savepath + filename);// 保存教师图片的保存路径
-			expert.setExpacount(expacount);// 保存用户账号
-			expertService.registExpert(expert);
-			request.setAttribute("expacount", expacount);
-			request.getRequestDispatcher("").forward(request, response);
-
-		} catch (Exception e) {
-			if (e instanceof FileUploadBase.FileSizeLimitExceededException) {
-				request.setAttribute("msg", "您上传的文件超出了1M");
-				request.getRequestDispatcher("/adminjsps/admin/book/add.jsp")
-						.forward(request, response);
-			}
-		}
-
-	}
 
 	/**
 	 * @param request
@@ -125,6 +65,7 @@ public class ExpertServlet extends BaseServlet {
 		try {
 			String verificationCode = (String) request.getSession()// 获取后台中的验证码
 					.getAttribute("verificationCode");
+			request.getSession().removeAttribute("verificationCode");// 清除Session，清除垃圾
 			if (!(verification.equals(verificationCode))) { // 前端验证码跟后台验证码进行比较，若验证码错误在前端页面显示错误信息，并回显用户名跟密码
 				request.setAttribute("verificationError", "验证码错误！");
 				request.setAttribute("userId", userId);

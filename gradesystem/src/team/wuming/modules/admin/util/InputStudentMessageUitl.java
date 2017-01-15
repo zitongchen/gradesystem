@@ -42,7 +42,7 @@ public class InputStudentMessageUitl {
 				// 姓名
 				cell = row.getCell(2);
 				user.setNickname(cell.getRichStringCellValue().toString());
-				// 姓别
+				// 性别
 				cell = row.getCell(3);
 				user.setXb(cell.getRichStringCellValue().toString());
 				// 出生日期
@@ -104,6 +104,7 @@ public class InputStudentMessageUitl {
 				cell = row.getCell(19);
 				user.setZczt(cell.getRichStringCellValue().toString());
 				// 预计毕业日期
+				cell = row.getCell(20);
 				Date yjbyrq = sdf.parse(cell.getRichStringCellValue()
 						.toString());
 				user.setYjbyrq(yjbyrq);

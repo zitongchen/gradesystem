@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Course</title>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/add-perfession.css">
+</head>
+<body>
+<div class="conntainer">
+    <div class="row make-row">
+        <div class="col-sm-4 col-sm-offset-5 ">
+            <p class="top-txt">添加课程</p>
+        </div>
+    </div>
+    <div class="row make-row">
+        <div class="col-sm-6 col-sm-offset-2">
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="inputKcdm" class="col-sm-4 control-label">课程号</label>
+                    <div class="col-sm-8">
+                        <input type="text" name="visit_count" class="form-control" id="inputKcdm" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputKcmc" class="col-sm-4 control-label">课程名称</label>
+                    <div class="col-sm-8">
+                        <input type="text" name="title" class="form-control" id="inputKcmc" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputZydm"  class="col-sm-4 control-label">专业代码</label>
+                    <div class="col-sm-8">
+                        <input type="text" name="zydm" class="form-control" id="inputZydm" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputXxss" class="col-sm-4 control-label">学习时数</label>
+                    <div class="col-sm-8">
+                        <input type="text" name="sthours" class="form-control" id="inputXxss" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputMsss" class="col-sm-4 control-label">面授时数</label>
+                    <div class="col-sm-8">
+                        <input type="text" name="classhour" class="form-control" id="inputMsss">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label  for="inputSyss" class="col-sm-4 control-label">实验时数</label>
+                    <div class="col-sm-8">
+                        <input type="text" name="sbhour" class="form-control" id="inputSyss">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label  for="inputFlid" class="col-sm-4 control-label">分类号</label>
+                    <div class="col-sm-8">
+                        <input type="text" name="lyid" class="form-control" id="inputFlid">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label  for="inputXf" class="col-sm-4 control-label">学分</label>
+                    <div class="col-sm-8">
+                        <input type="text" name="score" class="form-control" id="inputXf">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputSyzt" class="col-sm-4 control-label">使用状态</label>
+                    <div class="col-sm-8 sex-radio">
+                        <div class="radio">
+                            <label class="radio-inline" >
+                                <input name="states" type="radio" value="" checked>男
+                            </label>
+                            <label class="radio-inline">
+                                <input name="states" type="radio" value="">女
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">开课学期</label>
+                    <div class="col-sm-3">
+                        <select name="termth" class="form-control">
+                            <option>一</option>
+                            <option>二</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">简介</label>
+                    <div class="col-sm-8">
+                        <textarea name="description" class="form-control" rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-6 col-sm-6">
+                        <button type="submit" class="btn submit-btn btn-lg">提交</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</body>
+</html>

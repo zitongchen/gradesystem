@@ -26,8 +26,8 @@
     <servlet-class>team.wuming.test.json.TestUserServlet</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>GsonServlet</servlet-name>
-    <servlet-class>team.wuming.test.json.GsonServlet</servlet-class>
+    <servlet-name>JsonServlet</servlet-name>
+    <servlet-class>team.wuming.test.json.JsonServlet</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>BaseLoginServlet</servlet-name>
@@ -37,6 +37,16 @@
     <servlet-name>StudentGradeSheetServlet</servlet-name>
     <servlet-class>team.wuming.common.web.servlet.StudentGradeSheetServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>ExpertRegisterServlet</servlet-name>
+    <servlet-class>team.wuming.modules.experts.web.servlet.ExpertRegisterServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ExitServlet</servlet-name>
+    <servlet-class>team.wuming.common.web.servlet.ExitServlet</servlet-class>
+  </servlet>
+
+
   <servlet-mapping>
     <servlet-name>UserServlet</servlet-name>
     <url-pattern>/UserServlet</url-pattern>
@@ -62,8 +72,8 @@
     <url-pattern>/TestUserServlet</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>GsonServlet</servlet-name>
-    <url-pattern>/GsonServlet</url-pattern>
+    <servlet-name>JsonServlet</servlet-name>
+    <url-pattern>/JsonServlet</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>BaseLoginServlet</servlet-name>
@@ -72,6 +82,14 @@
   <servlet-mapping>
     <servlet-name>StudentGradeSheetServlet</servlet-name>
     <url-pattern>/StudentGradeSheetServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ExpertRegisterServlet</servlet-name>
+    <url-pattern>/ExpertRegisterServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ExitServlet</servlet-name>
+    <url-pattern>/ExitServlet</url-pattern>
   </servlet-mapping>
   <filter>
     <filter-name>UserLoginFilter</filter-name>

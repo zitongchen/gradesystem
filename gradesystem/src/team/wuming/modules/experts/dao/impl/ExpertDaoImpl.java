@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ColumnListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
@@ -80,11 +81,12 @@ public class ExpertDaoImpl implements ExpertDao {
 
 	@Override
 	public void registExpert(Expert expert) {
-		String sql = "insert into experts(expacount,password,name,nickname,sex,description,"
-				+ "picture,title,education,qq,telephone,email,weixin,city) value(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into experts(expacount,password,name,sex,description,"
+				+ "picture,title,education,qq,telephone,email,weixin,city) value(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
 		try {
 			qr.update(sql, expert.getExpacount(), expert.getPassword(),
-					expert.getName(), expert.getNickname(), expert.getSex(),
+					expert.getName(), expert.getSex(),
 					expert.getDescription(), expert.getPicture(),
 					expert.getTitle(), expert.getEducation(), expert.getQq(),
 					expert.getTelephone(), expert.getEmail(),
@@ -99,7 +101,8 @@ public class ExpertDaoImpl implements ExpertDao {
 	public int quertExpertNumber() {
 		String sql = "select count(*) from experts";
 		try {
-			return (Integer) qr.query(sql, new ScalarHandler());
+			Number obj = (Number) qr.query(sql, new ScalarHandler());
+			return obj.intValue();
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}
@@ -112,6 +115,17 @@ public class ExpertDaoImpl implements ExpertDao {
 		try {
 			qr.update(sql, photoPath, expacount);
 		} catch (Exception e) {
+			throw new RuntimeException();
+		}
+
+	}
+
+	@Override
+	public List<Expert> findExpertId() {
+		String sql = "select expacount,name from experts";
+		try {
+			return qr.query(sql, new BeanListHandler<Expert>(Expert.class));
+		} catch (SQLException e) {
 			throw new RuntimeException();
 		}
 

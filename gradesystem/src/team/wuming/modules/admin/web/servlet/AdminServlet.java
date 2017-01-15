@@ -27,6 +27,9 @@ import org.apache.commons.io.IOUtils;
 import org.apache.xmlbeans.impl.common.IOUtil;
 import org.omg.CORBA.UserException;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+
 import team.wuming.common.domain.Maijor;
 import team.wuming.common.domain.Objcenter;
 import team.wuming.common.domain.Xuexid;
@@ -138,20 +141,29 @@ public class AdminServlet extends BaseServlet {
 				if (!fileType.equals("xls")) {
 					request.setAttribute("errorMessage",
 							"你上传的文件不是Excel文件，请上传正确的文件！");
-					return "f:/jsps/admin/input_student_message.jsp";
+					return "f:/jsps/admin/add_student_message.jsp";
 				}
 				try {
 					userList = inputStudentMessageUtil
 							.studentMessageToList(fileItem.getInputStream());
 				} catch (Exception e) {
 					request.setAttribute("errorMessage", "上传失败！");
-					return "f:jsps/admin/input_student_message.jsp";
+					return "f:jsps/admin/add_student_message.jsp";
 				}
 			}
-			adminService.inputStudentMessage(userList);
+			try {
+				adminService.inputStudentMessage(userList);
+			} catch (Exception e) {
+				String message = e.getMessage();
+				message = message.substring(message.indexOf("\'") + 1,
+						message.indexOf("\'") + 13);
+				request.setAttribute("errorMessage", "上传失败！数据库里面已经存在学号为："
+						+ message + "，请确认上传的信息表格是否正确！");
+				return "f:jsps/admin/add_student_message.jsp";
+			}
 			request.setAttribute("successMessage", "学生信息录入成功！");
 		}
-		return "f:/jsps/admin/input_student_message.jsp";
+		return "f:/jsps/admin/add_student_message.jsp";
 	}
 	
 	//学生信息Excel样表的下载
@@ -237,7 +249,7 @@ public class AdminServlet extends BaseServlet {
 		return "f:/jsps/admin/#.jsp";
 	}
 
-	// 添加专业，不涉及到图片的上传
+	// 添加课程信息，不涉及到图片的上传
 	public String addObjcenter(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		Objcenter objecenter = CommonUtils.toBean(request.getParameterMap(),
@@ -263,7 +275,7 @@ public class AdminServlet extends BaseServlet {
 		}
 		adminService.addObjcenter(objecenter);
 		request.setAttribute("successMessage", "课程添加成功！");
-		return "f:/jsps/admin/active_message.jsp";
+		return "f:/jsps/common/active_message.jsp";
 	}
 	// 添加专业
 	public String addMaijor(HttpServletRequest request,
@@ -273,7 +285,7 @@ public class AdminServlet extends BaseServlet {
 				Maijor.class);
 		adminService.addMaijor(maijor);
 		request.setAttribute("successMessage", "专业添加成功！");
-		return "f:/jsps/admin/active_message.jsp";
+		return "f:/jsps/common/active_message.jsp";
 	}
 
 	// 添加学习地点
@@ -293,40 +305,91 @@ public class AdminServlet extends BaseServlet {
 		return "f:/jsps/admin/active_message.jsp";
 	}
 
-	// 查询专业
-	public String findMaijor(HttpServletRequest request,
+	// 查询专业-用于添加课程页面的专业选择
+	public void findMaijor(HttpServletRequest request,
 			HttpServletResponse response) {
 		List<Maijor> maijorList = adminService.findMaijor();
-		return null;
+		String output = null;
+		if (!maijorList.isEmpty()) {
+			output = JSON.toJSONString(maijorList);
+
+		}
+		try {
+			response.getWriter().println(output);
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
 	}
 
 	// 根据专业编号查询课程
-	public String findObjcenterByZydm(HttpServletRequest request,
+	public void findObjcenterByZydm(HttpServletRequest request,
 			HttpServletResponse response) {
 		String zydm = request.getParameter("zydm");
 		List<Objcenter> objcenterList = adminService.findObjcenterByZydm(zydm);
-		return null;
+		String output = null;
+		if (!objcenterList.isEmpty()) {
+			output = JSON.toJSONString(objcenterList);
+
+		}
+		try {
+			response.getWriter().println(output);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	// 根据专业代码查询班级
-	public String findClassByZydm(HttpServletRequest request,
+	public void findExpertId(HttpServletRequest request,
+			HttpServletResponse response) {
+		List<Expert> expertList = expertService.findExpertId();
+		String output = null;
+
+		if (!expertList.isEmpty()) {
+			output = JSON.toJSONString(expertList);
+		}
+		try {
+			response.getWriter().println(output);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	// 根据专业代码查询班级-添加班级课程接口
+	public void findClassByZydm(HttpServletRequest request,
 			HttpServletResponse response) {
 		String zydm = request.getParameter("zydm");
 		List<Object> classNameLists = adminService.findClassByZydm(zydm);
-		List<String> classList = null;
-		for (Object classNameList : classNameLists) {
-			classList.add(String.valueOf(classNameList));// 把Object类型变为String类型
+		List<String> classList = new ArrayList<String>();
+		String output = null;
+		if (!classNameLists.isEmpty()) {
+			output = JSON.toJSONString(classNameLists);
 		}
-		return null;
+
+		try {
+			response.getWriter().println(output);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
-	// 管理员根据情况向studentGrade写入内容
+
+	// 管理员根据情况向studentGrade写入内容,并返回操作信息！
 	public String addStudentGrade(HttpServletRequest request,
 			HttpServletResponse response) {
-		String className = request.getParameter("className");
+		String className = request.getParameter("bh");
 		String expacount = request.getParameter("expacount");
-		String visit_count = request.getParameter("visit_count");
+		String visit_count = request.getParameter("kc");
 		adminService.addStudentGrade(className, visit_count, expacount);
-		return null;
+		try {
+			request.setAttribute("successMessage", "添加班级课程成功！");
+			return "f:/jsps/common/active_message.jsp";
+		} catch (Exception e) {
+			request.setAttribute("errorMessage", "添加班级课程失败！");
+			return "f:/jsps/common/active_message.jsp";
+		}
 	}
 
 }

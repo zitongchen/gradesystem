@@ -21,9 +21,6 @@ import cn.itcast.jdbc.TxQueryRunner;
 
 public class AdminDaoImpl implements AdminDao {
 	private QueryRunner qr = new TxQueryRunner();
-
-
-
 	public void updateAdminMessageById(Admin form) {
 		String sql = "update admin ";
 		try {
@@ -81,15 +78,16 @@ public class AdminDaoImpl implements AdminDao {
 						user.getXz(),user.getXxxs(),user.getRxrq(),user.getDqszj(),user.getZczt(),user.getYjbyrq());
 			}
 			} catch (SQLException e) {
-			throw new RuntimeException();
+
+			throw new RuntimeException(e);
 			}
 	}
 
 	@Override
 	public void addObjcenter(Objcenter obj) {
-		String sql = "insert into objcenter(visit_count,title,description,states,remark,zydm,termth,sthours,classhour,sbhour,lyid,score) value(?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into objcenter(title,description,states,remark,zydm,termth,sthours,classhour,sbhour,lyid,score) value(?,?,?,?,?,?,?,?,?,?,?)";
 		try {
-			qr.update(sql, obj.getVisit_count(), obj.getTitle(),
+			qr.update(sql, obj.getTitle(),
 					obj.getDescription(), obj.getStates(), obj.getRemark(),
 					obj.getZydm(), obj.getTermth(), obj.getSthours(),
 					obj.getClasshour(), obj.getSbhour(), obj.getLyid(),
@@ -130,7 +128,7 @@ public class AdminDaoImpl implements AdminDao {
 	// 查询专业
 	@Override
 	public List<Maijor> findMaijor() {
-		String sql = "select * from maijor";
+		String sql = "select zydm,zymc from maijor";
 		try {
 			return qr.query(sql, new BeanListHandler<Maijor>(Maijor.class));
 		} catch (SQLException e) {
@@ -151,9 +149,10 @@ public class AdminDaoImpl implements AdminDao {
 		}
 	}
 
+	// 根据专业代码查询班级名称-用于添加班级课程
 	@Override
 	public List<Object> findClassByZydm(String zydm) {
-		String sql = "select distinct bh from users wherr zydm=?";// 去掉重复的行
+		String sql = "select distinct bh from users where zydm=?";// 去掉重复的行
 		try {
 			return qr.query(sql, new ColumnListHandler(), zydm);
 		} catch (SQLException e) {
@@ -176,7 +175,7 @@ public class AdminDaoImpl implements AdminDao {
 
 	@Override
 	public Expert findExpertById(String expacount) {
-		String sql = "select * from expert where expacount=?";
+		String sql = "select * from experts where expacount=?";
 		try {
 			return qr.query(sql, new BeanHandler<Expert>(Expert.class),
 					expacount);
@@ -200,8 +199,8 @@ public class AdminDaoImpl implements AdminDao {
 
 	@Override
 	public void addStuentGrade(List<StudentGrade> studentGradeList) {
-		String sql = "insert into studentgrade(user_acount,nickname,visit_count,title,sthours,bh,termth,expacount) "
-				+ " value(?,?,?,?,?,?,?,?)";
+		String sql = "insert into studentgrade(user_acount,nickname,visit_count,title,sthours,bh,termth,expacount) value(?,?,?,?,?,?,?,?)";
+
 		try {
 			for (StudentGrade studentGrade : studentGradeList) {
 				qr.update(sql, studentGrade.getUser_acount(), studentGrade
@@ -209,8 +208,10 @@ public class AdminDaoImpl implements AdminDao {
 						studentGrade.getTitle(), studentGrade.getSthours(),
 						studentGrade.getBh(), studentGrade.getTermth(),
 						studentGrade.getExpert().getExpacount());
+
 			}
 		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 			throw new RuntimeException();
 		}
 

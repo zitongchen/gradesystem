@@ -18,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 	<div>
 		<ul>
-			<li><a href="${pageContext.request.contextPath}/jsps/admin/search_experts.jsp">代教师管理成绩</a></li>
+			<li><a href="${pageContext.request.contextPath}/jsps/admin/manage_grade.jsp">代教师管理成绩</a></li>
 		</ul>
 	</div>
 	<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>

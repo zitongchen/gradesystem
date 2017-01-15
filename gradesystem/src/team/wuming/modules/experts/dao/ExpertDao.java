@@ -24,4 +24,6 @@ public interface ExpertDao {
 
 	public void updateExpertPhoto(String expacount, String photoPath);
 
+	public List<Expert> findExpertId();
+
 }

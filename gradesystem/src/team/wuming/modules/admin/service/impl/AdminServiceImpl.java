@@ -86,13 +86,16 @@ public class AdminServiceImpl implements AdminService {
 		// 查询课程的详细信息
 		Objcenter objcenter = adminDao.findObjcenterById(visit_count);
 		// 查询教师的信息
-		Expert expert = adminDao.findExpertById(expacount);
+		// Expert expert = adminDao.findExpertById(expacount);
+		Expert expert = new Expert();
+		expert.setExpacount(expacount);
 		List<User> userList = adminDao.findUserByClassName(className);
 		List<StudentGrade> studentGradeList = new ArrayList<StudentGrade>();
 		for (User user : userList) {
 			StudentGrade student = new StudentGrade();
 			student.setUser_acount(user.getUser_acount());
 			student.setNickname(user.getNickname());
+			student.setVisit_count(objcenter.getVisit_count());
 			student.setTitle(objcenter.getTitle());
 			student.setSthours(String.valueOf(objcenter.getSthours()));
 			student.setBh(user.getBh());
@@ -101,6 +104,5 @@ public class AdminServiceImpl implements AdminService {
 			studentGradeList.add(student);
 		}
 		adminDao.addStuentGrade(studentGradeList);
-
 	}
 }

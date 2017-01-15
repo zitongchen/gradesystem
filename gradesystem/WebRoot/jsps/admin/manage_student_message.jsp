@@ -18,8 +18,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 	<div>
 		<ul>
-			<li><a href="${pageContext.request.contextPath }/jsps/admin/input_student_message.jsp" target="body">导入学生信息表</a></li>
-			<li><a href="${pageContext.request.contextPath }/jsps/admin/input_classes_message.jsp" target="body">导入班级表</a></li>
+			<li><a href="${pageContext.request.contextPath }/jsps/admin/add_student_message.jsp" target="body">上传班级信息</a></li>
+			
 		</ul>
 	</div>
 	<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>

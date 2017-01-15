@@ -1,0 +1,44 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html ,
+body {
+    margin: 0;
+}
+
+.make-row{
+    margin: 0;
+}
+
+.mainbodying{
+    margin-top: 65px;
+}
+
+.mainbodying .success-box .success-heading {
+    color: #099e6a;
+    font-size: 32px;
+    text-align: center;
+    font-family: "Microsoft YaHei";
+}
+.mainbodying .success-box .success-txt {
+    color: #099e6a;
+    font-family: "Microsoft YaHei UI Light";
+    font-size: 15px;
+    text-align: center;
+
+}
+.mainbodying .error-box .error-heading {
+    color: crimson;
+    font-size: 32px;
+    text-align: center;
+    font-family: "Microsoft YaHei";
+}
+
+.mainbodying .error-box .error-txt {
+    color: crimson;
+    font-family: "Microsoft YaHei UI Light";
+    font-size: 15px;
+    text-align: center;
+}

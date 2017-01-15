@@ -1,0 +1,79 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+html,
+body {
+    font-family: "Microsoft YaHei UI Light";
+}
+.search-row {
+    margin: 0;
+}
+
+.search-boding {
+    margin-top: 50px;
+}
+
+.search-boding .search-heading {
+    color: #099e6a;
+    font-family: "Microsoft YaHei";
+    font-size: 32px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+.search-boding .search-input{
+    border-color: #099e6a;
+    box-shadow: none;
+}
+.search-boding .search-button {
+    background-color: #099e6a;
+    color: white;
+}
+
+.error-message-boding {
+    margin-top: 50px;
+}
+
+.error-message-boding .error-message {
+    text-align: center;
+    color: crimson;
+    font-size: 20px;
+}
+
+/*搜索页面的查询选择按钮*/
+.search-boding .search-btn-boding {
+   margin: 10px 0 0 -25px;
+}
+.search-result-boding {
+    margin-top: 0px;
+    font-family: "Microsoft YaHei UI Light";
+}
+
+
+/*代理老师管理成绩页面*/
+
+.manage-grade-boding {
+    margin-top: 0px;
+    font-family: "Microsoft YaHei UI Light";
+}
+
+.manage-grade-boding .manage-grade-btn {
+    background-color:gainsboro;
+    border-radius: 15px;
+    color:black;
+    font-size: 12px;
+    height: 28px;
+    margin: 10px 0;
+}
+
+
+.manage-grade-boding .manage-grade-btn:visited{
+    box-shadow: none;
+    background-color: #099e6a;
+    color: white;
+}
+
+.manage-grade-boding .manage-grade-btn:hover {
+    background-color: #099e6a;
+    color: white;
+}

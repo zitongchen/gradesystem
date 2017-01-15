@@ -70,4 +70,10 @@ public class ExpertServiceImpl implements ExpertService {
 		expertDao.updateExpertPhoto(expacount, photoPath);
 
 	}
+
+	@Override
+	public List<Expert> findExpertId() {
+		return expertDao.findExpertId();
+
+	}
 }

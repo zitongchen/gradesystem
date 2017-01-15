@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+html,
+body {
+    font-family: "Microsoft YaHei UI Light";
+    margin: 0;
+}
+.make-row {
+    margin: 0;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+.submit-btn {
+    background-color: #099e6a;
+    color: white;
+}
+.submit-btn:hover {
+    color: lightgray;
+}
+.top-txt {
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+/*添加课程*/
+.sex-radio {
+    margin-top: -6px;
+}

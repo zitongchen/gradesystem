@@ -6,6 +6,10 @@ import java.util.Date;
 /**
  * @author Tony 教师类
  */
+/**
+ * @author Tony
+ * 
+ */
 public class Expert implements Serializable {
 	private String expacount;// 专家帐号(主键)
 	private String password;// 密码
@@ -178,12 +182,13 @@ public class Expert implements Serializable {
 	public String toString() {
 		return "Expert [expacount=" + expacount + ", password=" + password
 				+ ", name=" + name + ", nickname=" + nickname + ", sex=" + sex
-				+ ", description=" + description + ", phote="
+				+ ", description=" + description + ", picture=" + picture
 				+ ", title=" + title + ", education=" + education + ", qq="
 				+ qq + ", telephone=" + telephone + ", email=" + email
-				+ ", misigal=" + ", city=" + city + ", state="
-				+ state + ", regtime=" + regtime + ", expcode=" + expcode
+				+ ", weixin=" + weixin + ", city=" + city + ", state=" + state
+				+ ", regtime=" + regtime + ", expcode=" + expcode
 				+ ", deparid=" + deparid + "]";
 	}
+
 
 }

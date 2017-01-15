@@ -21,4 +21,6 @@ public interface ExpertService {
 
 	public void updateExpertPhoto(String expacount, String photoPath);
 
+	public List<Expert> findExpertId();
+
 }

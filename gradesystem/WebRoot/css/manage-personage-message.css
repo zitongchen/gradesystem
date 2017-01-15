@@ -1,0 +1,35 @@
+*{
+    margin: 0;
+    padding:0;
+}
+.make-row {
+    margin: 0;
+}
+
+
+
+
+.main-bodying {
+    border: 2px solid gainsboro;
+    border-radius: 6px;
+    background-color: whitesmoke;
+    font-family: "Microsoft YaHei UI Light";
+    margin-top: 50px;
+
+}
+
+.main-bodying .bodying-heading {
+    color: #099e6a;
+    font-family: "Microsoft YaHei UI Light";
+    font-size: 32px;
+    text-align: center;
+}
+
+.main-bodying .error-message {
+    text-align: center;
+    color: crimson;
+}
+.main-bodying .submit-btn {
+    color: white;
+    background-color: #099e6a;
+}

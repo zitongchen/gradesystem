@@ -159,17 +159,16 @@ public class StudentGrade implements Serializable {
 	public void setState(String state) {
 		this.state = state;
 	}
-
 	@Override
 	public String toString() {
 		return "StudentGrade [user_acount=" + user_acount + ", nickname="
 				+ nickname + ", title=" + title + ", visit_count="
-				+ visit_count + ", sthhours=" + ", gradelei="
+				+ visit_count + ", sthours=" + sthours + ", gradelei="
 				+ gradelei + ", psscore=" + psscore + ", syscore=" + syscore
 				+ ", ksscore=" + ksscore + ", totalscores=" + totalscores
-				+ ", bh=" + bh + ", termth=" + termth + ", expacount="
-				+ ", oper=" + oper + ", shenhe=" + shenhe
-				+ ", optime=" + optime + ", remark=" + remark + ", state="
-				+ state + "]";
+				+ ", bh=" + bh + ", termth=" + termth + ", expert=" + expert
+				+ ", oper=" + oper + ", shenhe=" + shenhe + ", optime="
+				+ optime + ", remark=" + remark + ", state=" + state + "]";
 	}
+
 }
