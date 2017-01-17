@@ -73,3 +73,107 @@ function checkStringLen(obj,msg,len)
         return true;
     }
 }
+
+//个人信息修改页面
+$(function() {
+//获取class为caname的元素
+    $(".change-txt").click(function() {
+        var td = $(this);
+        var txt = td.text();
+        var input = $("<input class='form-control' type='text'value='" + txt + "'/>");
+        td.html(input);
+        input.click(function() { return false; });
+//获取焦点
+        input.trigger("focus");
+//文本框失去焦点后提交内容，重新变为文本
+        input.blur(function() {
+            var newtxt = $(this).val();
+//判断文本有没有修改
+            if (newtxt != txt) {
+                var name=td.attr("name");
+                var id=$("#id").text();
+                $.ajax({
+                    type:"post",
+                    url:"root#servlet",
+                    data:"method=updateSystemMessage&type=student&id="+id+"&tex="+newtxt+"&date="+new Date(),
+                    success:function () {
+                        td.html(newtxt);
+                        alert("请求成功！");
+                    },
+                    error:function () {
+                        td.html(txt);
+                        alert('修改信息有错！');
+                    }
+                });
+            }
+            else
+            {
+                td.html(newtxt);
+            }
+        });
+    });
+
+    //图片上传
+    $(".photo").click(function() {
+        //弹出窗口
+        var box= $(".container");
+        var show=box.css("display")
+        if(show=="none"){
+            $(".beijin").css("display","block");
+            box.css("display","block");
+        }
+        var options =
+            {
+                thumbBox: '.thumbBox',
+                spinner: '.spinner',
+                imgSrc: root+'resource/images/ni.jpg'
+            }
+        var cropper = $('.imageBox').cropbox(options);
+        $('#upload-file').on('change', function(){
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                options.imgSrc = e.target.result;
+                cropper = $('.imageBox').cropbox(options);
+            }
+            reader.readAsDataURL(this.files[0]);
+            this.files = [];
+        });
+        var first=true;
+        $('#btnCrop').on('click', function(){
+            var img = cropper.getDataURL();
+            var type=$(".picture").attr("name");
+            var userid=$("#id").text();
+            //上传截取后的图片，数据为base64
+            if(first){
+            	$.ajax({
+                    type:"post",
+                    url:root+"UploadPhoto",
+                    data:"method=uploadPhoto&imgData="+img+"&type="+type+"&userId="+userid,
+                    success:function (data) {
+                    	alert(data);
+                        //上传成功
+                        var show=box.css("display");
+                        if(show=="block"){
+                            $(".beijin").css("display","none");
+                            box.css("display","none");
+                        }
+                        $('.picture').attr("src",img);
+                    },
+                    error:function () {
+                    	alert("上传失败！")
+                    }
+                })
+                first=false;
+            }
+            
+        });
+        //取消弹出的窗口
+        $('#btnCancel').click(function () {
+            var show=box.css("display");
+            if(show=="block"){
+                $(".beijin").css("display","none");
+                box.css("display","none");
+            }
+        });
+    });
+});

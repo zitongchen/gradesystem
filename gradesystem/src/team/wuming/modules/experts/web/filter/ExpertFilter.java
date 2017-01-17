@@ -39,7 +39,7 @@ public class ExpertFilter implements Filter {
 		Admin admin = (Admin) httpRequest.getSession().getAttribute(
 				"session_admin");
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
-		if (expert != null || admin != null) {
+		if (expert != null) {
 			chain.doFilter(httpRequest, response);
 		} else {
 			httpResponse.sendRedirect(httpRequest.getContextPath()

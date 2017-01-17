@@ -34,28 +34,15 @@ public class UserServiceImpl implements UserService {
 		userDao.updateUserMessageById(user);
 	}
 
-	/**
-	 * 学生密码修改功能
-	 */
-	public void updateUserPassword(User user) {
-		userDao.updateUserPasswordById(user);
-	}
+
 
 	// 忘记密码
 	public void forgetUserPassword(User user) {
 
 	}
 
-	/**
-	 * 学生成绩查询
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	public List<StudentGrade> queryUserGrade(String userId) {
-		return userDao.queryGradeByUserId(userId);
-	}
 
+	// 查询学生信息，人员信息展示功能
 	public User findUserMessage(String userId) {
 		return userDao.findUserMessageById(userId);
 	}
@@ -66,5 +53,11 @@ public class UserServiceImpl implements UserService {
 
 	}
 
+	// 根据账号更改密码
+	@Override
+	public void updateUserPassword(String user_acount, String password) {
+		userDao.updateUserPasswordById(user_acount, password);
+
+	}
 
 }

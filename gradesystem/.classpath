@@ -47,6 +47,7 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-lang3-3.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/fastjson-1.2.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/itcat-tools-1.4.2.jar" sourcepath="D:/BaiduYunDownload/成绩管理系统/所需jar包/itcast-tools-1.4.2"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/sun.misc.BASE64Decoder.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

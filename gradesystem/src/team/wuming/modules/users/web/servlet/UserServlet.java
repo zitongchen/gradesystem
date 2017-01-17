@@ -55,19 +55,15 @@ public class UserServlet extends cn.itcast.servlet.BaseServlet {
 			String verificationCode = (String) request.getSession()
 					.getAttribute("verificationCode");
 			if (!(verification.equals(verificationCode))) {
-				request.setAttribute("verificationError", "验证码错误！");
-				request.setAttribute("userId", userId);
-				request.setAttribute("password", password);
-				return "f:/jsps/common/login_system.jsp";
+				request.setAttribute("errorMessage", "验证码错误！");
+				return "f:/index.jsp";
 			}
 			User user = userService.login(form);
 			request.getSession().setAttribute("session_user", user);
-			return "f:/jsps/user/user_homepage.jsp";
+			return "f:/jsps/user/homepage.jsp";
 		} catch (team.wuming.modules.users.service.UserException e) {
-			request.setAttribute("msg", e.getMessage());// 账号密码有误，保存错误信息并回原来的账号跟密码
-			request.setAttribute("userId", userId);
-			request.setAttribute("password", password);
-			return "f:/jsps/common/login_system.jsp";
+			request.setAttribute("errorMessage", "账号或密码有错！");
+			return "f:/index.jsp";
 		}
 	}
 
@@ -154,9 +150,8 @@ public class UserServlet extends cn.itcast.servlet.BaseServlet {
 			UserException {
 		String userId = request.getParameter("user_acount");
 		User user = userService.findUserMessage(userId);
-		request.setAttribute("request_user", user);
-		return "f:/jsps/user/index.jsp";
-		// return "f:/jsps/user/usermessage.jsp";
+		request.setAttribute("user", user);
+		return "f:/jsps/user/person_message.jsp";
 	}
 
 	/**
@@ -172,28 +167,18 @@ public class UserServlet extends cn.itcast.servlet.BaseServlet {
 	public String updateUserPassword(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			UserException {
-		User form = CommonUtils.toBean(request.getParameterMap(), User.class);
+		String oldpassword=request.getParameter("oldpassword");
 		User user = (User) request.getSession().getAttribute("session_user");
-		if (!form.getPassword().equals(user.getPassword())) {
-			request.setAttribute("passwordError", "原密码输入有误");
-			return "f:/jsps/user/updateuserpassword.jsp";
+		if (!oldpassword.equals(user.getPassword())) {
+			request.setAttribute("errorMessage", "原密码输入有误");
+			return "f:/jsps/user/update_password.jsp";
 		} else {
-			form.setPassword(request.getParameter("newPassword"));
+			String password = request.getParameter("newpassword");
+			System.out.println(password);
+			userService.updateUserPassword(user.getUser_acount(),password);
 		}
-		userService.updateUserPassword(form);
 		request.getSession().invalidate();// 销毁session并让用户重新登录
 		return "r:/index.jsp";
-	}
-
-	/**
-	 * 学生忘记密码(暂时不做)
-	 * 
-	 */
-	public String forgetUserPassword(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException,
-			UserException {
-
-		return null;
 	}
 
 	/**
@@ -216,22 +201,4 @@ public class UserServlet extends cn.itcast.servlet.BaseServlet {
 		request.setAttribute("studentGradeList", studentGradeList);
 		return "f:/jsps/user/query_grade.jsp";
 	}
-
-	/**
-	 * 学生补考科目查询
-	 * 
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	public String queryUserFail(HttpServletRequest request,
-			HttpServletResponse response) {
-		String userId = request.getParameter("user_acount");
-		List<StudentGrade> studentGradeList = studentGradeService
-				.queryUserFail(userId);
-		request.setAttribute("studentGradeFail", studentGradeList);
-		return "f:/jsps/user/query_fail_grade.jsp";
-	}
-
-
 }

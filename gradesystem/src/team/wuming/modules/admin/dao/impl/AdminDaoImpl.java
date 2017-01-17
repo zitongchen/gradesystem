@@ -27,6 +27,8 @@ public class AdminDaoImpl implements AdminDao {
 			qr.update(sql);
 		} catch (SQLException e) {
 			throw new RuntimeException();
+		} finally {
+
 		}
 
 	}
@@ -79,7 +81,7 @@ public class AdminDaoImpl implements AdminDao {
 			}
 			} catch (SQLException e) {
 
-			throw new RuntimeException(e);
+			throw new RuntimeException(e.getMessage());
 			}
 	}
 
@@ -93,7 +95,7 @@ public class AdminDaoImpl implements AdminDao {
 					obj.getClasshour(), obj.getSbhour(), obj.getLyid(),
 					obj.getScore());
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e.getMessage());
 		}
 
 	}
@@ -106,7 +108,7 @@ public class AdminDaoImpl implements AdminDao {
 					maijor.getXxxs(), maijor.getPycc(), maijor.getXznx(),
 					maijor.getXz(), maijor.getBz(), maijor.getLyid());
 		} catch (Exception e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e.getMessage());
 		}
 	}
 
@@ -120,7 +122,7 @@ public class AdminDaoImpl implements AdminDao {
 					xuexid.getTelephone(), xuexid.getEmial(), xuexid.getYtdw(),
 					xuexid.getLeixing(), xuexid.getYongdate(), xuexid.getHuze());
 		} catch (Exception e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e.getMessage());
 		}
 
 	}
@@ -132,7 +134,7 @@ public class AdminDaoImpl implements AdminDao {
 		try {
 			return qr.query(sql, new BeanListHandler<Maijor>(Maijor.class));
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e.getMessage());
 		}
 
 	}
@@ -145,7 +147,7 @@ public class AdminDaoImpl implements AdminDao {
 			return qr.query(sql,
 					new BeanListHandler<Objcenter>(Objcenter.class), zydm);
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e.getMessage());
 		}
 	}
 
@@ -156,7 +158,7 @@ public class AdminDaoImpl implements AdminDao {
 		try {
 			return qr.query(sql, new ColumnListHandler(), zydm);
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e.getMessage());
 		}
 
 	}
@@ -168,7 +170,7 @@ public class AdminDaoImpl implements AdminDao {
 			return qr.query(sql, new BeanHandler<Objcenter>(Objcenter.class),
 					visit_count);
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e.getMessage());
 		}
 
 	}
@@ -180,7 +182,7 @@ public class AdminDaoImpl implements AdminDao {
 			return qr.query(sql, new BeanHandler<Expert>(Expert.class),
 					expacount);
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e.getMessage());
 		}
 
 	}
@@ -192,7 +194,7 @@ public class AdminDaoImpl implements AdminDao {
 			return qr.query(sql, new BeanListHandler<User>(User.class),
 					className);
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e.getMessage());
 		}
 
 	}
@@ -211,8 +213,19 @@ public class AdminDaoImpl implements AdminDao {
 
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException();
+			throw new RuntimeException(e.getMessage());
+		}
+
+	}
+
+	// 保存图片的途径
+	@Override
+	public void savePhotoPath(String userId, String filePath) {
+		String sql = "update admins set photo=? where admin_acount=?";
+		try {
+			qr.update(sql, filePath, userId);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		}
 
 	}

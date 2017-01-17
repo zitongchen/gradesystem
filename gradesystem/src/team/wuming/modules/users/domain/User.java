@@ -13,7 +13,7 @@ public class User implements Serializable {
 	private String realname;// 真实姓名
 	private String nickname; // 昵称
 	private String score; // 用户积分
-	private String tlelphone; // 手机号
+	private String telephone; // 手机号
 	private String qq;// QQ号
 	private String email;// email
 	private String weixin;// 微信号
@@ -96,12 +96,12 @@ public class User implements Serializable {
 		this.score = score;
 	}
 
-	public String getTlelphone() {
-		return tlelphone;
+	public String getTelephone() {
+		return telephone;
 	}
 
-	public void setTlelphone(String tlelphone) {
-		this.tlelphone = tlelphone;
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
 
 	public String getQq() {
@@ -432,6 +432,27 @@ public class User implements Serializable {
 		this.zczt = zczt;
 	}
 
+	@Override
+	public String toString() {
+		return "User [user_acount=" + user_acount + ", password=" + password
+				+ ", realname=" + realname + ", nickname=" + nickname
+				+ ", score=" + score + ", telephone=" + telephone + ", qq="
+				+ qq + ", email=" + email + ", weixin=" + weixin + ", age="
+				+ age + ", city=" + city + ", occupation=" + occupation
+				+ ", education=" + education + ", level=" + level + ", scores="
+				+ scores + ", state=" + state + ", regist_time=" + regist_time
+				+ ", usercode=" + usercode + ", marry=" + marry + ", hobby="
+				+ hobby + ", province=" + province + ", address=" + address
+				+ ", postCode=" + postCode + ", paymethod=" + paymethod
+				+ ", user_type=" + user_type + ", sex=" + sex + ", csrq="
+				+ csrq + ", bh=" + bh + ", dqszj=" + dqszj + ", ksh=" + ksh
+				+ ", mz=" + mz + ", zzmm=" + zzmm + ", photo=" + photo
+				+ ", xxdd=" + xxdd + ", sfzh=" + sfzh + ", zydm=" + zydm
+				+ ", zymc=" + zymc + ", yxdm=" + yxdm + ", yxmc=" + yxmc
+				+ ", xxxs=" + xxxs + ", rxrq=" + rxrq + ", yjbyrq=" + yjbyrq
+				+ ", swzh=" + swzh + ", xb=" + xb + ", cc=" + cc + ", xz=" + xz
+				+ ", zczt=" + zczt + "]";
+	}
 
 
 

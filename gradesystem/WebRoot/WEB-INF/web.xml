@@ -45,6 +45,21 @@
     <servlet-name>ExitServlet</servlet-name>
     <servlet-class>team.wuming.common.web.servlet.ExitServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>AdminServletOne</servlet-name>
+    <servlet-class>team.wuming.modules.admin.web.servlet.AdminServletOne</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>UploadPhoto</servlet-name>
+    <servlet-class>team.wuming.common.web.servlet.UploadPhoto</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>UserUploadPhoto</servlet-name>
+    <servlet-class>team.wuming.modules.users.web.servlet.UserUploadPhoto</servlet-class>
+  </servlet>
+
+
+
 
 
   <servlet-mapping>
@@ -90,6 +105,18 @@
   <servlet-mapping>
     <servlet-name>ExitServlet</servlet-name>
     <url-pattern>/ExitServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AdminServletOne</servlet-name>
+    <url-pattern>/AdminServletOne</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UploadPhoto</servlet-name>
+    <url-pattern>/UploadPhoto</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UserUploadPhoto</servlet-name>
+    <url-pattern>/UserUploadPhoto</url-pattern>
   </servlet-mapping>
   <filter>
     <filter-name>UserLoginFilter</filter-name>

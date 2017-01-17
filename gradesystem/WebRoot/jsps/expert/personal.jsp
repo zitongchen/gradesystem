@@ -12,26 +12,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>个人中心</title>
 <base target="body"/>
-
 <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
-<link href="${pageContext.request.contextPath }/css/teacherCSS.css" rel="stylesheet" style="text/css">
+<link href="${pageContext.request.contextPath }/css/sidebar.css" rel="stylesheet" >
 </head>
 <body>
-<!--
-<div id="tabs">
-    <div>  
-         <ul>
-             <li><a href="personal.html">教师基本信息</a></li>
-             <li><a href="modifyPassword.html">密码修改</a></li>
-         </ul>
-    </div>
-</div>
--->
-            <li><a href="${pageContext.request.contextPath}/jsps/expert/personal_table.jsp">教师基本信息</a></li>
+	<div>
+		<ul>
+			<li><a href="${pageContext.request.contextPath}/jsps/expert/person_message.jsp">管理员基本信息</a></li>
             <li><a href="${pageContext.request.contextPath}/jsps/expert/update_password.jsp">密码修改</a></li>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-parent.js"></script><!-- 本地的bootstrap资源链接 -->
+		</ul>
+	</div>
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-	<script src="myJS.js"></script>
   </body>
 </html>

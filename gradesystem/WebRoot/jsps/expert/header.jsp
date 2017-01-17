@@ -10,27 +10,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>头部页面</title>
-
-<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
-<link href="${pageContext.request.contextPath }/css/teacherCSS2.css" rel="stylesheet" style="text/css">
+<title>首页</title>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/main-style.css">
 </head>
 <body>
-
+<!-- 以下是头部header -->
 <div class="header">
-	<div class="logo">继续教育学院成绩管理系统</div>
-	<div class="right_nav">
-		<div class="text_right">
-            <ul class="nav_return">
-                <li> [<a href="${pageContext.request.contextPath}/ExpertServlet?method=exit" target="_top">退出</a>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-            </ul>
-		</div>
-	</div>
-<div class="under_header"> 
-<span>${sessionScope.session_expert.name}</span>,您好！职工号：<span>${sessionScope.session_expert.expacount}</span>&nbsp;&nbsp;学院：<span>医药信息工程学院</span>&nbsp;&nbsp;职称：<span>${sessionScope.session_expert.title}</span> </div>
+	<div class="logo">
+        <p>继续教育学院成绩管理系统</p>
+    </div>
+    <div class="heading_right">
+        <div class="exit_active">
+            <a href="${pageContext.request.contextPath}/AdminServlet?method=exit" onclick="javascript:window.top.close();" class="exit_active_message">
+                <span class="glyphicon glyphicon-remove-circle"></span>
+                <span>退出</span>
+            </a>
+        </div>
+        <div class="user_message">
+            <span class="glyphicon glyphicon-user"></span>
+            <c:if test="${not empty sessionScope.session_user}">
+            <span>${sessionScope.session_user.nickname }</span>
+            </c:if>
+            <c:if test="${not empty sessionScope.session_expert}">
+            <span>${sessionScope.session_expert.name }</span>
+            </c:if>
+            <c:if test="${not empty sessionScope.session_admin}">
+            <span>${sessionScope.session_admin.name }</span>
+            </c:if>
+        </div>
+    </div>
 </div>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-parent.js"></script><!-- 本地的bootstrap资源链接 -->
-<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-</body>
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  </body>
 </html>

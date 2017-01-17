@@ -7,7 +7,7 @@ $(function () {
     		if(isZydm){
 	            $.ajax({
 	                type:"post",
-	                url:root+"AdminServlet",
+	                url:root+"AdminServletOne",
 	                data:"method=findMaijor",
 	                success:function (data) {
 	                    	var zy=JSON.parse(data);
@@ -26,8 +26,8 @@ $(function () {
     			var zydm=$("#zydm").val();
     			$.ajax({
     				type:"post",
-    				url:root+"AdminServlet",
-    				data:"method=findObjcenterByZydm&zydm="+zydm,
+    				url:root+"AdminServletOne",
+    				data:"method=findObjByZydm&zydm="+zydm,
     				success:function(data){
     					$("#kc-select").empty();
     					var kc=JSON.parse(data);
@@ -48,7 +48,7 @@ $(function () {
     	$(function(){
     		$.ajax({
     			type:"post",
-    			url:root+"AdminServlet",
+    			url:root+"AdminServletOne",
     			data:"method=findExpertId",
     			success:function(data){
     				var js=JSON.parse(data);
@@ -65,12 +65,12 @@ $(function () {
     			}
     		})
     	})
-    	$("#zydm").focusout(function(){
+    	$("#kc-select").focusout(function(){
     		var zydm=$("#zydm").val();
     		$("#bj-select").empty();
     		$.ajax({
     			type:"post",
-    			url:root+"AdminServlet",
+    			url:root+"AdminServletOne",
     			data:"method=findClassByZydm&zydm="+zydm,
     			success:function(data){
     				$("#bj-select").empty();

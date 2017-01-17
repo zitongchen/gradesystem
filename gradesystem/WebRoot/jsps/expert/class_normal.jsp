@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>计算机科学与技术15(1)</title>
+<title>班级成绩录入</title>
 <base target="body"/>
 <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
 <link href="${pageContext.request.contextPath }/css/teacherCSS2.css" rel="stylesheet" style="text/css">
@@ -19,32 +19,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <!-- 以下是内容主体部分mainbody -->  
 <div class="mainbody">
-    <p>当前位置：教师-->教师成绩录入-->${requestScope.classes.className}
-    </p>
     <div>
     <form target="body" name="" id="" metdod="post" action="${pageContext.request.contextPath}/ExpertServlet">
 			<input type="hidden"  name="method" value="saveClassStudentGrade"/>
-			<input type="hidden" name="classId" value="${requestScope.classes.bh}"/>
+			<input type="hidden" name="classId" value="${requestScope.studentgrades[0].bh}"/>
             <!-- 第一个表格 -->
             <table class="table table-bordered table-condensed">
-                <option>教师基本信息：</option>
+                <option>课程基本信息：</option>
                 <tr>
                     <td>教师姓名：</td>
                     <td><span>${sessionScope.session_expert.name}</span></td>
                     <td>课程名称：</td>
-                    <td><span>${requestScope.studentgrades[0].docourse.title}</span></td>
+                    <td><span>${requestScope.studentgrades[0].title}</span></td>
                 </tr>
                 <tr>
-                    <td>班级构成：</td>
-                    <td><span>${requestScope.className}</span></td>
+                    <td>班级：</td>
+                    <td><span>${requestScope.studentgrades[0].bh}</span></td>
                     <td>学年学期：</td>
                     <td><span>2016-2017-1(静态数据)</span></td>
-                </tr>
-                <tr>
-                    <td>课程性质：</td>
-                    <td><span>必修课（静态数据）</span></td>
-                    <td>考核方式：</td>
-                    <td><span>其他（静态数据）</span></td>
                 </tr>
             </table>
             
@@ -82,8 +74,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <tbody>
              <c:if test="${not empty requestScope.studentgrades }">
             <tr>
-                <td>序号</td>
-                <td>班级名称</td>
+                <!--  序号-->
                 <td>学号</td>
                 <td>姓名</td>
                 <td>平时成绩</td>
@@ -92,15 +83,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </tr>
 			    <c:forEach items="${requestScope.studentgrades}" var="studentList" varStatus="status">
 			    	<tr>
-			    		<td>${status.count}</td>
-		                <td style="width: 20%">${requestScope.className}</td>
+			    		<!--  td>${status.count}</td-->
 			    		<td><input type="text" name="userId" value="${studentList.user_acount}" size="12" readonly="readonly" style="border: 0px"></td>
 			    		<c:set var="index" value="${status.index}"></c:set>
-		                <td>${studentNameList[index]}</td>
-			    		<td><input type="text" name="psgrade" value="${studentList.psgrade}" size="8"></td>
-			    		<td><input type="text" name="ksgrade" value="${studentList.ksgrade}" size="8"></td>
-			    		<!-- <td> input type="text" name="grade" value="${studentList.grade}" size="8" disabled="disabled"></td>-->
-			    		<td>${studentList.grade}</td>
+		                <td>${studentList.nickname}</td>
+			    		<td><input type="text" name="psgrade" value="${studentList.psscore}" size="8"></td>
+			    		<td><input type="text" name="ksgrade" value="${studentList.ksscore}" size="8"></td>
+			    		<td>${studentList.totalscores}</td>
     				</tr>
 			    </c:forEach>
     		</c:if>

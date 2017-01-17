@@ -126,7 +126,30 @@ public class ExpertDaoImpl implements ExpertDao {
 		try {
 			return qr.query(sql, new BeanListHandler<Expert>(Expert.class));
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e);
+		}
+
+	}
+
+	// 改变学生某刻成绩的状态
+	@Override
+	public void changeGradeState(String bh, String kcId) {
+		String sql = "update studentgrade set state=? where bh=? and visit_count=?";
+		try {
+			qr.update(sql, "1", bh, kcId);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	// 保存图片的途径
+	@Override
+	public void savePhotoPath(String userId, String filePath) {
+		String sql = "update experts set photo=? where expacount=?";
+		try {
+			qr.update(sql, filePath, userId);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		}
 
 	}

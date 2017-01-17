@@ -25,21 +25,11 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 	public List<StudentGrade> queryUserGrade(String userId) {
 		List<StudentGrade> studentGrades = studentGradeDao
 				.queryGradeByUserId(userId);
-		Expert expert = new Expert();
-		return studentGrades;
-	}
-
-	/**
-	 * 学生根据本人学号查询补考信息
-	 */
-	@Override
-	public List<StudentGrade> queryUserFail(String userId) {
-		List<StudentGrade> studentGrades = studentGradeDao
-				.queryFailGradeByUserId(userId);
-
-		Expert expert = new Expert();
-
-
+		for (StudentGrade studentGrade : studentGrades) {
+			String name = String.valueOf(studentGradeDao
+					.queryExpert(studentGrade.getExpert().getExpacount()));
+			studentGrade.getExpert().setName(name);
+		}
 		return studentGrades;
 	}
 
@@ -52,35 +42,50 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 		List<StudentGrade> studentGrades = studentGradeDao
 				.findClassStudentByClass(classId, expacount);
 
-		Expert expert = new Expert(); // 创建教师对象
-
 		return studentGrades;
 	}
 
-	/**
-	 * 根据班级编号查询学生姓名
-	 */
-	@Override
-	public List<Object> queryUserName(String classId) {
-		return studentGradeDao.queryUserName(classId);
-	}
 
 	/**
 	 * 教师保存学生的成绩
 	 */
 	@Override
 	public void saveClassStudentGrade(String[] userId, String[] psGrades,
-			String[] ksGrades, String paecetime, String terminal) {
+			String[] syGrades, String[] ksGrades, String paecetime,
+			String sytime, String terminal) {
 		List<StudentGrade> newStudentGrade = new ArrayList<StudentGrade>();// 创建一个保存学生成绩的List集合
+		Float ps = Float.parseFloat(paecetime) / 100;
+		Float sy = Float.parseFloat(sytime) / 100;
+		Float qm = Float.parseFloat(terminal) / 100;
+		Float psScore;
+		Float syScore;
+		Float ksScore;
+		Float grades = (float) 0;
 		for (int index = 0; index < userId.length; index++) {
 			StudentGrade studentGrade = new StudentGrade();
-			int grades = (int) (Float.parseFloat(psGrades[index]) // 根据公式计算学生的总评成绩，把各项成绩的占比转化为小数进行计算
-					* Float.parseFloat(paecetime) / 100 + Float
-					.parseFloat(ksGrades[index])
-					* Float.parseFloat(terminal)
-					/ 100);
+
+
+			if (psGrades[index] != "") {
+				psScore = Float.parseFloat(psGrades[index]);
+				grades = psScore * ps;
+			} else {
+				psGrades[index] = null;
+			}
+			if (syGrades[index] != "") {
+				syScore = Float.parseFloat(syGrades[index]);
+				grades += syScore * sy;
+			} else {
+				syGrades[index] = null;
+			}
+			if (ksGrades[index] != "") {
+				ksScore = Float.parseFloat(ksGrades[index]);
+				grades += ksScore * qm;
+			} else {
+				ksGrades[index] = null;
+			}
 			studentGrade.setUser_acount(userId[index]);
 			studentGrade.setPsscore(psGrades[index]);
+			studentGrade.setSyscore(syGrades[index]);
 			studentGrade.setKsscore(ksGrades[index]);
 			studentGrade.setTotalscores(String.valueOf(grades));
 			newStudentGrade.add(studentGrade);
@@ -98,10 +103,5 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 
 	}
 
-
-	@Override
-	public List<Object> queryUserSex(String classId) {
-		return studentGradeDao.querySexName(classId);
-	}
 
 }

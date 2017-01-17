@@ -13,8 +13,6 @@ public interface UserService {
 	// 更新学生信息
 	public void updateUserMessage(User user);
 
-	// 更新学生密码
-	public void updateUserPassword(User user);
 
 	// 忘记密码
 	public void forgetUserPassword(User user);
@@ -24,6 +22,8 @@ public interface UserService {
 
 	public void uploadStudentPhoto(String userId, String photo);
 
+	// 根据账号更改密码
+	public void updateUserPassword(String user_acount, String password);
 
 
 }

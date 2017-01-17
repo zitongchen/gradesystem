@@ -76,4 +76,10 @@ public class ExpertServiceImpl implements ExpertService {
 		return expertDao.findExpertId();
 
 	}
+
+	@Override
+	public void changeGradeState(String bh, String kcId) {
+		expertDao.changeGradeState(bh, kcId);
+
+	}
 }

@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 <!-- 以下是头部header -->
 <div class="heading">
-    <iframe frameborder="0" src="${pageContext.request.contextPath}/jsps/common/header.jsp" scrolling="no" ></iframe>
+    <iframe frameborder="0" src="${pageContext.request.contextPath}/jsps/user/header.jsp" scrolling="no" ></iframe>
 </div>
 <!-- 以下是菜单menu以及左侧的二级菜单 -->
 <div class="bodying" id="main-bodying">
@@ -30,22 +30,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="right">
         <div class="right_top">
             <ul class="navigation">
-            	<c:if test="${not empty requestScope.session.session_user}">
-	                <li class="navigation-li"><a class="navigation-li-a" href="../user/sidebar.html" target="sidebar">首页</a></li>
-	                <li class="navigation-li"><a class="navigation-li-a" href="../user/query.html" target="sidebar">成绩查询</a></li>
-	                <li class="navigation-li"><a class="navigation-li-a" href="../user/personal.html" target="sidebar">个人中心</a></li>
-                </c:if>
-                <c:if test="${not empty requestScope.session.session_expert}">
-	                <li class="navigation-li"><a class="navigation-li-a" href="../user/sidebar.html" target="sidebar">首页</a></li>
-	                <li class="navigation-li"><a class="navigation-li-a" href="../user/query.html" target="sidebar">成绩查询</a></li>
-	                <li class="navigation-li"><a class="navigation-li-a" href="../user/personal.html" target="sidebar">个人中心</a></li>
-                </c:if>
-                <c:if test="${not empty session_admin}">
-	                <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath}/jsps/common/sidebar.jsp" target="sidebar">首页</a></li>
-			        <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath}/jsps/admin/show_classes.jsp" target="sidebar">成绩管理</a></li>
-			        <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath}/jsps/admin/manage_student_message.jsp" target="sidebar">学生信息管理</a></li>
-			        <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath}/jsps/admin/manage_education_message.jsp" target="sidebar">系统信息管理</a></li>
-			        <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath}/jsps/admin/personal.jsp" target="sidebar">个人中心</a></li>
+            	<c:if test="${not empty session_user}">
+	                <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath }/jsps/common/sidebar.jsp" target="sidebar">首页</a></li>
+	                <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath }/jsps/user/query.jsp" target="sidebar">成绩查询</a></li>
+	                <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath }/jsps/user/personal.jsp" target="sidebar">个人中心</a></li>
                 </c:if>
             </ul>
         </div>

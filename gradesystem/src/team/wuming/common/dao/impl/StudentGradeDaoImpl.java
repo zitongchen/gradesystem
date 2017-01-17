@@ -54,57 +54,20 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 		return studentGrades;
 	}
 
-	@Override
-	public int queryTrByUserId(String userId) {
-		// TODO Auto-generated method stub
-		String sql = "select count(*) from studentgrade where user_acount=?";
-		try {
-			return ((Number) qr.query(sql, new ScalarHandler(), userId))
-					.intValue();
-
-		} catch (Exception e) {
-			throw new RuntimeException();
-		}
-
-	}
-
-
 
 	/**
-	 * 根据教师编号查询教师
+	 * 根据教师编号查询教师-用于学生查询成绩功能
 	 */
 	@Override
-	public Expert queryExpert(String expacount) {
-		String sql = "select * from experts where expacount=?";
+	public Object queryExpert(String expacount) {
+		String sql = "select name from experts where expacount=?";
 		try {
-			return qr.query(sql, new BeanHandler<Expert>(Expert.class),
-					expacount);
+			return qr.query(sql, new ScalarHandler(), expacount);
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}
 	}
 
-	/**
-	 * 根据学号查询学生补考成绩信息
-	 */
-	@Override
-	public List<StudentGrade> queryFailGradeByUserId(String userId) {
-		String sql = "select * from studentgrade where user_acount=? and grade<60";
-		List<StudentGrade> studentGrades = new ArrayList<StudentGrade>();
-		try {
-			List<Map<String,Object>> maps=qr.query(sql, new MapListHandler(),userId);
-			for (Map<String, Object> map : maps) {
-				Expert expert = CommonUtils.toBean(map, Expert.class);
-				StudentGrade studentGrade = CommonUtils.toBean(map,
-						StudentGrade.class);
-				studentGrade.setExpert(expert);
-				studentGrades.add(studentGrade);
-			}
-		} catch (SQLException e) {
-			throw new RuntimeException();
-		}
-		return studentGrades;
-	}
 
 	/**
 	 * 根据班级编号，教师编号查询教师所教的成绩信息
@@ -112,8 +75,7 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 	@Override
 	public List<StudentGrade> findClassStudentByClass(String classId,
 			String expacount) {
-		String sql = " select * from studentgrade where user_acount in"
-				+ " (select user_acount from users where bh =?) and expacount=? order by user_acount asc";
+		String sql = " select * from studentgrade where bh =? and expacount=? order by user_acount asc";
 		List<StudentGrade> studentGrades = new ArrayList<StudentGrade>();
 		try {
 			List<Map<String, Object>> maps = qr.query(sql,
@@ -132,30 +94,17 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 		}
 		return studentGrades;
 	}
-
-	/**
-	 * 根据班级编号查询学生姓名
-	 */
-	@Override
-	public List<Object> queryUserName(String classId) {
-		String sql = "select realname from users where bh=?";
-		try {
-			return qr.query(sql, new ColumnListHandler(), classId);
-		} catch (Exception e) {
-			throw new RuntimeException();
-		}
-	}
-
 	/**
 	 * 保存学生成绩
 	 */
 	@Override
 	public void saveStudentGrades(List<StudentGrade> newStudentGrade) {
 
-		String sql = "update studentgrade set psgrade=? ,ksgrade=?,grade=? where user_acount=?";
+		String sql = "update studentgrade set psscore=? ,syscore=?,ksscore=?,totalscores=? where user_acount=?";
 		try {
 			for (StudentGrade studentGrade : newStudentGrade) {// 循环保存学生信息
 				qr.update(sql, studentGrade.getPsscore(),
+						studentGrade.getSyscore(),
 						studentGrade.getKsscore(),
 						studentGrade.getTotalscores(),
 						studentGrade.getUser_acount());
@@ -164,18 +113,4 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 			throw new RuntimeException();
 		}
 	}
-
-
-
-
-	@Override
-	public List<Object> querySexName(String classId) {
-		String sql = "select xb from users where bh=?";
-		try {
-			return qr.query(sql, new ColumnListHandler(), classId);
-		} catch (Exception e) {
-			throw new RuntimeException();
-		}
-	}
-
 }

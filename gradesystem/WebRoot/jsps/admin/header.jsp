@@ -22,21 +22,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <div class="heading_right">
         <div class="exit_active">
-            <a href="${pageContext.request.contextPath}/AdminServlet?method=exit" class="exit_active_message">
+            <a href="${pageContext.request.contextPath}/AdminServlet?method=exit" onclick="javascript:window.top.close();" class="exit_active_message">
                 <span class="glyphicon glyphicon-remove-circle"></span>
                 <span>退出</span>
             </a>
         </div>
         <div class="user_message">
             <span class="glyphicon glyphicon-user"></span>
-            <c:if test="${not empty sessionScope.session_user}">
-            <span>${sessionScope.session_user.nickname }</span>
-            </c:if>
-            <c:if test="${not empty sessionScope.session_expert}">
-            <span>${sessionScope.session_expert.name }</span>
-            </c:if>
             <c:if test="${not empty sessionScope.session_admin}">
-            <span>${sessionScope.session_admin.name }</span>
+            <span>${sessionScope.session_expert.name }</span>
             </c:if>
         </div>
     </div>

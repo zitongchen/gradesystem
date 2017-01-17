@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="conntainer">
         <div class="row make-row">
             <div class="col-sm-6 col-sm-offset-3 main-bodying">
-                <form class="form" action="<c:url value="/AdminServlet?method=inputStudentMessage"></c:url>" enctype="multipart/form-data" method="post" role="form">
+                <form class="form" action="<c:url value="/AdminServletOne?method=inputStudentMessage"></c:url>" enctype="multipart/form-data" method="post" role="form">
                     <div class="form-group">
                         <p class="main-toping">请上传班级信息的Excel表</p>
                         <input type="file" name="studentExcelMessage" placeholder="Excel" class="form-control file-input">
@@ -40,7 +40,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </form>
                 <div class="col-sm-10 col-sm-offset-3 remark">
                     <span>注：</span>
-                    <a href="${pageContext.request.contextPath}/AdminServlet?method=downloadUserExcel">学生信息格式表(Excel)下载</a>
+                    <a href="${pageContext.request.contextPath}/AdminServletOne?method=downloadUserExcel">学生信息格式表(Excel)下载</a>
                 </div>
             </div>
         </div>

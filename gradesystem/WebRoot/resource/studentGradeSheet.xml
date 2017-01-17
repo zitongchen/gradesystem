@@ -1,29 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<excel id="student" code="student" name="学生成绩信息">
+<excel id="student" code="student" name="学生成绩登记表">
     <colgroup><!-- 电子表格的列的宽度 -->
-        <col index="A" width='12em'></col>
+        <col index="A" width='13em'></col>
         <col index="B" width='12em'></col>
-        <col index="C" width='12em'></col>
-        <col index="D" width='12em'></col>
-        <col index="E" width='12em'></col>
-        <col index="F" width='12em'></col>        
+        <col index="C" width='13em'></col>
+        <col index="D" width='13em'></col>
+        <col index="E" width='11em'></col>
+        <col index="F" width='11em'></col>        
         <col index="G" width='12em'></col>        
     </colgroup>
     <!-- 电子表格的标题：设置表格的高度，行数，列数，内容 -->
     <title>
         <tr height="16px">
-            <td rowspan="1" colspan="7" value="学生成绩信息" />
+            <td rowspan="1" colspan="7" value="学生成绩登记表" />
         </tr>
     </title>
     <ml>
     	<tr height="16px">
     		<td rowspan="1" colspan="4" value="班级：计算机科学与技术"/>
-    		<td rowspan="5" colspan="7" value="课程名称_____"/>
+    		<td rowspan="5" colspan="7" value="课程名称___________"/>
     	</tr>
     </ml>
     <foot>
     	<tr height="16px">
-    		<td rowspan="1" colspan="3" value="任课教师：________"/>
+    		<td rowspan="1" colspan="2" value="任课教师签名："/>
+    		<td rowspan="3" colspan="7" value=""/>
+    	</tr>
+    	<tr height="16px">
+    		<td rowspan="1" colspan="2" value="值勤人员签名："/>
+    		<td rowspan="3" colspan="7" value=""/>
     	</tr>
     </foot>
     <!-- 电子表格的表头：设置高度，表头的内容 -->
@@ -31,10 +36,10 @@
         <tr height="16px">
             <th value="学号" />
             <th value="姓名" />
-            <th value="性别"/>
             <th value="平时与考勤"/>
-            <th value="考试成绩"/>            
-            <th value="总评成绩"/>    
+            <th value="作业与实验"/>
+            <th value="期末"/>            
+            <th value="总评"/>    
             <th value="备注"/>        
         </tr>
     </thead>

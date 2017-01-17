@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,16 +71,16 @@ public class ExpertServlet extends cn.itcast.servlet.BaseServlet {
 				request.setAttribute("verificationError", "验证码错误！");
 				request.setAttribute("userId", userId);
 				request.setAttribute("password", password);
-				return "f:/jsps/common/login_system.jsp";
+				return "f:/index.jsp";
 			}
 			Expert expert = expertService.login(form);// 验证输入的用户名跟密码时候正确
 			request.getSession().setAttribute("session_expert", expert);
-			return "f:/jsps/expert/expert_homepage.jsp";
+			return "f:/jsps/expert/homepage.jsp";
 		} catch (ExpertException e) {
 			request.setAttribute("msg", e.getMessage());
 			request.setAttribute("userId", userId);
 			request.setAttribute("password", password);
-			return "f:/jsps/common/login_system.jsp";
+			return "f:/index.jsp";
 		}
 	}
 
@@ -183,16 +184,16 @@ public class ExpertServlet extends cn.itcast.servlet.BaseServlet {
 			HttpServletResponse response) throws ServletException, IOException,
 			UserException {
 		Expert form = new Expert();
-		form.setPassword(request.getParameter("password"));
+		form.setPassword(request.getParameter("oldpassword"));
 
 		Expert expert = (Expert) request.getSession().getAttribute(
 				"session_expert");
 		form.setExpacount(expert.getExpacount());
 		if (!form.getPassword().equals(expert.getPassword())) {// 判断输入的原密码是否跟session中的密码一致，不一致回显错误信息
-			request.setAttribute("passwordError", "原密码输入有误");
+			request.setAttribute("errorMessage", "原密码输入有误");
 			return "f:/jsps/expert/update_password.jsp";
 		} else {
-			form.setPassword(request.getParameter("newPassword"));
+			form.setPassword(request.getParameter("newpassword"));
 		}
 
 		expertService.updateExpertPassword(form);
@@ -236,20 +237,10 @@ public class ExpertServlet extends cn.itcast.servlet.BaseServlet {
 		String classId = new String(request.getParameter("classId").getBytes(
 				"iso-8859-1"), "utf-8");
 		String expacount = request.getParameter("expacount");
-		String className = request.getParameter("className");
 		List<StudentGrade> studentGrades = studentGradeService // 创建学生成绩集合
 				.findClassStudentByClass(classId, expacount);
-		List<Object> userNameObjectList = studentGradeService // 创建学生姓名集合
-				.queryUserName(classId);
-
-		List<String> userNameList=new ArrayList<String>();
-		for (Object object : userNameObjectList) {
-			userNameList.add(String.valueOf(object));
-		}
 		request.setAttribute("studentgrades", studentGrades);
-		request.setAttribute("studentNameList", userNameList);
-		request.setAttribute("className", classId);
-		return "f:/jsps/expert/class_normal.jsp";
+		return "f:/jsps/expert/add_student_grade.jsp";
 	}
 
 	/**
@@ -261,75 +252,52 @@ public class ExpertServlet extends cn.itcast.servlet.BaseServlet {
 	 */
 	public String saveClassStudentGrade(HttpServletRequest request,
 			HttpServletResponse response) {
+		String state=request.getParameter("state");
+		if(state!="0"){
+			return null;
+		}
 		String[] userId = request.getParameterValues("userId");
-		String[] psGrades = request.getParameterValues("psgrade");// 平时成绩
-		String[] ksGrades = request.getParameterValues("ksgrade");// 考试成绩
-		String paecetime = request.getParameter("paecetime");// 平时成绩占比率
-		String terminal = request.getParameter("terminal");// 考试成绩占比率
+		String[] psGrades = request.getParameterValues("psscore");// 平时成绩
+		String[] syGrades = request.getParameterValues("syscore");// 实验成绩
+		String[] ksGrades = request.getParameterValues("ksscore");// 考试成绩
+		String paecetime = request.getParameter("ps");// 平时成绩占比率
+		String sytime = request.getParameter("sy");// 实验成绩占比率
+		String terminal = request.getParameter("qm");// 考试成绩占比率
 		Expert expert = (Expert) request.getSession().getAttribute(
 				"session_expert");
 		String classId = request.getParameter("classId");
-		studentGradeService.saveClassStudentGrade(userId, psGrades, ksGrades,
-				paecetime, terminal);
+		studentGradeService.saveClassStudentGrade(userId, psGrades, syGrades,
+				ksGrades, paecetime, sytime, terminal);
 
 		return "f:/ExpertServlet?method=findClassStudentByClass&classId="
 				+ request.getParameter("classId") + "&expacount="
 				+ expert.getExpacount();
 
 	}
-
-
 	/**
-	 * 打印学生成绩
-	 * 
-	 * @param request
-	 * @param response
-	 * @throws Exception
+	 * 改变学生成绩状态state,让老师提交后不能够更改
 	 */
-	public void printStudentGrade(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		String classId = request.getParameter("classId");
-		String expacount = request.getParameter("expacount");
-
-
-
-		studentGradeService.createGradeSheet(classId, expacount);
-		// 创建一个空白的工作簿
-		XSSFWorkbook workbook = new XSSFWorkbook();
-		// 创建一个电子表
-		XSSFSheet sheet = workbook.createSheet("Employee Info");
-
-		XSSFRow row;
-		Map<String, Object[]> empinfo = new TreeMap<String, Object[]>();
-		empinfo.put("1", new Object[] { "EMP ID", "EMP NAME", "DESIGNATION" });
-		empinfo.put("2", new Object[] { "tp01", "Gopal", "Technical Manager" });
-		empinfo.put("3", new Object[] { "tp02", "Gopal", "Technical Manager" });
-		empinfo.put("4", new Object[] { "tp02", "Gopal", "Technical Manager" });
-		Set<String> keyid = empinfo.keySet();
-		int rowid = 0;
-		for (String key : keyid) {
-			row = sheet.createRow(rowid++);
-			Object[] objectArr = empinfo.get(key);
-			int cellid = 0;
-			for (Object obj : objectArr) {
-				Cell cell = row.createCell(cellid++);
-				cell.setCellValue((String) obj);
+	public void changeGradeState(HttpServletRequest request,
+			HttpServletResponse response) {
+		String kcId = request.getParameter("kcId");
+		String bh = request.getParameter("bh");
+		String message = null;
+		PrintWriter out = null;
+		try {
+			out = response.getWriter();
+			try {
+				expertService.changeGradeState(bh, kcId);
+				request.setAttribute("successMessage", "提交成绩成功！");
+				out.println("成绩提交成功！");
+			} catch (Exception e) {
+				out.println("成绩提交失败！");
 			}
+
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} finally {
+			out.close();
 		}
-		/*
-		 * FileOutputStream out = new FileOutputStream( new
-		 * File("Writersheet.xlsx")); workbook.write(out); out.close();
-		 * System.out.println("writer out success!");
-		 */
-		String fileName = "学生成绩表.xlsx";
-		fileName = new String(fileName.getBytes("GBK"), "ISO-8859-1");
-		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("content-disposition", "attachment;filename="
-				+ fileName);
-		OutputStream outputStream = response.getOutputStream();// 创建一个输出流
-		workbook.write(outputStream);// 利用poi中的方法下载
-		outputStream.flush();
-		outputStream.close();
 	}
 
 }

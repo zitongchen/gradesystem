@@ -27,11 +27,11 @@ public class UserDaoImpl implements UserDao {
 	private QueryRunner qr = new TxQueryRunner();
 
 	/**
-	 * 根据用户账号查询用户
+	 * 根据用户账号查询用户(登陆功能)
 	 */
 	public User findByUserid(String userid) {
 		try {
-			String sql = "select * from users where user_acount=?";
+			String sql = "select user_acount,password,nickname from users where user_acount=?";
 			return qr.query(sql, new BeanHandler<User>(User.class), userid);
 		} catch (SQLException e) {
 			throw new RuntimeException();
@@ -54,7 +54,7 @@ public class UserDaoImpl implements UserDao {
 				+ "city=?,occupation=?,education=?,marry=?,hobby=?,province=?,"
 				+ "address=?,postCode=? where user_acount=? ";
 		try {
-			qr.update(sql, user.getRealname(), user.getTlelphone(),
+			qr.update(sql, user.getRealname(), user.getTelephone(),
 					user.getQq(), user.getEmail(), user.getWeixin(),
 					user.getCity(), user.getOccupation(), user.getEducation(),
 					user.getMarry(), user.getHobby(), user.getProvince(),
@@ -65,33 +65,9 @@ public class UserDaoImpl implements UserDao {
 		}
 	}
 
-	/**
-	 * 更新用户密码
-	 */
-	public void updateUserPasswordById(User user) {
-		String sql = "update users set password=? where user_acount=?";
-		try {
-			qr.update(sql, user.getPassword(), user.getUser_acount());
-		} catch (SQLException e) {
-			throw new RuntimeException();
-		}
 
-	}
 
-	/**
-	 * 查询学生本人成绩
-	 */
-	public List<StudentGrade> queryGradeByUserId(String userId)
- {
-		String sql = "select * from studentgrade where user_acount=?";
-		List<StudentGrade> studentGrades = new ArrayList<StudentGrade>();
-		try {
-			return qr.query(sql, new BeanListHandler<StudentGrade>(
-					StudentGrade.class));
-		} catch (Exception e) {
-			throw new RuntimeException();
-		}
-	}
+
 
 	@Override
 	public void uploadStudentPhote(String userId, String photo) {
@@ -100,6 +76,30 @@ public class UserDaoImpl implements UserDao {
 			qr.update(sql, photo, userId);
 		} catch (Exception e) {
 			throw new RuntimeException();
+		}
+
+	}
+
+	// 根据账号修改密码
+	@Override
+	public void updateUserPasswordById(String user_acount, String password) {
+		String sql = "update users set password=? where user_acount=?";
+		try {
+			qr.update(sql, password, user_acount);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+	}
+
+	// 保存图片的途径
+	@Override
+	public void savePhotoPath(String userId, String filePath) {
+		String sql = "update users set photo=? where user_acount=?";
+		try {
+			qr.update(sql, filePath, userId);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		}
 
 	}

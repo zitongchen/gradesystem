@@ -9,8 +9,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.sl.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -20,16 +25,32 @@ public class PoiTestDemo {
 
 	@Test
 	public void demo1() throws IOException {
-		String[] title = { "id", "name", "sex" };
-		// 创建工作簿
-		XSSFWorkbook workbook = new XSSFWorkbook();
+		Workbook wb = new HSSFWorkbook();
+		Sheet sheet = (Sheet) wb.createSheet("new sheet");
 
-		FileOutputStream out = new FileOutputStream(new File(
-				"createworkbook.xlsx"));
-		workbook.write(out);
-		out.close();
-		System.out.println("create success");
+		// Create a row and put some cells in it. Rows are 0 based.
+		Row row = ((XSSFSheet) sheet).createRow(1);
 
+		// Create a cell and put a value in it.
+		Cell cell = row.createCell(1);
+		cell.setCellValue(4);
+
+		// Style the cell with borders all around.
+		CellStyle style = wb.createCellStyle();
+		style.setBorderBottom(CellStyle.BORDER_THIN);
+		style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+		style.setBorderLeft(CellStyle.BORDER_THIN);
+		style.setLeftBorderColor(IndexedColors.GREEN.getIndex());
+		style.setBorderRight(CellStyle.BORDER_THIN);
+		style.setRightBorderColor(IndexedColors.BLUE.getIndex());
+		style.setBorderTop(CellStyle.BORDER_MEDIUM_DASHED);
+		style.setTopBorderColor(IndexedColors.BLACK.getIndex());
+		cell.setCellStyle(style);
+
+		// Write the output to a file
+		FileOutputStream fileOut = new FileOutputStream("workbook.xls");
+		wb.write(fileOut);
+		fileOut.close();
 	}
 
 	@Test

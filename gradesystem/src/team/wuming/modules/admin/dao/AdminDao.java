@@ -40,4 +40,6 @@ public interface AdminDao {
 
 	public void addStuentGrade(List<StudentGrade> studentGradeList);
 
+	public void savePhotoPath(String userId, String filePath);
+
 }

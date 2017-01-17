@@ -15,6 +15,7 @@ public class StudentGrade implements Serializable {
 	private String gradelei;// 成绩类型
 	private String psscore;// 平时成绩
 	private String syscore;// 实验成绩
+	private String bkscore;// 补考成绩
 	private String ksscore;// 期末成绩
 	private String totalscores;// 总评成绩
 	private String bh;// 班级
@@ -86,6 +87,13 @@ public class StudentGrade implements Serializable {
 		this.syscore = syscore;
 	}
 
+	public String getBkscore() {
+		return bkscore;
+	}
+
+	public void setBkscore(String bkscore) {
+		this.bkscore = bkscore;
+	}
 	public String getKsscore() {
 		return ksscore;
 	}
@@ -165,10 +173,12 @@ public class StudentGrade implements Serializable {
 				+ nickname + ", title=" + title + ", visit_count="
 				+ visit_count + ", sthours=" + sthours + ", gradelei="
 				+ gradelei + ", psscore=" + psscore + ", syscore=" + syscore
-				+ ", ksscore=" + ksscore + ", totalscores=" + totalscores
-				+ ", bh=" + bh + ", termth=" + termth + ", expert=" + expert
-				+ ", oper=" + oper + ", shenhe=" + shenhe + ", optime="
-				+ optime + ", remark=" + remark + ", state=" + state + "]";
+				+ ", bkscore=" + bkscore + ", ksscore=" + ksscore
+				+ ", totalscores=" + totalscores + ", bh=" + bh + ", termth="
+				+ termth + ", expert=" + expert + ", oper=" + oper
+				+ ", shenhe=" + shenhe + ", optime=" + optime + ", remark="
+				+ remark + ", state=" + state + "]";
 	}
+
 
 }

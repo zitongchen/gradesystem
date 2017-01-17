@@ -23,4 +23,6 @@ public interface ExpertService {
 
 	public List<Expert> findExpertId();
 
+	public void changeGradeState(String bh, String kcId);
+
 }

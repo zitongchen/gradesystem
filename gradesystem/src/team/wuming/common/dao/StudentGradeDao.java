@@ -16,37 +16,22 @@ public interface StudentGradeDao {
 	 */
 	public List<StudentGrade> queryGradeByUserId(String userId);
 
-	/**
-	 * @param userId
-	 * @return 通过学号，查询对应学号的的成绩信息总条数
-	 */
-	public int queryTrByUserId(String userId);
 
-	/**
-	 * @param visit_count
-	 * @return 通过学生的成绩信息查询相关的课程
-	 */
 
 
 	/**
 	 * @param expacount
 	 * @return 通过学生的成绩信息查询相关老师
 	 */
-	public Expert queryExpert(String expacount);
+	public Object queryExpert(String expacount);
 
-	public List<StudentGrade> queryFailGradeByUserId(String userId);
+
 
 	public List<StudentGrade> findClassStudentByClass(String classId,
 			String expacount);
 
-	public List<Object> queryUserName(String classId);
 
 	public void saveStudentGrades(List<StudentGrade> newStudentGrade);
 
-
-
-
-
-	public List<Object> querySexName(String classId);
 
 }

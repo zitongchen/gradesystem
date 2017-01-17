@@ -1,0 +1,78 @@
+
+/*该CSS文件控制的是需载入的页面*/
+
+body {
+	font-family: "Microsoft YaHei UI Light";
+	font-size: 13px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin: 10px 0 30px 0;
+	background-color: #F9F9F9;
+	line-height: 175%;
+	color:black;
+}
+html {
+	background-color: #F9F9F9;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin: 0px;
+}
+
+
+/*有些表格要用Ajax加载，样式需提前设定*/
+table,tr,td,th {  
+  
+    border:1px solid #cef;  
+    border-collapse:collapse;  
+    background-color:#fff;  
+}  
+td {
+    width:200px;
+    text-align:center;
+
+}
+/*表格样式设定完毕*/
+
+ul{
+    margin:0;
+	padding:0;
+	list-style-position: outside;
+	list-style-type: none;
+}
+li{
+	margin:0;
+	padding:0;
+}
+
+/*以下修饰内容主体部分mainbody*/
+.mainbody
+{
+	width:100%;
+
+	border-left: 1px solid #d5dedb;
+	border-right: 1px solid #d5dedb;
+}
+
+/*教师成绩录入*/
+
+.submit-btn {
+	background-color: #099e6a;
+	color: white;
+	font-size: 14px;
+	margin: 10px 0 10px 0;
+}
+.last-btn {
+	margin-bottom: 100px;
+}
+
+.input-style {
+	height: 22px;
+	padding: 0 10px;
+	border-radius: 5px;
+	border: 1px solid lightgray;
+
+}

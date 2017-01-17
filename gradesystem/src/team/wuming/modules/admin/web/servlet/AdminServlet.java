@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -69,7 +72,7 @@ public class AdminServlet extends BaseServlet {
 			}
 			Admin Admin = adminService.login(form);
 			request.getSession().setAttribute("session_admin", Admin);
-			return "f:/jsps/common/homepage.jsp";
+			return "f:/jsps/admin/homepage.jsp";
 		} catch (Exception e) {
 			request.setAttribute("msg", e.getMessage());
 			request.setAttribute("userId", userId);
@@ -114,76 +117,7 @@ public class AdminServlet extends BaseServlet {
 		return "r:/index.jsp";
 	}
 
-	// 管理员上传学生信息
-	public String inputStudentMessage(HttpServletRequest request,
-			HttpServletResponse response) throws IOException,
-			FileUploadException {
-		// 上传三部曲
-		DiskFileItemFactory factory = new DiskFileItemFactory();// 创建工厂
-		ServletFileUpload sfu = new ServletFileUpload(factory);// 创建解析器
-		sfu.setFileSizeMax(1024 * 1024 * 10);// 设置上传的大小为10m
-		List<FileItem> fileItems = sfu.parseRequest(request);// 利用解析器来解析request
-		Iterator iter = fileItems.iterator();// 创建迭代器
-		String fileName = "";
-		List<User> userList = new ArrayList<User>();// 创建保存学生信息的List集合
-		InputStudentMessageUitl inputStudentMessageUtil = new InputStudentMessageUitl();// 引入Excel信息转化类
-		while (iter.hasNext()) {
-			FileItem fileItem = (FileItem) iter.next();
-			if (!fileItem.isFormField()) {
-				fileName = fileItem.getName();// 获取文件名称
-				int fileNameLength = fileName.length();
-				if (fileNameLength <= 0) {
-					request.setAttribute("errorMessage", "你还没有选择上传的文件");
-					return "f:/jsps/admin/input_student_message.jsp";
-				}
-				int start = fileName.lastIndexOf(".");
-				String fileType = fileName.substring(start + 1, fileNameLength);
-				if (!fileType.equals("xls")) {
-					request.setAttribute("errorMessage",
-							"你上传的文件不是Excel文件，请上传正确的文件！");
-					return "f:/jsps/admin/add_student_message.jsp";
-				}
-				try {
-					userList = inputStudentMessageUtil
-							.studentMessageToList(fileItem.getInputStream());
-				} catch (Exception e) {
-					request.setAttribute("errorMessage", "上传失败！");
-					return "f:jsps/admin/add_student_message.jsp";
-				}
-			}
-			try {
-				adminService.inputStudentMessage(userList);
-			} catch (Exception e) {
-				String message = e.getMessage();
-				message = message.substring(message.indexOf("\'") + 1,
-						message.indexOf("\'") + 13);
-				request.setAttribute("errorMessage", "上传失败！数据库里面已经存在学号为："
-						+ message + "，请确认上传的信息表格是否正确！");
-				return "f:jsps/admin/add_student_message.jsp";
-			}
-			request.setAttribute("successMessage", "学生信息录入成功！");
-		}
-		return "f:/jsps/admin/add_student_message.jsp";
-	}
 	
-	//学生信息Excel样表的下载
-	public String downloadUserExcel(HttpServletRequest request,
-			HttpServletResponse response) throws FileNotFoundException,
-			IOException {
-		String fileName = "学生数据导入格式表.xls";
-		String path = request.getServletContext().getRealPath(
-				"/WEB-INF/resource/" + fileName);
-		File file = new File(path);
-		if (!file.exists()) {
-			request.setAttribute("errorMessage", "你要下载的文件不存在！");
-			return "f:/jsps/admin/input_student_message.jsp";
-		}
-		fileName = new String(fileName.getBytes("GBK"), "ISO-8859-1");
-		response.addHeader("content-disposition", "attachment;filename="
-				+ fileName);
-		IOUtils.copy(new FileInputStream(file), response.getOutputStream());
-		return "f:/jsps/admin/input_student_message.jsp";
-	}
 
 	//代老师管理成绩：根据教师编号查询教师所教的班级
 	public String findClassByExpertId(HttpServletRequest request,
@@ -201,53 +135,7 @@ public class AdminServlet extends BaseServlet {
 		request.setAttribute("expacount", expacount);
 		return "f:/jsps/admin/search_experts.jsp";
 	}
-	/*
-	 * 添加学科信息
-	 */
-	public String addObjcenter_photo(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		DiskFileItemFactory factory=new DiskFileItemFactory();
-		ServletFileUpload sfu=new ServletFileUpload(factory);
-		sfu.setSizeMax(1*1024*1024);//设置上传的图片为1M
-		try {
-			List<FileItem> fileItems=sfu.parseRequest(request);
-			Map<String ,String> mapList=new HashMap<String , String>();
-			String filename = null;
-			FileItem uploadFile = null;
-			for (FileItem fileItem : fileItems) {
-				if(fileItem.isFormField()){
-					mapList.put(fileItem.getFieldName(),fileItem.getString("UTF-8"));
-				}else{
-					filename=fileItem.getName();//获取上传文件的名称
-					if(filename!=null){//判断是否上传文件，若上传便进行处理，反之不进行处理
-						uploadFile=fileItem;
-						if(filename.endsWith(".jpg")){
-							request.setAttribute("errorMessage", "你上次的照片不是jpg格式，请上传jpg格式的照片！");
-							request.getRequestDispatcher("#").forward(request, response);
-						}
-					}
-				}
-			}
-			Objcenter objecenter = CommonUtils.toBean(mapList, Objcenter.class);
-			if (uploadFile != null) {
-				String savepath = this.getServletContext().getRealPath(
-						"/WEB-INF/Objcenter");
-				filename = CommonUtils.uuid() + "_" + filename;
-				objecenter.setPicture(savepath + "/" + filename);// 保存图片的路径
-				File file = new File(savepath, filename);
-				uploadFile.write(file);// 保存文件到指定的文职
-			}
-			adminService.addObjcenter(objecenter);
-		} catch (Exception e) {
-			//若文件超出限制便报错
-			if (e instanceof FileUploadBase.FileSizeLimitExceededException) {
-				request.setAttribute("errorMessage", "你上传的文件超过了1M！");
-				request.getRequestDispatcher("#").forward(request, response);
-			}
-		}
-		request.setAttribute("successMessage", "设置学科课程成功！");
-		return "f:/jsps/admin/#.jsp";
-	}
+
 
 	// 添加课程信息，不涉及到图片的上传
 	public String addObjcenter(HttpServletRequest request,
@@ -303,77 +191,6 @@ public class AdminServlet extends BaseServlet {
 		adminService.addXuexid(xuexid);
 		request.setAttribute("successMessage", "学习地点添加成功！");
 		return "f:/jsps/admin/active_message.jsp";
-	}
-
-	// 查询专业-用于添加课程页面的专业选择
-	public void findMaijor(HttpServletRequest request,
-			HttpServletResponse response) {
-		List<Maijor> maijorList = adminService.findMaijor();
-		String output = null;
-		if (!maijorList.isEmpty()) {
-			output = JSON.toJSONString(maijorList);
-
-		}
-		try {
-			response.getWriter().println(output);
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
-	}
-
-	// 根据专业编号查询课程
-	public void findObjcenterByZydm(HttpServletRequest request,
-			HttpServletResponse response) {
-		String zydm = request.getParameter("zydm");
-		List<Objcenter> objcenterList = adminService.findObjcenterByZydm(zydm);
-		String output = null;
-		if (!objcenterList.isEmpty()) {
-			output = JSON.toJSONString(objcenterList);
-
-		}
-		try {
-			response.getWriter().println(output);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public void findExpertId(HttpServletRequest request,
-			HttpServletResponse response) {
-		List<Expert> expertList = expertService.findExpertId();
-		String output = null;
-
-		if (!expertList.isEmpty()) {
-			output = JSON.toJSONString(expertList);
-		}
-		try {
-			response.getWriter().println(output);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-	// 根据专业代码查询班级-添加班级课程接口
-	public void findClassByZydm(HttpServletRequest request,
-			HttpServletResponse response) {
-		String zydm = request.getParameter("zydm");
-		List<Object> classNameLists = adminService.findClassByZydm(zydm);
-		List<String> classList = new ArrayList<String>();
-		String output = null;
-		if (!classNameLists.isEmpty()) {
-			output = JSON.toJSONString(classNameLists);
-		}
-
-		try {
-			response.getWriter().println(output);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	// 管理员根据情况向studentGrade写入内容,并返回操作信息！

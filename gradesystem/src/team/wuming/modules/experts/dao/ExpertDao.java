@@ -26,4 +26,8 @@ public interface ExpertDao {
 
 	public List<Expert> findExpertId();
 
+	public void changeGradeState(String bh, String kcId);
+
+	public void savePhotoPath(String userId, String filePath);
+
 }
