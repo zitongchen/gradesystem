@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>班级成绩录入</title>
+    <title>成绩录入</title>
     <base target="body"/>
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
     <link href="${pageContext.request.contextPath}/css/teacher.css" rel="stylesheet" rel="stylesheet">
@@ -24,6 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <input type="hidden"  name="method" value="saveClassStudentGrade"/>
             <input type="hidden" name="classId" value="${requestScope.studentgrades[0].bh}"/>
             <input type="hidden" name="state" value="${requestScope.studentgrade[0].state}"/>
+            <input type="hidden" name="kc" value="${requestScope.studentgrade[0].visit_count}"/>
             <!-- 第一个表格 -->
             <table class="table table-bordered table-condensed">
                 <option>课程基本信息：</option>
@@ -37,7 +38,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <td>班级：</td>
                     <td><span>${requestScope.studentgrades[0].bh}</span></td>
                     <td>学年学期：</td>
-                    <td><span>2016-2017-1(静态数据)</span></td>
+                    <td><span>${requestScope.studentgrades[0].termth }</span></td>
                 </tr>
             </table>
             <!-- 第二个表格 -->
@@ -90,9 +91,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </div>
             </div>
         </form>
-        <div class="col-sm-1 ">
-        	<button id="loadGrade" class="btn default-btn submit-btn">提交</button>
-        </div>
+        <c:if test="${ requestScope.studentgrades[0].state=='0'}">
+	        <div class="col-sm-1 ">
+	        	<button id="loadGrade" class="btn default-btn submit-btn">提交</button>
+	        </div>
+        </c:if>
         <form action="${pageContext.request.contextPath}/StudentGradeSheetServlet">
             <input type="hidden" name="classId" value="${requestScope.studentgrades[0].bh}"/>
             <input type="hidden" name="expacount" value="${sessionScope.session_expert.expacount}"/>

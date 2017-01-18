@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="form-group">
                     <label class="col-sm-4 control-label">专业</label>
                     <div class="col-sm-8">
-                        <select id="zydm" class="form-control ">
+                        <select id="zydm"  class="form-control">
                         	<option>请选择专业！</option>
                         </select>
                     </div>

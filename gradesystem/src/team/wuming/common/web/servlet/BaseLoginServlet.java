@@ -11,10 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 public class BaseLoginServlet extends HttpServlet {
 
 
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-	}
 
 
 	/**

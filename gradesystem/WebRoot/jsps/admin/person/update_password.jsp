@@ -22,9 +22,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </div>
                 <form class="form-horizontal" action="${pageContext.request.contextPath}/AdminServlet" method="post" role="form" onsubmit="return doupdate()">
                 	<input type="hidden" name="method" value="updateAdminPassword">
-                    <div class="col-sm-8 col-sm-offset-2">
-                        <p class="error-message">错误信息</p>
-                    </div>
+                	<c:if test="${not empty requestScope.errorMessage}">
+	                    <div class="col-sm-8 col-sm-offset-2">
+	                        <p class="error-message">${requestScope.errorMessage}</p>
+	                    </div>
+                    </c:if>
                     <div class="form-group">
                         <label for="inputAcount" class="control-label col-sm-3">账号</label>
                         <div class="col-sm-8">

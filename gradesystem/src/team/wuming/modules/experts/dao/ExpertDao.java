@@ -10,11 +10,11 @@ import team.wuming.modules.experts.domain.Expert;
 public interface ExpertDao {
 	public Expert findExertByExperId(Expert form);
 
-	public void updateExpertMessageById(Expert form);
+
 
 	public Expert findExpertMessageById(String expertId);
 
-	public void updateExpertPassword(Expert form);
+	public void updateExpertPassword(String expacount, String password);
 
 	public List<Object> findClassIdByExpert(String expacount);
 
@@ -29,5 +29,7 @@ public interface ExpertDao {
 	public void changeGradeState(String bh, String kcId);
 
 	public void savePhotoPath(String userId, String filePath);
+
+	public List<Object> findClassNameFail(String expacount);
 
 }

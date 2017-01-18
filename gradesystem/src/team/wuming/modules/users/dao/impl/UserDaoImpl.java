@@ -48,23 +48,6 @@ public class UserDaoImpl implements UserDao {
 	}
 
 
-	// 修改用户信息
-	public void updateUserMessageById(User user) {
-		String sql = "update users set realname=?,telephone=?,qq=?,email=?,weixin=?,"
-				+ "city=?,occupation=?,education=?,marry=?,hobby=?,province=?,"
-				+ "address=?,postCode=? where user_acount=? ";
-		try {
-			qr.update(sql, user.getRealname(), user.getTelephone(),
-					user.getQq(), user.getEmail(), user.getWeixin(),
-					user.getCity(), user.getOccupation(), user.getEducation(),
-					user.getMarry(), user.getHobby(), user.getProvince(),
-					user.getAddress(), user.getPostCode(),
-					user.getUser_acount());
-		} catch (Exception e) {
-			throw new RuntimeException();
-		}
-	}
-
 
 
 

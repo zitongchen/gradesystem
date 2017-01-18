@@ -7,7 +7,7 @@ $(function () {
     		if(isFirst){
 	            $.ajax({
 	                type:"post",
-	                url:root+"AdminServlet",
+	                url:root+"AdminServletOne",
 	                data:"method=findMaijor",
 	                success:function (data) {
 	                    	var zy=JSON.parse(data);

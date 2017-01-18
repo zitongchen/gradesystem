@@ -53,10 +53,22 @@
     <servlet-name>UploadPhoto</servlet-name>
     <servlet-class>team.wuming.common.web.servlet.UploadPhoto</servlet-class>
   </servlet>
+  
   <servlet>
-    <servlet-name>UserUploadPhoto</servlet-name>
-    <servlet-class>team.wuming.modules.users.web.servlet.UserUploadPhoto</servlet-class>
+    <servlet-name>UploadMessageServlet</servlet-name>
+    <servlet-class>team.wuming.common.web.servlet.UploadMessageServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>UploadStudentMessageServlet</servlet-name>
+    <servlet-class>team.wuming.modules.admin.web.servlet.UploadStudentMessageServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ClassGradeSheetServlet</servlet-name>
+    <servlet-class>team.wuming.modules.admin.web.servlet.ClassGradeSheetServlet</servlet-class>
+  </servlet>
+
+
+
 
 
 
@@ -114,9 +126,18 @@
     <servlet-name>UploadPhoto</servlet-name>
     <url-pattern>/UploadPhoto</url-pattern>
   </servlet-mapping>
+ 
   <servlet-mapping>
-    <servlet-name>UserUploadPhoto</servlet-name>
-    <url-pattern>/UserUploadPhoto</url-pattern>
+    <servlet-name>UploadMessageServlet</servlet-name>
+    <url-pattern>/UploadMessageServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UploadStudentMessageServlet</servlet-name>
+    <url-pattern>/UploadStudentMessageServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ClassGradeSheetServlet</servlet-name>
+    <url-pattern>/ClassGradeSheetServlet</url-pattern>
   </servlet-mapping>
   <filter>
     <filter-name>UserLoginFilter</filter-name>

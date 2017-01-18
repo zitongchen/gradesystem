@@ -21,20 +21,9 @@ import cn.itcast.jdbc.TxQueryRunner;
 
 public class AdminDaoImpl implements AdminDao {
 	private QueryRunner qr = new TxQueryRunner();
-	public void updateAdminMessageById(Admin form) {
-		String sql = "update admin ";
-		try {
-			qr.update(sql);
-		} catch (SQLException e) {
-			throw new RuntimeException();
-		} finally {
-
-		}
-
-	}
 
 	public Admin findAdminMessageById(String adminId) {
-		String sql = "select *　from admins where admin_account=?";
+		String sql = "select admin_acount,password,name　from admins where admin_account=?";
 		try {
 			return qr.query(sql, new BeanHandler<Admin>(Admin.class), adminId);
 		} catch (SQLException e) {
@@ -42,10 +31,21 @@ public class AdminDaoImpl implements AdminDao {
 		}
 	}
 
-	public void updateAdminPassword(Admin form) {
+	// 查询管理员个人信息
+	@Override
+	public Admin findAdminMessage(String userId) {
+		String sql = "select * from admins where admin_acount=?";
+		try {
+			return qr.query(sql, new BeanHandler<Admin>(Admin.class), userId);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+	}
+	public void updateAdminPassword(String userId, String password) {
 		String sql = "update admins set password=? where admin_account=?";
 		try {
-			qr.update(sql, form.getPassword(), form.getAdmin_acount());
+			qr.update(sql, password, userId);
 		} catch (SQLException e) {
 			throw new RuntimeException();
 		}
@@ -142,7 +142,7 @@ public class AdminDaoImpl implements AdminDao {
 	// 根据专业代码查询课程目录
 	@Override
 	public List<Objcenter> findObjcenterByZydm(String zydm) {
-		String sql = "select * from Objcenter where zydm=?";
+		String sql = "select * from objcenter where zydm=?";
 		try {
 			return qr.query(sql,
 					new BeanListHandler<Objcenter>(Objcenter.class), zydm);
@@ -228,6 +228,73 @@ public class AdminDaoImpl implements AdminDao {
 			throw new RuntimeException(e);
 		}
 
+	}
+
+	// 根据教师Id模糊查询教师所教的班级（代老师管理成绩)
+	@Override
+	public List<Object> searchClass(String id) {
+		String sql = "select  DISTINCT bh from studentgrade where expacount like ?";
+		try {
+			return qr.query(sql, new ColumnListHandler("bh"), id);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+	}
+
+	// 查找补考的班级(代老师管理成绩)
+	@Override
+	public List<Object> searchFailClass(String id) {
+		String sql = "select DISTINCT bh from studentgrade where expacount like ? and totalscores<60 and state>0";
+		try {
+			return qr.query(sql, new ColumnListHandler("bh"), id);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public List<Expert> displayExpert() {
+		String sql = "select expacount,name from experts where state=0";
+		try {
+			return qr.query(sql, new BeanListHandler<Expert>(Expert.class));
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public void changeExpertState(String expacount) {
+		String sql = "update experts set state=1 where expacount=?";
+		try {
+			qr.update(sql, expacount);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+	}
+
+	// 模糊查询班级名称
+	@Override
+	public List<Object> searchClassByName(String bh) {
+		String sql = "select DISTINCT bh from users where bh like ?";
+		try {
+			return qr.query(sql, new ColumnListHandler(), bh + "%");
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	// 根据班级名称查询班级学生，用于下载班级成绩登记表
+	@Override
+	public List<User> findClassStudentByBh(String classId) {
+		String sql = "select user_acount,nickname from users where bh=?";
+		try {
+			return qr
+					.query(sql, new BeanListHandler<User>(User.class), classId);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

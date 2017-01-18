@@ -25,10 +25,10 @@ public class Expert implements Serializable {
 	private String email;// email
 	private String weixin;// 微信号
 	private String city;// 城市
-	private int state;// 状态
-	private Date regtime;// 注册时间
+	private String state;// 状态
+	private Date regist_time;// 注册时间
 	private String expcode;// 专家类型编码
-	private String deparid;// 所属单位编号
+	private String departid;// 所属单位编号
 
 
 	public String getWeixin() {
@@ -146,20 +146,28 @@ public class Expert implements Serializable {
 		this.city = city;
 	}
 
-	public int getState() {
+	public String getState() {
 		return state;
 	}
 
-	public void setState(int state) {
+	public void setState(String state) {
 		this.state = state;
 	}
 
-	public Date getRegtime() {
-		return regtime;
+	public Date getRegist_time() {
+		return regist_time;
 	}
 
-	public void setRegtime(Date regtime) {
-		this.regtime = regtime;
+	public void setRegist_time(Date regist_time) {
+		this.regist_time = regist_time;
+	}
+
+	public String getDepartid() {
+		return departid;
+	}
+
+	public void setDepartid(String departid) {
+		this.departid = departid;
 	}
 
 	public String getExpcode() {
@@ -170,14 +178,6 @@ public class Expert implements Serializable {
 		this.expcode = expcode;
 	}
 
-	public String getDeparid() {
-		return deparid;
-	}
-
-	public void setDeparid(String deparid) {
-		this.deparid = deparid;
-	}
-
 	@Override
 	public String toString() {
 		return "Expert [expacount=" + expacount + ", password=" + password
@@ -186,9 +186,10 @@ public class Expert implements Serializable {
 				+ ", title=" + title + ", education=" + education + ", qq="
 				+ qq + ", telephone=" + telephone + ", email=" + email
 				+ ", weixin=" + weixin + ", city=" + city + ", state=" + state
-				+ ", regtime=" + regtime + ", expcode=" + expcode
-				+ ", deparid=" + deparid + "]";
+				+ ", regist_time=" + regist_time + ", expcode=" + expcode
+				+ ", departid=" + departid + "]";
 	}
+
 
 
 }

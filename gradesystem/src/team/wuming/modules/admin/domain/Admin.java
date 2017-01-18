@@ -17,15 +17,24 @@ public class Admin implements Serializable {
 	private String admincode;// 管理员类型（超级管理员/教学点管理员）
 	private String city;// 地址
 	private String regtime;// 注册时间
-	private String misigal;// 微信号
+	private String weixin;// 微信号
 	private String state;// 状态
+	private String departid;
 
-	public String getMisigal() {
-		return misigal;
+	public String getDepartid() {
+		return departid;
 	}
 
-	public void setMisigal(String misigal) {
-		this.misigal = misigal;
+	public void setDepartid(String departid) {
+		this.departid = departid;
+	}
+
+	public String getWeixin() {
+		return weixin;
+	}
+
+	public void setWeixin(String weixin) {
+		this.weixin = weixin;
 	}
 
 	public String getState() {
@@ -149,16 +158,15 @@ public class Admin implements Serializable {
 		this.admincode = admincode;
 	}
 
-
-
 	@Override
 	public String toString() {
-		return "Admin [admin_account=" + ", password="
-				+ password + ", name=" + name + ", sex=" + sex
-				+ ", description=" + description + ", photo=" + photo
-				+ ", title=" + title + ", education=" + education + ", qq="
-				+ qq + ", telephone=" + telephone + ", email=" + email
-				+ ", admincode=" + admincode + ", address=" + "]";
+		return "Admin [admin_acount=" + admin_acount + ", password=" + password
+				+ ", name=" + name + ", sex=" + sex + ", description="
+				+ description + ", photo=" + photo + ", title=" + title
+				+ ", education=" + education + ", qq=" + qq + ", telephone="
+				+ telephone + ", email=" + email + ", admincode=" + admincode
+				+ ", city=" + city + ", regtime=" + regtime + ", weixin="
+				+ weixin + ", state=" + state + ", departid=" + departid + "]";
 	}
 
 }

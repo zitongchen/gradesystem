@@ -29,14 +29,11 @@ public class AdminServiceImpl implements AdminService {
 		return admin;
 	}
 
-	public void updateAdminMessage(Admin form) {
-		adminDao.updateAdminMessageById(form);
-
-	}
 
 
-	public void updateAdminPassword(Admin form) {
-		adminDao.updateAdminPassword(form);
+
+	public void updateAdminPassword(String userId, String password) {
+		adminDao.updateAdminPassword(userId, password);
 
 	}
 
@@ -104,5 +101,59 @@ public class AdminServiceImpl implements AdminService {
 			studentGradeList.add(student);
 		}
 		adminDao.addStuentGrade(studentGradeList);
+	}
+
+	@Override
+	public List<String> searchClass(String id) {
+		List<String> classList = new ArrayList<String>();
+		List<Object> classObject = adminDao.searchClass(id);
+		for (Object object : classObject) {
+			classList.add(String.valueOf(object));
+		}
+		return classList;
+	}
+
+	@Override
+	public List<String> searchFailClass(String id) {
+		List<String> classFailList = new ArrayList<String>();
+		List<Object> classFaileObject = adminDao.searchFailClass(id);
+		for (Object object : classFaileObject) {
+			classFailList.add(String.valueOf(object));
+		}
+		return classFailList;
+	}
+
+	@Override
+	public Admin findAdminMessage(String userId) {
+
+		return adminDao.findAdminMessage(userId);
+	}
+
+	@Override
+	public List<Expert> displayExert() {
+
+		return adminDao.displayExpert();
+	}
+
+	@Override
+	public void changeExpertState(String expacount) {
+		adminDao.changeExpertState(expacount);
+		
+	}
+
+	@Override
+	public List<String> searchClassByName(String bh) {
+		List<String> classLists = new ArrayList<String>();
+		List<Object> classNameList = adminDao.searchClassByName(bh);
+		for (Object object : classNameList) {
+			classLists.add(String.valueOf(object));
+		}
+		return classLists;
+	}
+
+	// 根据班级名称查询班级学生
+	@Override
+	public List<User> findClassStudentByBh(String classId) {
+		return adminDao.findClassStudentByBh(classId);
 	}
 }

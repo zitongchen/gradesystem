@@ -24,21 +24,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="left">
         <div class="left_body">
             <p class="left_title">相关操作</p>
-            <iframe name="sidebar" src="${pageContext.request.contextPath}/jsps/common/sidebar.jsp" frameborder="0"></iframe>
+            <iframe name="sidebar" src="${pageContext.request.contextPath }/jsps/user/query.jsp" frameborder="0"></iframe>
         </div>
     </div>
     <div class="right">
         <div class="right_top">
             <ul class="navigation">
             	<c:if test="${not empty session_user}">
-	                <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath }/jsps/common/sidebar.jsp" target="sidebar">首页</a></li>
 	                <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath }/jsps/user/query.jsp" target="sidebar">成绩查询</a></li>
 	                <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath }/jsps/user/personal.jsp" target="sidebar">个人中心</a></li>
                 </c:if>
             </ul>
         </div>
         <div id="right-iframe" class="right_bottom">
-            <iframe name="body" src="${pageContext.request.contextPath}/jsps/common/sidebar.jsp" frameborder="0" scrolling="yes"></iframe>
+            <iframe class="boding" name="body" src="${pageContext.request.contextPath}/jsps/user/common.jsp" frameborder="0" scrolling="yes"></iframe>
         </div>
     </div>
 </div>
@@ -62,5 +61,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script>
+	    $(function(){
+	    	$(".navigation-li").click(function(){
+	    		 var url=$(".boding").attr("src");
+	    	        body.location.href = url
+	    	})
+	    });
+    </script>
   </body>
 </html>

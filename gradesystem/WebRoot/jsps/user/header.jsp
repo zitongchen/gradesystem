@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <div class="heading_right">
         <div class="exit_active">
-            <a href="${pageContext.request.contextPath}/AdminServlet?method=exit" onclick="javascript:window.top.close();" class="exit_active_message">
+            <a href="${pageContext.request.contextPath}/ExitServlet" onclick="javascript:window.top.close();" class="exit_active_message">
                 <span class="glyphicon glyphicon-remove-circle"></span>
                 <span>退出</span>
             </a>

@@ -18,12 +18,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 	<div>
 		<ul>
-			<li><a href="${pageContext.request.contextPath}/jsps/admin/add_profession.jsp">添加专业</a></li>
-			<li><a href="${pageContext.request.contextPath}/jsps/admin/add_course.jsp">添加课程</a></li>
-			<li><a href="${pageContext.request.contextPath}/jsps/admin/add_xuexid.jsp">添加学习地点</a></li>
-			<li><a href="${pageContext.request.contextPath}/jsps/admin/add_class_course.jsp">添加班级课程</a></li>
-			<li><a href="${pageContext.request.contextPath}/jsps/admin/add_xuexid.jsp">教师审核</a></li>
-			<li><a href="${pageContext.request.contextPath}/jsps/admin/search.jsp">系统查询</a></li>
+			<li><a href="${pageContext.request.contextPath}/jsps/admin/system/add_profession.jsp">添加专业</a></li>
+			<li><a href="${pageContext.request.contextPath}/jsps/admin/system/add_course.jsp">添加课程</a></li>
+			<li><a href="${pageContext.request.contextPath}/jsps/admin/system/add_xuexid.jsp">添加学习地点</a></li>
+			<li><a href="${pageContext.request.contextPath}/jsps/admin/system/add_class_course.jsp">添加班级课程</a></li>
+			<li><a href="${pageContext.request.contextPath}/AdminServletOne?method=displayExpert">教师审核</a></li>
+			<li><a href="${pageContext.request.contextPath}/jsps/admin/system/search.jsp">系统查询</a></li>
 		</ul>
 	</div>
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>

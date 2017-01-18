@@ -10,8 +10,7 @@ import team.wuming.modules.users.domain.User;
 public interface UserService {
 	public User login(User form) throws UserException;
 
-	// 更新学生信息
-	public void updateUserMessage(User user);
+
 
 
 	// 忘记密码

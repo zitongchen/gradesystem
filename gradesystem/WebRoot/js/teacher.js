@@ -30,6 +30,7 @@ function text_formula(){
 //利用ajax提交成绩！
 $(function(){
 	$("#loadGrade").click(function(){
+		
 		$.ajax({
 			type:"post",
 			url:root+"ExpertServlet",

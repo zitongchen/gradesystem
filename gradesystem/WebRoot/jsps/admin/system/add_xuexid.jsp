@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Add Profession</title>
+    <title>学习地点</title>
     <base target="body"/>
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
@@ -19,59 +19,71 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="conntainer">
         <div class="row make-row">
             <div class="col-sm-4 col-sm-offset-5 ">
-                <p class="top-txt">添加专业</p>
+                <p class="top-txt">添加学习地点</p>
             </div>
         </div>
         <div class="row make-row">
             <div class="col-sm-6 col-sm-offset-2">
                 <form class="form-horizontal" action="${pageContext.request.contextPath}/AdminServlet" method="post"  role="form">
-                	<input type="hidden" name="method" value="addMaijor"/> 
+                	<input type="hidden" name="method" value="addXuexid"/> 
                     <div class="form-group">
-                        <label for="inputZydm" class="col-sm-4 control-label">专业编号</label>
+                        <label for="inputXxddm" class="col-sm-4 control-label">学习点编码</label>
                         <div class="col-sm-8">
-                            <input type="text" name="zydm" class="form-control" id="inputZydm" >
+                            <input type="text" name="deparid" class="form-control" id="inputXxddm" required="required" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputZymc" class="col-sm-4 control-label">专业名称</label>
+                        <label for="inputXxdmc" class="col-sm-4 control-label">学习点名称</label>
                         <div class="col-sm-8">
-                            <input type="text" name="zymc" class="form-control" id="inputZymc" >
+                            <input type="text" name="xxdd" class="form-control" id="inputXxdmc" required="required" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputXxxs" class="col-sm-4 control-label">学习形式</label>
+                        <label for="inputXxddz" class="col-sm-4 control-label">学习点地址</label>
                         <div class="col-sm-8">
-                            <input type="text" name="xxxs" class="form-control" id="inputXxxs" placeholder="">
+                            <input type="text" name="dizhi" class="form-control" id="inputXxddz" placeholder=""required="required">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputPycc" class="col-sm-4 control-label">培养层次</label>
+                        <label for="inputLxr" class="col-sm-4 control-label">联系人</label>
                         <div class="col-sm-8">
-                            <input type="text" name="pycc" class="form-control" id="inputPycc" >
+                            <input type="text" name="lianxiren" class="form-control" id="inputLxr" required="required">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputXznx" class="col-sm-4 control-label">学制年限</label>
+                        <label for="inputEmail" class="col-sm-4 control-label">邮箱地址</label>
                         <div class="col-sm-8">
-                            <input type="text" name="xznx" class="form-control" id="inputXznx">
+                            <input type="email" name="email" class="form-control" id="inputEmail" required="required">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label  for="inputXz" class="col-sm-4 control-label">学制</label>
+                        <label  for="inputYtdw" class="col-sm-4 control-label">依托单位</label>
                         <div class="col-sm-8">
-                            <input type="text" name="xz" class="form-control" id="inputXz">
+                            <input type="text" name="ytdw" class="form-control" id="inputYtdw" required="required">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label  for="inputLy" class="col-sm-4 control-label">领域大类</label>
+                        <label  for="inputLeixing" class="col-sm-4 control-label">单位类型</label>
                         <div class="col-sm-8">
-                            <input type="text" name="lyid" class="form-control" id="inputLy">
+                            <input type="text" name="leixing" class="form-control" id="inputLeixing">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label  for="inputBz" class="col-sm-4 control-label">备注</label>
+                        <label  for="inputYongdate" class="col-sm-4 control-label">建立日期</label>
                         <div class="col-sm-8">
-                            <input type="text" name="bz" class="form-control" id="inputBz">
+                            <input  type="text"  name="yongdate" class="form-control" id="inputYongdate" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  for="inputHuze" class="col-sm-4 control-label">负责人</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="huze" class="form-control" id="inputHuze" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  for="inputTel" class="col-sm-4 control-label">联系电话</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="telephone" class="form-control" id="inputTel" required="required">
                         </div>
                     </div>
                     <div class="form-group">
@@ -83,11 +95,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
         </div>
     </div>
-
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath}/laydate/laydate.js"></script>
+	<script>
+		laydate({
+		  elem: '#inputYongdate',
+		  max: laydate.now(+0) //+1代表明天，+2代表后天，以此类推
+		});
+	</script>
 </body>
 </html>

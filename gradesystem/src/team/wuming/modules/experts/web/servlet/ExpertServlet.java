@@ -66,108 +66,27 @@ public class ExpertServlet extends cn.itcast.servlet.BaseServlet {
 		try {
 			String verificationCode = (String) request.getSession()// 获取后台中的验证码
 					.getAttribute("verificationCode");
-			request.getSession().removeAttribute("verificationCode");// 清除Session，清除垃圾
 			if (!(verification.equals(verificationCode))) { // 前端验证码跟后台验证码进行比较，若验证码错误在前端页面显示错误信息，并回显用户名跟密码
-				request.setAttribute("verificationError", "验证码错误！");
-				request.setAttribute("userId", userId);
-				request.setAttribute("password", password);
+				request.setAttribute("errorMessage", "验证码错误！");
 				return "f:/index.jsp";
 			}
 			Expert expert = expertService.login(form);// 验证输入的用户名跟密码时候正确
 			request.getSession().setAttribute("session_expert", expert);
 			return "f:/jsps/expert/homepage.jsp";
 		} catch (ExpertException e) {
-			request.setAttribute("msg", e.getMessage());
-			request.setAttribute("userId", userId);
-			request.setAttribute("password", password);
+			request.setAttribute("errorMessage", e.getMessage());
 			return "f:/index.jsp";
 		}
 	}
 
-
-	/**
-	 * 退出功能
-	 * 
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws ServletException
-	 * @throws IOException
-	 * @throws UserException
-	 */
-	public String exit(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, UserException {
-		request.getSession().invalidate();// 注销登陆时生成的session并转发到登陆页面
-		return "r:/index.jsp";
-	}
-
-	// 教师更新数据
-	public String updateExpertMessage(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException,
-			UserException {
-		Expert form = CommonUtils.toBean(request.getParameterMap(),
-				Expert.class);
-		expertService.updateExpertMessage(form);
-		return "r:/ExpertServlet?method=findExpertMessage";
-	}
-
-	// 更新教师照片
-	public String updateExpertPhoto(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		DiskFileItemFactory factory = new DiskFileItemFactory();
-		ServletFileUpload sfu = new ServletFileUpload(factory);
-		sfu.setFileSizeMax(1 * 1024 * 1024);
-		try {
-			List<FileItem> fileItemList = sfu.parseRequest(request);
-			FileItem fileItem = fileItemList.get(0);
-			String filename = fileItem.getName();// 获取照片的名字
-			if (filename == null || " ".trim().equals(filename)) {
-				request.setAttribute("errorMessage", "你还没有选择照片，请选择照片后再提交！");
-				return "f:/jsps/expert/..";
-			}
-			if (!filename.endsWith("jpg") || !filename.endsWith("png")) {
-				request.setAttribute("errorMessage",
-						"你上传的照片格式不是jpg或png,请上传指定格式的照片！");
-				return "f:/jsps/expert/..";
-			}
-			String savepath = this.getServletContext().getRealPath(
-					"/WEB-ING/Expert_picture");
-			// 设置图片的名称为uuid+.jpg
-			int point = filename.indexOf(".");
-			int legth = filename.length();
-			filename = CommonUtils.uuid() + filename.substring(point, legth);
-			savepath = savepath + "/" + filename.indexOf(0) + "/";// 目录打散，把图片文件保存到不同的地方n
-			File destFile = new File(savepath, filename);
-			fileItem.write(destFile);// 把图片保存到指定的目录里面
-			Expert expert = (Expert) request.getSession().getAttribute(
-					"session_expert");
-			// 删除原来的图片，减少耗费的空间
-			String absolutePath = this.getServletContext().getRealPath(
-					expert.getPicture());
-			File file = new File(absolutePath);
-			if (file.exists()) {
-				file.delete();
-			}
-			String photoPath = savepath + filename;
-			expertService.updateExpertPhoto(expert.getExpacount(), photoPath);
-		} catch (Exception e) {
-			if (e instanceof FileUploadBase.FileSizeLimitExceededException) {
-				request.setAttribute("errorMessage", "你上次的图片超过了1M，请上传1M一下的图片！");
-				return "f:/jsps/expert...";
-			}
-		}
-		request.setAttribute("successMessage", "照片上传成功！");
-		return "f:/jsps/expert/..";
-	}
-
-	// 获取教师信息(直接通过session获取教师的信息)
+	// 查询老师的信息
 	public String findExpertMessage(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			UserException {
 		String expertId = request.getParameter("expacount");
 		Expert expert = expertService.findExpertMessage(expertId);
-		request.setAttribute("request_expert", expert);
-		return "f:/jsp/expert/usermessage.jsp";
+		request.setAttribute("expert", expert);
+		return "f:/jsps/expert/person_message.jsp";
 	}
 
 	/**
@@ -183,27 +102,23 @@ public class ExpertServlet extends cn.itcast.servlet.BaseServlet {
 	public String updateExpertPassword(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException,
 			UserException {
-		Expert form = new Expert();
-		form.setPassword(request.getParameter("oldpassword"));
-
+		String oldpassword = request.getParameter("oldpassword");
 		Expert expert = (Expert) request.getSession().getAttribute(
 				"session_expert");
-		form.setExpacount(expert.getExpacount());
-		if (!form.getPassword().equals(expert.getPassword())) {// 判断输入的原密码是否跟session中的密码一致，不一致回显错误信息
+
+		if (oldpassword.equals(expert.getPassword())) {// 判断输入的原密码是否跟session中的密码一致，不一致回显错误信息
 			request.setAttribute("errorMessage", "原密码输入有误");
-			return "f:/jsps/expert/update_password.jsp";
+			return "f:/index.jsp";
 		} else {
-			form.setPassword(request.getParameter("newpassword"));
+			String password = request.getParameter("newpassord");
+			expertService.updateExpertPassword(expert.getExpacount(), password);
 		}
-
-		expertService.updateExpertPassword(form);
-
 		request.getSession().invalidate();// 销毁session并让用户重新登录
 		return "r:/index.jsp";
 	}
 
 	/**
-	 * 显示教师所教的班级
+	 * 显示教师所教的班级(包含要补考的名单)
 	 * 
 	 * @param request
 	 * @param response
@@ -214,12 +129,20 @@ public class ExpertServlet extends cn.itcast.servlet.BaseServlet {
 		String expacount = request.getParameter("expacount");
 		List<Object> classLists = expertService
 				.findClassNameByExpert(expacount);
+		List<Object> classListsFails = expertService
+				.findClassNameFail(expacount);
+		List<String> classNameFail = new ArrayList<String>();
 		List<String> classNameList = new ArrayList<String>();
 		for (Object object : classLists) {
 			String className = String.valueOf(object);
 			classNameList.add(className);
 		}
+		for (Object object : classListsFails) {
+			String fail = String.valueOf(object);
+			classNameFail.add(fail);
+		}
 		request.setAttribute("classList", classNameList);
+		request.setAttribute("failList", classNameFail);
 		return "f:/jsps/expert/show_classes.jsp";
 
 	}
@@ -253,6 +176,7 @@ public class ExpertServlet extends cn.itcast.servlet.BaseServlet {
 	public String saveClassStudentGrade(HttpServletRequest request,
 			HttpServletResponse response) {
 		String state=request.getParameter("state");
+		String kc = request.getParameter("kc");
 		if(state!="0"){
 			return null;
 		}
@@ -267,13 +191,46 @@ public class ExpertServlet extends cn.itcast.servlet.BaseServlet {
 				"session_expert");
 		String classId = request.getParameter("classId");
 		studentGradeService.saveClassStudentGrade(userId, psGrades, syGrades,
-				ksGrades, paecetime, sytime, terminal);
+				ksGrades, paecetime, sytime, terminal, kc,
+				expert.getExpacount());
 
 		return "f:/ExpertServlet?method=findClassStudentByClass&classId="
 				+ request.getParameter("classId") + "&expacount="
 				+ expert.getExpacount();
 
 	}
+
+	// 补考考生查询
+	public String findFailStudent(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		String classId = new String(request.getParameter("classId").getBytes(
+				"iso-8859-1"), "utf-8");
+		String expacount = request.getParameter("expacount");
+		List<StudentGrade> studentLists = studentGradeService.findFailStudent(
+				classId, expacount);
+		request.setAttribute("studentList", studentLists);
+		return "f:/jsps/expert/add_student_failgrade.jsp";
+	}
+
+	// 保存补考成绩
+	public String saveFailStudentGrade(HttpServletRequest request,
+			HttpServletResponse response) {
+		String state = request.getParameter("state");
+		// 获取课程
+		String kc = request.getParameter("kc");
+		String[] userId = request.getParameterValues("userId");
+		String[] bkGrades = request.getParameterValues("bkscore");// 补考成绩
+		Expert expert = (Expert) request.getSession().getAttribute(
+				"session_expert");
+		String classId = request.getParameter("classId");
+		studentGradeService.saveFailStudentGrade(userId, bkGrades, kc,
+				expert.getExpacount());
+		return "f:/ExpertServlet?method=findFailStudent&classId="
+				+ request.getParameter("classId") + "&expacount="
+				+ expert.getExpacount();
+
+	}
+
 	/**
 	 * 改变学生成绩状态state,让老师提交后不能够更改
 	 */

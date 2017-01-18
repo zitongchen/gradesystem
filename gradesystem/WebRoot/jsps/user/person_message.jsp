@@ -23,7 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	<c:if test="${not empty user.photo}">
         		<img name="student" class="picture" src="${pageContext.request.contextPath}${user.photo}">
         	</c:if>
-        	<c:if test="${not user.photo }">
+        	<c:if test="${empty user.photo }">
         		<img name="student" class="picture" src="${pageContext.request.contextPath}/resource/images/he.png">
         	</c:if>
         	
@@ -34,11 +34,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <tbody >
                     <tr>
                         <td >学号</td>
-                        <td id="id" name="xuehao" class="col-sm-2 change-txt" >${user.user_acount}</td>
+                        <td id="id" name="student" class="col-sm-2 " >${user.user_acount}</td>
                         <td >姓名</td>
-                        <td name="name" class="col-sm-2 change-txt">${user.nickname}</td>
+                        <td name="name" class="col-sm-2 ">${user.nickname}</td>
                         <td >出生年月</td>
-                        <td class="col-sm-2 change-txt">${user.csrq }</td>
+                        <td class="col-sm-2 ">${user.csrq }</td>
                     </tr>
                     <tr>
                         <td >性别</td>
@@ -68,9 +68,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     	<td >政治面貌</td>
                         <td class="col-sm-2" >${user.zzmm }</td>
                         <td >QQ</td>
-                        <td class="col-sm-2">${user.qq}</td>
+                        <td name="qq" class="col-sm-2 change-txt">${user.qq}</td>
                         <td >联系电话</td>
-                        <td class="col-sm-2">${user.telephone}</td>
+                        <td name="telephone" class="col-sm-2 change-txt">${user.telephone}</td>
                         
                     </tr>
                     <tr>
@@ -82,8 +82,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <td class="col-sm-2">${user.xxxs}</td>
                     </tr>
                     
+                     
                 </tbody>
             </table>
+            <p class="col-sm-12">备注：点击头像可更新头像，点击个人信息可更新个人信息，但并不是所有信息都可修改哦！</p>
         </div>
         <div class="beijin"></div>
         <div class="container">

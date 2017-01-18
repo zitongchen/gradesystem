@@ -18,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 	<div>
 		<ul>
-			<li><a href="inform.html">通知文件</a></li>
+			<li><a href="common.html">通知文件</a></li>
 		</ul>
 	</div>
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>

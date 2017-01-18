@@ -52,15 +52,18 @@ public class UploadPhoto extends BaseServlet {
 				}
 			}
 			savePath = savePath + "/" + userId + ".jpg";
+
+				// 若文件不存在不用删除，直接保存
 			File file = new File(savePath);
 			if (file.exists() && file.isFile()) {
 				file.delete();
 			}
-			OutputStream out = new FileOutputStream(savePath);
 
+			OutputStream out = new FileOutputStream(savePath);
 			out.write(b);
 			out.flush();
 			out.close();
+
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

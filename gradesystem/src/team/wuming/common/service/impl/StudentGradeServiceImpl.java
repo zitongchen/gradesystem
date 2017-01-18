@@ -41,7 +41,6 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 			String expacount) {
 		List<StudentGrade> studentGrades = studentGradeDao
 				.findClassStudentByClass(classId, expacount);
-
 		return studentGrades;
 	}
 
@@ -52,7 +51,7 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 	@Override
 	public void saveClassStudentGrade(String[] userId, String[] psGrades,
 			String[] syGrades, String[] ksGrades, String paecetime,
-			String sytime, String terminal) {
+			String sytime, String terminal, String kc, String expacount) {
 		List<StudentGrade> newStudentGrade = new ArrayList<StudentGrade>();// 创建一个保存学生成绩的List集合
 		Float ps = Float.parseFloat(paecetime) / 100;
 		Float sy = Float.parseFloat(sytime) / 100;
@@ -88,20 +87,40 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 			studentGrade.setSyscore(syGrades[index]);
 			studentGrade.setKsscore(ksGrades[index]);
 			studentGrade.setTotalscores(String.valueOf(grades));
+			studentGrade.setVisit_count(kc);
+			studentGrade.setOper(expacount);
 			newStudentGrade.add(studentGrade);
 		}
 		studentGradeDao.saveStudentGrades(newStudentGrade);
 	}
 
-	/**
-	 * 创建成绩表
-	 */
 	@Override
-	public void createGradeSheet(String classId, String expacount) {
-		XSSFWorkbook workBook = new XSSFWorkbook();
-		XSSFSheet sheet = workBook.createSheet();
-
+	public List<StudentGrade> findFailStudent(String classId, String expacount) {
+		return studentGradeDao.findFailStudent(classId, expacount);
 	}
 
+	// 保存补考成绩
+	@Override
+	public void saveFailStudentGrade(String[] userId, String[] bkGrades,
+			String kc, String expacount) {
+		List<StudentGrade> studentList=new ArrayList<StudentGrade>();
+		for(int i=0;i<userId.length;i++){
+			StudentGrade stuGrade=new StudentGrade();
+			stuGrade.setBkscore(bkGrades[i]);
+			stuGrade.setVisit_count(kc);
+			stuGrade.setUser_acount(userId[i]);
+			stuGrade.setOper(expacount);
+			studentList.add(stuGrade);
+		}
+		studentGradeDao.saveFailStudentGrade(studentList);
+		
+	}
+
+	// 根据教师编号查询教师姓名
+	@Override
+	public String findExpertName(String expacount) {
+		Object name = studentGradeDao.findExpertName(expacount);
+		return String.valueOf(name);
+	}
 
 }

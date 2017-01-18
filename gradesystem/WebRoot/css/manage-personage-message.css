@@ -188,4 +188,14 @@ a.upload-img:hover{
 }
 
 .tc{text-align:center;}
-/*www.jq22.com*/
+
+/*教师审核页面*/
+.pass-div{
+	float: right;margin: 20px 40px
+}
+.pass-div .pass-btn{
+	color:white;
+	background-color: #099e6a;
+}
+
+

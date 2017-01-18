@@ -44,7 +44,7 @@ input[required]+label:before {
 }
 
 .register_wrap .ipt_box{
-    width: 400px;
+    width: 410px;
     height: 60px;
     margin: 0 auto;
 }
@@ -53,7 +53,7 @@ input[required]+label:before {
 
  .register_wrap .ipt_box .item{
      margin: 0;
-     width: 80px;
+     width: 100px;
      height: 35px;
      line-height: 35px;
      float: left;

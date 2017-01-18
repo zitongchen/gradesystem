@@ -80,34 +80,34 @@ $(function() {
     $(".change-txt").click(function() {
         var td = $(this);
         var txt = td.text();
+        var key=td.attr("name");
         var input = $("<input class='form-control' type='text'value='" + txt + "'/>");
         td.html(input);
         input.click(function() { return false; });
-//获取焦点
+        //获取焦点
         input.trigger("focus");
-//文本框失去焦点后提交内容，重新变为文本
+        //文本框失去焦点后提交内容，重新变为文本
         input.blur(function() {
             var newtxt = $(this).val();
-//判断文本有没有修改
-            if (newtxt != txt) {
-                var name=td.attr("name");
-                var id=$("#id").text();
+            //判断文本有没有修改
+            if (newtxt != txt) {     
+                var userId=$("#id").text();
+                var type=$("#id").attr("name");
                 $.ajax({
                     type:"post",
-                    url:"root#servlet",
-                    data:"method=updateSystemMessage&type=student&id="+id+"&tex="+newtxt+"&date="+new Date(),
-                    success:function () {
-                        td.html(newtxt);
-                        alert("请求成功！");
+                    url:root+"UploadMessageServlet",
+                    data:"method=uploadPersonMessage&type="+type+"&userId="+userId+"&key="+key+"&val="+newtxt,
+                    success:function (data) {
+                    	td.html(newtxt);
+                        alert("个人信息更新成功！");
                     },
                     error:function () {
                         td.html(txt);
-                        alert('修改信息有错！');
+                        alert('个人信息更新失败！');
                     }
                 });
             }
-            else
-            {
+            else{
                 td.html(newtxt);
             }
         });
@@ -136,10 +136,10 @@ $(function() {
                 cropper = $('.imageBox').cropbox(options);
             }
             reader.readAsDataURL(this.files[0]);
-            this.files = [];
+            //this.files = [];
         });
         var first=true;
-        $('#btnCrop').on('click', function(){
+        $('#btnCrop').click(function(){
             var img = cropper.getDataURL();
             var type=$(".picture").attr("name");
             var userid=$("#id").text();

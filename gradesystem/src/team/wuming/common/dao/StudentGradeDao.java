@@ -34,4 +34,10 @@ public interface StudentGradeDao {
 	public void saveStudentGrades(List<StudentGrade> newStudentGrade);
 
 
+	public List<StudentGrade> findFailStudent(String classId, String expacount);
+
+	public void saveFailStudentGrade(List<StudentGrade> studentList);
+
+	public Object findExpertName(String expacount);
+
 }

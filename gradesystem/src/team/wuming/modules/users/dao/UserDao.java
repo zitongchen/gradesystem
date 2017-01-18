@@ -13,9 +13,6 @@ public interface UserDao {
 	public User findUserMessageById(String userId);
 
 
-	// 修改用户信息
-	public void updateUserMessageById(User user);
-
 
 
 	public void uploadStudentPhote(String userId, String photo);

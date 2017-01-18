@@ -12,9 +12,9 @@ import team.wuming.modules.users.domain.User;
 
 public interface AdminDao {
 
-	public void updateAdminMessageById(Admin form);
 
-	public void updateAdminPassword(Admin form);
+
+	public void updateAdminPassword(String userId, String password);
 
 	public Admin findAdminByAdminId(Admin form);
 
@@ -41,5 +41,19 @@ public interface AdminDao {
 	public void addStuentGrade(List<StudentGrade> studentGradeList);
 
 	public void savePhotoPath(String userId, String filePath);
+
+	public List<Object> searchClass(String id);
+
+	public List<Object> searchFailClass(String id);
+
+	public Admin findAdminMessage(String userId);
+
+	public List<Expert> displayExpert();
+
+	public void changeExpertState(String expacount);
+
+	public List<Object> searchClassByName(String bh);
+
+	public List<User> findClassStudentByBh(String classId);
 
 }

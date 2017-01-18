@@ -6,10 +6,12 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -19,26 +21,30 @@ import team.wuming.modules.experts.domain.Expert;
 import team.wuming.modules.experts.service.ExpertService;
 import team.wuming.modules.experts.service.impl.ExpertServiceImpl;
 import cn.itcast.commons.CommonUtils;
+import cn.itcast.servlet.BaseServlet;
 
 public class ExpertRegisterServlet extends HttpServlet {
 	private ExpertService expertService = new ExpertServiceImpl();
+	
+
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload sfu = new ServletFileUpload(factory);
 		sfu.setFileSizeMax(1 * 1024 * 1024);// 设置上传 的图片最大为1M
 		try {
 			List<FileItem> fileItemList = sfu.parseRequest(request);// 获取文件条目
-
 			Map<String, String> map = new HashMap<String, String>();
 			FileItem pictureItem = null;
 			String filename = null;
 			for (FileItem fileItem : fileItemList) {
 				if (fileItem.isFormField()) {
 					map.put(fileItem.getFieldName(),
-							fileItem.getString("UTF-8"));
+							fileItem.getString("UTF-8"));// 保存教师注册信息的名称跟值
 				} else {
-					pictureItem = fileItem;
+					pictureItem = fileItem;// 保存照片fileItem
 				}
 			}
 
@@ -46,25 +52,26 @@ public class ExpertRegisterServlet extends HttpServlet {
 			String code = map.get("code");
 			String verificationCode = (String) request.getSession()
 					.getAttribute("verificationCode");
-			request.getSession().removeAttribute("verificationCode");
+			request.getSession().removeAttribute("verificationCode");// 清除验证码信息
 			if (!code.equals(verificationCode)) {
 				request.setAttribute("errorMessage", "你输入的验证码错误！");
-				request.getRequestDispatcher(
-						"/jsps/common/teacher_register.jsp").forward(request,
+				request.getRequestDispatcher("/teacher.jsp").forward(request,
 						response);
+				return;
 			}
 			String savepath = this.getServletContext().getRealPath(
-					"/WEB-INF/resource/Expert_picture");
-			if (pictureItem != null) {
+					"/resource/images/expert_photo");
+			if (pictureItem != null) {// 判断是否上传照片
 				filename = pictureItem.getName();// 获取照片的名字
-				/*
-				 * 检验文件的扩展名,出错回显
-				 */
-				if (!filename.toLowerCase().endsWith("jpg")) {
-					request.setAttribute("errorMessage", "你上传的图片不是JPG扩展名！");
-					request.getRequestDispatcher(
-							"/jsps/common/teacher_register.jsp").forward(
+				
+				if (!filename.toLowerCase().endsWith("jpg")
+						&& !filename.toLowerCase().endsWith("png")
+						&& !filename.toLowerCase().endsWith("jpeg")) {
+					request.setAttribute("errorMessage",
+							"上传的图片只支持jpg,png,jpeg格式！");
+					request.getRequestDispatcher("/teacher.jsp").forward(
 							request, response);
+					return;
 				}
 				// 设置图片的名称为uuid+.jpg
 				int point = filename.indexOf(".");
@@ -87,7 +94,7 @@ public class ExpertRegisterServlet extends HttpServlet {
 			if (sheng != "" || shi != " ") {
 				expert.setCity(sheng + shi);
 			}
-			expert.setPicture("/WEB-INF/resource/Expert_picture/" + filename);// 保存教师图片的保存路径
+			expert.setPicture("/resource/images/expert_photo/" + filename);// 保存教师图片的保存路径
 			expert.setExpacount(expacount);// 保存用户账号
 			expertService.registExpert(expert);
 			request.setAttribute("successMessage", "注册成功！");
@@ -97,18 +104,12 @@ public class ExpertRegisterServlet extends HttpServlet {
 					.forward(request, response);
 		} catch (Exception e) {
 			if (e instanceof FileUploadBase.FileSizeLimitExceededException) {
-				request.setAttribute("errorMessage", "您上传的文件超出了1M");
-				System.out.println("test");
-				request.getRequestDispatcher(
-						"/jsps/common/teacher_register.jsp")
-						.forward(request, response);
+				request.setAttribute("errorMessage", "您上传的照片超出了1M");
+				request.getRequestDispatcher("/teacher.jsp").forward(request,
+						response);
 			}
-			request.setAttribute("errorMessage", "注册成功！");
-			request.setAttribute("errorTxt", "系统出现了小问题，请重试！");
-			request.getRequestDispatcher("/jsps/common/active_message.jsp")
-					.forward(request, response);
-			throw new ServletException(e);
 		}
 	}
 
 }
+

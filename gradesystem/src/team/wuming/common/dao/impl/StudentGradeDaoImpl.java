@@ -13,6 +13,7 @@ import javax.management.Query;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ColumnListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
@@ -100,17 +101,72 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 	@Override
 	public void saveStudentGrades(List<StudentGrade> newStudentGrade) {
 
-		String sql = "update studentgrade set psscore=? ,syscore=?,ksscore=?,totalscores=? where user_acount=?";
+		String sql = "update studentgrade set psscore=? ,syscore=?,ksscore=?,totalscores=?,oper=? where user_acount=? and visit_count=?";
 		try {
 			for (StudentGrade studentGrade : newStudentGrade) {// 循环保存学生信息
 				qr.update(sql, studentGrade.getPsscore(),
 						studentGrade.getSyscore(),
 						studentGrade.getKsscore(),
 						studentGrade.getTotalscores(),
-						studentGrade.getUser_acount());
+ studentGrade.getOper(),
+						studentGrade.getUser_acount(),
+						studentGrade.getVisit_count());
 			}
 		} catch (Exception e) {
 			throw new RuntimeException();
+		}
+	}
+
+	// 查询要补考的学生信息
+	@Override
+	public List<StudentGrade> findFailStudent(String classId, String expacount) {
+		String sql = "select * from studentgrade where bh=? and expacount=? and totalscores < 60";
+		List<StudentGrade> studentList = new ArrayList<StudentGrade>();
+		try {
+			List<Map<String, Object>> listMap = qr.query(sql,
+					new MapListHandler(), classId, expacount);
+			for (Map<String, Object> map : listMap) {
+				Expert expert = CommonUtils.toBean(map, Expert.class);
+				StudentGrade studentGrade = CommonUtils.toBean(map,
+						StudentGrade.class);
+				studentGrade.setExpert(expert);
+				studentList.add(studentGrade);
+			}
+		} catch (SQLException e) {
+
+			throw new RuntimeException(e);
+		}
+		return studentList;
+
+	}
+
+	// 保存补考同学的成绩
+	@Override
+	public void saveFailStudentGrade(List<StudentGrade> studentList) {
+		String sql = "update studentgrade set totalscore=?,bkscore=?,oper=? where user_acount=? and visit_count=?";
+		for (StudentGrade studentGrade : studentList) {
+
+			try {
+				qr.update(sql, studentGrade.getBkscore(),
+						studentGrade.getBkscore(),
+ studentGrade.getOper(),
+						studentGrade.getUser_acount(),
+						studentGrade.getVisit_count());
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+		}
+
+	}
+
+	// 根据教师编号查询教师姓名：（管理员代教师管理成绩功能）
+	@Override
+	public Object findExpertName(String expacount) {
+		String sql = "select name from experts where expacount=?";
+		try {
+			return qr.query(sql, new ScalarHandler(), expacount);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		}
 	}
 }

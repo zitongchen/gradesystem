@@ -4,26 +4,33 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Add Student</title>
+    <title>上传学习信息</title>
 
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/manage-student.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/manage-student.css">
 </head>
 <body>
+	<c:if test="${not empty errorMessage}">
+		<p><script>alert("${errorMessage}")</script> </p>
+	</c:if>
+	<c:if test="${not empty successMessage}">
+		<p><script>alert("${successMessage}")</script></p>
+	</c:if>
     <div class="conntainer">
         <div class="row make-row">
             <div class="col-sm-6 col-sm-offset-3 main-bodying">
-                <form class="form" action="#" enctype="multipart/form-data" method="post" role="form">
+                <form class="form" onsubmit="ture" action="<c:url value="/UploadStudentMessageServlet"></c:url>" enctype="multipart/form-data" method="post" role="form">
                     <div class="form-group">
                         <p class="main-toping">请上传班级信息的Excel表</p>
-                        <input type="file" class="form-control file-input">
+                        <input type="file" name="studentExcelMessage" placeholder="Excel" class="form-control file-input" required="required">
                     </div>
                     <div class="form-group">
                         <div class="col-sm-7 col-sm-offset-5">
@@ -33,7 +40,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </form>
                 <div class="col-sm-10 col-sm-offset-3 remark">
                     <span>注：</span>
-                    <a href="#">班级信息格式表(Excel)下载</a>
+                    <a href="${pageContext.request.contextPath}/AdminServletOne?method=downloadUserExcel">学生信息格式表(Excel)下载</a>
                 </div>
             </div>
         </div>

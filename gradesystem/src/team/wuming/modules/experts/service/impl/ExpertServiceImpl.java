@@ -21,27 +21,24 @@ public class ExpertServiceImpl implements ExpertService {
 	public Expert login(Expert form) throws ExpertException {
 		Expert expert = expertDao.findExertByExperId(form);
 		if (expert == null) {
-			throw new ExpertException("用户名不存在！");
+			throw new ExpertException("账号不存在！");
 		}
 		if (!expert.getPassword().equals(form.getPassword())) {
-			throw new ExpertException("用户名或密码有误！");
+			throw new ExpertException("账号或密码有误！");
+		}
+		if ("0".equals(expert.getState())) {
+			throw new ExpertException("你的账号还没有审核通过，请耐心等待管理员审核！");
 		}
 		return expert;
 	}
 
-	public void updateExpertMessage(Expert form) {
-		expertDao.updateExpertMessageById(form);
 
-	}
 
 	public Expert findExpertMessage(String expertId) {
 		return expertDao.findExpertMessageById(expertId);
 	}
 
-	public void updateExpertPassword(Expert form) {
-		expertDao.updateExpertPassword(form);
 
-	}
 
 	/**
 	 * 查询教师所教班级序列
@@ -65,11 +62,6 @@ public class ExpertServiceImpl implements ExpertService {
 		return expertDao.quertExpertNumber();
 	}
 
-	@Override
-	public void updateExpertPhoto(String expacount, String photoPath) {
-		expertDao.updateExpertPhoto(expacount, photoPath);
-
-	}
 
 	@Override
 	public List<Expert> findExpertId() {
@@ -81,5 +73,18 @@ public class ExpertServiceImpl implements ExpertService {
 	public void changeGradeState(String bh, String kcId) {
 		expertDao.changeGradeState(bh, kcId);
 
+	}
+
+	// 根据账号，更新密码
+	@Override
+	public void updateExpertPassword(String expacount, String password) {
+		expertDao.updateExpertPassword(expacount, password);
+
+	}
+
+	// 查询补考的班级
+	@Override
+	public List<Object> findClassNameFail(String expacount) {
+		return expertDao.findClassNameFail(expacount);
 	}
 }

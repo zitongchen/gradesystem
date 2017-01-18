@@ -7,11 +7,9 @@ import team.wuming.modules.experts.domain.Expert;
 public interface ExpertService {
 	public Expert login(Expert form) throws ExpertException;
 
-	public void updateExpertMessage(Expert form);
-
 	public Expert findExpertMessage(String expertId);
 
-	public void updateExpertPassword(Expert form);
+	public void updateExpertPassword(String expacount, String password);
 
 	public List<Object> findClassNameByExpert(String expacount);
 
@@ -19,10 +17,10 @@ public interface ExpertService {
 
 	public int quertExpertNumber();
 
-	public void updateExpertPhoto(String expacount, String photoPath);
-
 	public List<Expert> findExpertId();
 
 	public void changeGradeState(String bh, String kcId);
+
+	public List<Object> findClassNameFail(String expacount);
 
 }

@@ -19,37 +19,63 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="conntainer">
     <div class="row make-row">
         <div  class="photo" title="支持jpg、jpeg、png格式，文件小于1M" >
-            <img name="expert" class="picture" src="${pageContext.request.contextPath}/resource/images/he.png">
+            <c:if test="${ not empty expert.picture}">
+            	<img name="expert" class="picture" style="width:160px;height: 180px" src="${pageContext.request.contextPath}${expert.picture}">
+            </c:if>
+        	<c:if test="${ empty expert.picture}">
+            	<img name="expert" class="picture" src="${pageContext.request.contextPath}/resource/images/he.png">
+            </c:if>
         </div>
         <div class="col-sm-12">
             <table class="table table-striped table-bordered" >
                 <tbody >
                     <tr>
-                        <td >学号</td>
-                        <td id="id" name="xuehao" class="col-sm-2 change-txt" >1405553103</td>
+                        <td >账号</td>
+                        <td id="id" name="expert" class="col-sm-2 " >${expert.expacount}</td>
                         <td >姓名</td>
-                        <td name="name" class="col-sm-2 change-txt">李金城</td>
-                        <td >出生年月</td>
-                        <td class="col-sm-2 change-txt">xxx-xx-xx</td>
-                    </tr>
-                    <tr>
+                        <td name="name" class="col-sm-2 change-txt ">${expert.name }</td>
                         <td >性别</td>
-                        <td class="col-sm-2" >男</td>
-                        <td >贯籍</td>
-                        <td class="col-sm-2">广东梅州</td>
-                        <td >入学日期</td>
-                        <td class="col-sm-2">xxx-xx-xx</td>
+                        <td class="col-sm-2 ">${expert.sex}</td>
                     </tr>
                     <tr>
-                        <td >名族</td>
-                        <td class="col-sm-2" >汉族</td>
-                        <td >专业</td>
-                        <td class="col-sm-2">计算机科学与技术</td>
-                        <td >专业方向</td>
-                        <td class="col-sm-2">医学应用</td>
+                        <td >学历</td>
+                        <td class="col-sm-2 change-txt" name="education" >${expert.education}</td>
+                        <td >职称</td>
+                        <td class="col-sm-2" >${expert.title}</td>
+                        <td >专家类型编码</td>
+                        <td class="col-sm-2">${expert.expcode}</td>
+                    </tr>
+                    <tr>
+                        <td >电话</td>
+                        <td class="col-sm-2 change-txt " name="telephone">${expert.telephone}</td>
+                        <td >qq</td>
+                        <td class="col-sm-2 change-txt" name="qq">${expert.qq}</td>
+                        <td >E-mail</td>
+                        <td class="col-sm-2 change-txt" name="email">${expert.email}</td>
+                    </tr>
+                    <tr>
+                        <td >微信</td>
+                        <td class="col-sm-2 change-txt" name="weixin">${expert.weixin}</td>
+                        <td >城市</td>
+                        <td class="col-sm-2 change-txt" name="city">${expert.city}</td>
+                        <td >状态</td>
+                        <td class="col-sm-2">${expert.state}</td>
+                    </tr>
+                    <tr>
+                        <td >注册时间</td>
+                        <td class="col-sm-2" >${expert.regist_time}</td>
+                        <td >所属单位编号</td>
+                        <td class="col-sm-2">${expert.departid}</td>
+                        <td ></td>
+                        <td class="col-sm-2"></td>
+                    </tr>
+                    <tr>
+                        <td >简介</td>
+                        <td colspan="5" class="change-txt" name="description">${expert.description}</td>
                     </tr>
                 </tbody>
             </table>
+            <p class="col-sm-12">备注：点击头像可更新头像，点击个人信息可更新个人信息，但并不是所有信息都可修改哦！</p>
         </div>
         <div class="beijin"></div>
         <div class="container">

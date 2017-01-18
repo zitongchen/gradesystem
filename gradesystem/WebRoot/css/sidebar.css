@@ -17,3 +17,25 @@ a:hover{
     text-decoration: none;
 
 }
+
+.make-row{
+    margin: 0;
+}
+.common-box {
+    font-family: "Microsoft YaHei UI Light";
+    color: lightgray;
+    margin-top: 80px;
+}
+.common-heading {
+    text-align: center;
+    font-size: 36px;
+}
+.common-box .common-boding {
+    font-size: 16px;
+}
+.expert-text {
+	margin-top:10px;
+	font-family: "Microsoft YaHei UI Light";
+    color: #099e6f;
+	
+}

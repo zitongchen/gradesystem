@@ -24,7 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="left">
         <div class="left_body">
             <p class="left_title">相关操作</p>
-            <iframe name="sidebar" src="${pageContext.request.contextPath}/jsps/common/sidebar.jsp" frameborder="0"></iframe>
+            <iframe name="sidebar" src="${pageContext.request.contextPath}/jsps/admin/asexpert/show_classes.jsp" frameborder="0"></iframe>
         </div>
     </div>
     <div class="right">
@@ -32,8 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <ul class="navigation">
             	
                 <c:if test="${not empty session_admin}">
-	                <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath}/jsps/common/sidebar.jsp" target="sidebar">首页</a></li>
-			        <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath}/jsps/admin/show_classes.jsp" target="sidebar">成绩管理</a></li>
+			        <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath}/jsps/admin/asexpert/show_classes.jsp" target="sidebar">成绩管理</a></li>
 			        <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath}/jsps/admin/manage_student_message.jsp" target="sidebar">学生信息管理</a></li>
 			        <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath}/jsps/admin/manage_education_message.jsp" target="sidebar">系统信息管理</a></li>
 			        <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath}/jsps/admin/personal.jsp" target="sidebar">个人中心</a></li>
@@ -41,7 +40,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </ul>
         </div>
         <div id="right-iframe" class="right_bottom">
-            <iframe name="body" src="${pageContext.request.contextPath}/jsps/common/sidebar.jsp" frameborder="0" scrolling="yes"></iframe>
+            <iframe class="boding" name="body" src="${pageContext.request.contextPath}/jsps/admin/common.jsp" frameborder="0" scrolling="yes"></iframe>
         </div>
     </div>
 </div>
@@ -65,5 +64,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script >
+    $(function(){
+    	$(".navigation-li").click(function(){
+    		 var url=$(".boding").attr("src");
+    	        body.location.href = url
+    	})
+    });
+    </script>
   </body>
 </html>

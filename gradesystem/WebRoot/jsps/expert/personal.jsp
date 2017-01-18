@@ -15,10 +15,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
 <link href="${pageContext.request.contextPath }/css/sidebar.css" rel="stylesheet" >
 </head>
-<body>
+<body >
+
 	<div>
 		<ul>
-			<li><a href="${pageContext.request.contextPath}/jsps/expert/person_message.jsp">管理员基本信息</a></li>
+			<li><a id="name" href="${pageContext.request.contextPath}/ExpertServlet?method=findExpertMessage&expacount=${sessionScope.session_expert.expacount}">教师基本信息</a></li>
             <li><a href="${pageContext.request.contextPath}/jsps/expert/update_password.jsp">密码修改</a></li>
 		</ul>
 	</div>

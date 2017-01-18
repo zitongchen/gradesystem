@@ -17,12 +17,17 @@ public interface StudentGradeService {
  String[] psGrades,
 			String[] syGrades, String[] ksGrades, String paecetime,
 			String sytime,
-			String terminal);
-
-	public void createGradeSheet(String classId, String expacount);
+ String terminal, String kc, String expacount);
 
 
 
 	public List<StudentGrade> queryUserGrade(String userId);
+
+	public List<StudentGrade> findFailStudent(String classId, String expacount);
+
+	public void saveFailStudentGrade(String[] userId, String[] bkGrades,
+			String kc, String expacount);
+
+	public String findExpertName(String expacount);
 
 }

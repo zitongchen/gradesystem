@@ -14,7 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title>教师注册</title>
 	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/teacher_register.css">
-	<script rel="script" src="${pageContext.request.contextPath}/js/teacher_register.js"></script>
+	
 </head>
 <body>
 
@@ -22,42 +22,50 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<p>教师注册</p>
 	</div>
 	<div class="register_wrap">
-		<p>${requestScope.errorMessage}</p>
-		<form name="register_form" id="register" method="post" action="${pageContext.request.contextPath}/ExpertRegisterServlet" enctype="multipart/form-data">
+		
+		<form name="register_form" id="register" onsubmit="return doupdate();" method="post" action="${pageContext.request.contextPath}/ExpertRegisterServlet" enctype="multipart/form-data">
 			<div class="ipt_box_before"></div>
 			<div class="ipt_box">
 				<label for="name" class="item" class="required">姓名</label>
-				<input type="text" name="name" class="txt" maxlength="24" autocomplete="off" required>
+				<input type="text" name="name" id="name"  class="txt" maxlength="24" autocomplete="off" required>
 			</div>
 			<div class="ipt_box">
 				<label for="pwd" class="item" class="required">密码</label>
-				<input type="password"  name="passwordone" class="txt" maxlength="16" placeholder="输入大于6位的密码" required>
+				<input type="password" id="password1"  name="passwordone" class="txt" maxlength="16" placeholder="输入大于6位的密码" required>
 			</div>
 
 			<div class="ipt_box">
 				<label for="pwd_y" class="item" class="required">确认密码</label>
-				<input type="password" name="password" id="pwd_y" class="txt" maxlength="16" required>
+				<input type="password" id="password2" name="password" id="pwd_y" class="txt" maxlength="16" onfocusout="doupdate()" required>
 			</div>
 
 			<div class="ipt_box">
-					<label class="item" for="num"
-					class="required">手机号码</label>
+					<label class="item" for="num" class="required">手机号码</label>
 					<div class="txt">
-						<input type="text" name="telephone" id="num" class="txt" maxlength="11" required>
+						<input type="text" name="telephone" id="telephone" class="txt" maxlength="11" required>
 					</div>
 			</div>
 			<div class="ipt_box">
+				<label for="email" class="item" class="required">email</label>
+				<input type="email" name="email" class="txt" maxlength="24" autocomplete="off" required>
+			</div>
+			<div class="ipt_box">
 				<label for="weixin" class="item" >微信</label>
-				<input type="text" name="weixin" class="txt" maxlength="16" autocomplete="off" >
+				<input type="text" id="weixin" name="weixin" class="txt" maxlength="16" autocomplete="off" >
 			</div>
 			<div class="ipt_box">
 				<label for="qq" class="item" >QQ</label>
 				<input type="text" name="qq" class="txt" maxlength="16" autocomplete="off" >
 			</div>
 			<div class="ipt_box">
-				<label for="email" class="item" class="required">email</label>
-				<input type="email" name="email" class="txt" maxlength="24" autocomplete="off" required>
+				<label  class="item" >专家类型编码</label>
+				<input type="text" name="expcode" class="txt" maxlength="16" autocomplete="off" >
 			</div>
+			<div class="ipt_box">
+				<label  class="item" >所属单位</label>
+				<input type="text" name="departid" class="txt" maxlength="16" autocomplete="off" >
+			</div>
+			
 			<div class="ipt_box">
 				<label class="item">性别</label>
 				<div class="txt">
@@ -177,9 +185,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<label class="item"> 上传照片</label>
 				<div class="photo">
 					<div class="preview" id="preview">
-						<img src='<%=request.getContextPath()%>/image/test_one.jpg'><!--获得项目路径 -->
+						<img src='<%=request.getContextPath()%>/resource/images/he.png'><!--获得项目路径 -->
 					</div>
-					<input type="file" name="picture" onchange="previewImage(this)"/>     <!-- 改变时触发 -->
+					<input type="file" id="file" name="picture" onchange="previewImage(this)" required="required"/>     <!-- 改变时触发 -->
 				</div>
 			</div>
 			<div class="ipt_box description_box">
@@ -201,6 +209,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div id ="foot">
 		Copyright All Rights Reserved 成绩查询系统 版权所有®
 	</div>
+	<c:if test="${not empty requestScope.errorMessage}">
+		<script>alert('${requestScope.errorMessage}')</script>
+	</c:if>
+	<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+	<script rel="script" src="${pageContext.request.contextPath}/js/teacher_register.js"></script>
 	<script type="text/javascript">
 		function code_change(){
 			var code=document.getElementById("test_code");

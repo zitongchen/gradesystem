@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add Course</title>
+    <title>课程</title>
     <base target="body"/>
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/add-perfession.css">
@@ -29,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="form-group">
                     <label for="inputKcmc" class="col-sm-4 control-label">课程名称</label>
                     <div class="col-sm-8">
-                        <input type="text" name="title" class="form-control" id="inputKcmc" >
+                        <input type="text" name="title" class="form-control" id="inputKcmc" required="required">
                     </div>
                 </div>
                 <div class="form-group">
@@ -43,19 +43,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="form-group">
                     <label for="inputXxss" class="col-sm-4 control-label">学习时数</label>
                     <div class="col-sm-8">
-                        <input type="text" name="sthours" class="form-control" id="inputXxss">
+                        <input type="text" name="sthours" class="form-control" id="inputXxss" required="required">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputMsss" class="col-sm-4 control-label">面授时数</label>
                     <div class="col-sm-8">
-                        <input type="text" name="classhour" class="form-control" id="inputMsss">
+                        <input type="text" name="classhour" class="form-control" id="inputMsss" required="required">
                     </div>
                 </div>
                 <div class="form-group">
                     <label  for="inputSyss" class="col-sm-4 control-label">实验时数</label>
                     <div class="col-sm-8">
-                        <input type="text" name="sbhour" class="form-control" id="inputSyss" >
+                        <input type="text" name="sbhour" class="form-control" id="inputSyss" required="required" >
                     </div>
                 </div>
                 <div class="form-group">
@@ -67,7 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="form-group">
                     <label  for="inputXf" class="col-sm-4 control-label">学分</label>
                     <div class="col-sm-8">
-                        <input type="text" name="score" class="form-control" id="inputXf" >
+                        <input type="text" name="score" class="form-control" id="inputXf" required="required">
                     </div>
                 </div>
                 <div class="form-group">

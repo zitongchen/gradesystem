@@ -29,11 +29,6 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
-	// 更新学生信息
-	public void updateUserMessage(User user) {
-		userDao.updateUserMessageById(user);
-	}
-
 
 
 	// 忘记密码

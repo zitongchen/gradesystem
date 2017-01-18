@@ -36,8 +36,6 @@ public class ExpertFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		Expert expert = (Expert) httpRequest.getSession().getAttribute(
 				"session_expert");
-		Admin admin = (Admin) httpRequest.getSession().getAttribute(
-				"session_admin");
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		if (expert != null) {
 			chain.doFilter(httpRequest, response);

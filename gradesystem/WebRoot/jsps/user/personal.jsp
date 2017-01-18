@@ -18,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 	<div>
 		<ul>
-			<li><a href="${pageContext.request.contextPath}/UserServlet?method=findUserMessage&user_acount=${sessionScope.session_user.user_acount}">管理员基本信息</a></li>
+			<li><a href="${pageContext.request.contextPath}/UserServlet?method=findUserMessage&user_acount=${sessionScope.session_user.user_acount}">学生基本信息</a></li>
             <li><a href="${pageContext.request.contextPath}/jsps/user/update_password.jsp">密码修改</a></li>
 		</ul>
 	</div>
