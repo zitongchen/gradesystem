@@ -20,11 +20,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- 以下是内容主体部分mainbody -->
 <div class="mainbody">
     <div>
-        <form target="body" onsubmit="return text_formula()" name="" id="" metdod="post" action="${pageContext.request.contextPath}/ExpertServlet">
-            <input type="hidden"  name="method" value="saveClassStudentGrade"/>
+        <form target="body" onsubmit="return text_formula()" name="" id="" method="post" action="${pageContext.request.contextPath}/AdminServlet">
+            <input type="hidden"  name="method" value="saveFailStudentGrade"/>
             <input type="hidden" name="classId" value="${requestScope.studentList[0].bh}"/>
-            <input type="hidden" name="state" value="${requestScope.studentList[0].state}"/>
             <input type="hidden" name="kc" value="${requestScope.studentList[0].visit_count}"/>
+            <input type="hidden" name="expacount" value="${requestScope.studentList[0].expert.expacount}"/>
+            <input type="hidden" name="gradelei" value="${requestScope.gradelei}"
             <!-- 第一个表格 -->
             <table class="table table-bordered table-condensed">
                 <option>课程基本信息：</option>
@@ -38,7 +39,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <td>班级：</td>
                     <td><span>${requestScope.studentList[0].bh}</span></td>
                     <td>学年学期：</td>
-                    <td><span>2016-2017-1(静态数据)</span></td>
+                    <td><span>${requestScope.studentList[0].termth}</span></td>
+                </tr>
+                <tr>
+                    <td>考试类型：</td>
+                    <td><span>${requestScope.gradelei}</span></td>
+                    <td></td>
+                    <td><span></span></td>
                 </tr>
             </table>
             <!-- 第三个表格 -->
@@ -54,10 +61,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </tr>
                     <c:forEach items="${requestScope.studentList}" var="studentList" varStatus="status">
                         <tr>
-                            <td><input type="text" name="userId" value="${studentList.user_acount}" size="12" readonly="readonly" style="border: 0px"></td>
+                            <td><input type="text"  name="userId" value="${studentList.user_acount}" size="12" readonly="readonly" style="border: 0px"></td>
                             <c:set var="index" value="${status.index}"></c:set>
                             <td>${studentList.nickname}</td>
-                            <td><input class="input-style" type="number" name="bkscore" value="${studentList.bkscore}" size="8"></td>
+                            <td><input class="input-style " type="number" name="bkscore" value="${studentList.bkscore}" size="8"></td>
                             <td>${studentList.totalscores}</td>
                         </tr>
                     </c:forEach>
@@ -65,24 +72,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </tbody>
             </table>
             <div class="form-group">
-                <div class="col-sm-1 col-sm-offset-4">
+            	<div class="col-sm-1 col-sm-offset-5">
+	        		<button id="submit-fail-btn" type="button" class="btn default-btn submit-btn">保存</button>
+	        	</div>
+                <div class="col-sm-1 ">
                 	<c:if test="${requestScope.studentList[0].state=='1'}">
-                    	<button type="submit" id="submit-btn" class="btn default-btn submit-btn">保存</button>
+                    	<button type="submit"  class="btn default-btn submit-btn">提交</button>
                     </c:if>
-                </div>
-            </div>
-        </form>
-        <c:if test="${requestScope.studentList[0].state=='1' }">
-	        <div class="col-sm-1 ">
-	        	<button id="loadGrade" class="btn default-btn submit-btn">提交</button>
-	        </div>
-        </c:if>
-        <form action="${pageContext.request.contextPath}/StudentGradeSheetServlet">
-            <input type="hidden" name="classId" value="${requestScope.studentgrades[0].bh}"/>
-            <input type="hidden" name="expacount" value="${sessionScope.session_expert.expacount}"/>
-            <div class="form-group ">
-                <div class="col-sm-3">
-                    <button type="submit" class="btn default-btn submit-btn last-btn">成绩输出打印</button>
                 </div>
             </div>
         </form>
@@ -92,8 +88,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script>
     	var root="<%=basePath%>";
-    	var bh='${requestScope.studentgrades[0].bh}';
-    	var kcId='${requestScope.studentgrades[0].visit_count}';
+    	var bh='${requestScope.studentList[0].bh}';
+    	var kcId='${requestScope.studentList[0].visit_count}';
+    	
+    	
     </script>
     <script src="${pageContext.request.contextPath}/js/teacher.js"></script>
  </body>

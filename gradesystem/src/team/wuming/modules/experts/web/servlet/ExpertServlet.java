@@ -106,11 +106,11 @@ public class ExpertServlet extends cn.itcast.servlet.BaseServlet {
 		Expert expert = (Expert) request.getSession().getAttribute(
 				"session_expert");
 
-		if (oldpassword.equals(expert.getPassword())) {// 判断输入的原密码是否跟session中的密码一致，不一致回显错误信息
+		if (!oldpassword.equals(expert.getPassword())) {// 判断输入的原密码是否跟session中的密码一致，不一致回显错误信息
 			request.setAttribute("errorMessage", "原密码输入有误");
-			return "f:/index.jsp";
+			return "f:/jsps/expert/update_password.jsp";
 		} else {
-			String password = request.getParameter("newpassord");
+			String password = request.getParameter("newpassword");
 			expertService.updateExpertPassword(expert.getExpacount(), password);
 		}
 		request.getSession().invalidate();// 销毁session并让用户重新登录
@@ -172,14 +172,17 @@ public class ExpertServlet extends cn.itcast.servlet.BaseServlet {
 	 * @param request
 	 * @param response
 	 * @return
+	 * @throws UnsupportedEncodingException
 	 */
 	public String saveClassStudentGrade(HttpServletRequest request,
-			HttpServletResponse response) {
-		String state=request.getParameter("state");
+			HttpServletResponse response) throws UnsupportedEncodingException {
 		String kc = request.getParameter("kc");
-		if(state!="0"){
-			return null;
-		}
+		String classId = request.getParameter("classId");
+		classId = new String(classId.getBytes("utf-8"), "iso-8859-1");
+		/*
+		 * String state=request.getParameter("state"); if(state!="0"){ return
+		 * null; }
+		 */
 		String[] userId = request.getParameterValues("userId");
 		String[] psGrades = request.getParameterValues("psscore");// 平时成绩
 		String[] syGrades = request.getParameterValues("syscore");// 实验成绩
@@ -189,15 +192,14 @@ public class ExpertServlet extends cn.itcast.servlet.BaseServlet {
 		String terminal = request.getParameter("qm");// 考试成绩占比率
 		Expert expert = (Expert) request.getSession().getAttribute(
 				"session_expert");
-		String classId = request.getParameter("classId");
+
 		studentGradeService.saveClassStudentGrade(userId, psGrades, syGrades,
 				ksGrades, paecetime, sytime, terminal, kc,
 				expert.getExpacount());
 
 		return "f:/ExpertServlet?method=findClassStudentByClass&classId="
-				+ request.getParameter("classId") + "&expacount="
+				+ classId + "&expacount="
 				+ expert.getExpacount();
-
 	}
 
 	// 补考考生查询
@@ -209,25 +211,33 @@ public class ExpertServlet extends cn.itcast.servlet.BaseServlet {
 		List<StudentGrade> studentLists = studentGradeService.findFailStudent(
 				classId, expacount);
 		request.setAttribute("studentList", studentLists);
+		if (studentLists.get(0).getGradelei().equals("正考")) {
+			request.setAttribute("gradelei", "补考");
+		} else if (studentLists.get(0).getGradelei().equals("补考")) {
+			request.setAttribute("gradelei", "补考2");
+		} else if (studentLists.get(0).getGradelei().equals("补考2")) {
+			request.setAttribute("gradelei", "补考3");
+		}
 		return "f:/jsps/expert/add_student_failgrade.jsp";
 	}
 
 	// 保存补考成绩
 	public String saveFailStudentGrade(HttpServletRequest request,
-			HttpServletResponse response) {
-		String state = request.getParameter("state");
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		String classId = request.getParameter("classId");
+		String gradelei = request.getParameter("gradelei");
+		classId = new String(classId.getBytes("utf-8"), "iso-8859-1");
 		// 获取课程
 		String kc = request.getParameter("kc");
 		String[] userId = request.getParameterValues("userId");
 		String[] bkGrades = request.getParameterValues("bkscore");// 补考成绩
 		Expert expert = (Expert) request.getSession().getAttribute(
 				"session_expert");
-		String classId = request.getParameter("classId");
+
 		studentGradeService.saveFailStudentGrade(userId, bkGrades, kc,
-				expert.getExpacount());
-		return "f:/ExpertServlet?method=findFailStudent&classId="
-				+ request.getParameter("classId") + "&expacount="
-				+ expert.getExpacount();
+				expert.getExpacount(), gradelei);
+		return "r:/ExpertServlet?method=findClassStudentByClass&classId="
+				+ classId + "&expacount=" + expert.getExpacount();
 
 	}
 
@@ -244,7 +254,6 @@ public class ExpertServlet extends cn.itcast.servlet.BaseServlet {
 			out = response.getWriter();
 			try {
 				expertService.changeGradeState(bh, kcId);
-				request.setAttribute("successMessage", "提交成绩成功！");
 				out.println("成绩提交成功！");
 			} catch (Exception e) {
 				out.println("成绩提交失败！");
@@ -256,5 +265,7 @@ public class ExpertServlet extends cn.itcast.servlet.BaseServlet {
 			out.close();
 		}
 	}
+
+
 
 }

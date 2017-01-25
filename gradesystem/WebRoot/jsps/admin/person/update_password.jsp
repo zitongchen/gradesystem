@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <div class="form-group">
                         <label for="inputAcount" class="control-label col-sm-3">账号</label>
                         <div class="col-sm-8">
-                            <input type="text" id="inputAcount" name="acount" class="form-control" value="${sessionScope.session_admin.admin_acount}" disabled>
+                            <input type="text" id="inputAcount" name="userId" class="form-control" value="${sessionScope.session_admin.admin_acount}" disabled>
                         </div>
                     </div>
                     <div class="form-group">

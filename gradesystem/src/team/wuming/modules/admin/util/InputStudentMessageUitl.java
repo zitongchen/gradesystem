@@ -12,6 +12,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 
 import team.wuming.modules.users.domain.User;
 
@@ -38,7 +39,9 @@ public class InputStudentMessageUitl {
 				user.setKsh(cell.getRichStringCellValue().toString());
 				// 学号
 				cell = row.getCell(1);
+				cell.setCellType(cell.CELL_TYPE_STRING);
 				user.setUser_acount(cell.getRichStringCellValue().toString());
+
 				// 姓名
 				cell = row.getCell(2);
 				user.setNickname(cell.getRichStringCellValue().toString());
@@ -111,8 +114,8 @@ public class InputStudentMessageUitl {
 				// 把user放到userList中
 				userList.add(user);
 			}
-		} catch (ParseException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 		return userList;
 	}

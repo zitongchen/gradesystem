@@ -24,9 +24,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	<c:if test="${ not empty requestScope.expertList }">
         		<c:forEach items="${requestScope.expertList }" var="expert">
 		            <div class="message-bodying col-sm-12">
-		                <p class="col-sm-2 ">账号：${expert.expacount}</p>
-		                <p class="col-sm-2 ">用户名：${expert.name}</p>
-		                <div class="col-sm-1 col-sm-offset-7">
+		                <p class="col-sm-3 ">账号：${expert.expacount}</p>
+		                <p class="col-sm-4 ">用户名：${expert.name}</p>
+		                <div class="col-sm-1 col-sm-offset-4">
 		                    <a href="${pageContext.request.contextPath}/AdminServletOne?method=checkExpert&expacount=${expert.expacount}">
 		                    	<button class="btn ">审核</button>
 		                    </a>

@@ -45,3 +45,28 @@ $(function(){
 		})
 	})
 })
+
+//利用ajax保存补考成绩
+$(function(){
+	$("#submit-fail-btn").click(function(){
+		var user_id=document.getElementsByName('userId');
+    	var bk=document.getElementsByName('bkscore');
+    	var user_acount="";
+    	var bkscore="";
+    	for(i=0;i<user_id.length;i++){
+    		user_acount+=user_id[i].value+" ";
+    		bkscore+=bk[i].value+" ";
+    	}
+		$.ajax({
+			type:"post",
+			url:root+"StudentGradeServlet",
+			data:"method=saveBkScore&bh="+bh+"&kcId="+kcId+"&user_acount="+user_acount+"&bkscore="+bkscore,
+			success:function(data){
+				alert(data);
+			},
+			error:function(){
+				alert("保存补考成绩失败！");
+			}
+		})
+	})
+})

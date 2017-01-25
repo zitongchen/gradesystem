@@ -40,4 +40,11 @@ public interface StudentGradeDao {
 
 	public Object findExpertName(String expacount);
 
+	public List<StudentGrade> searchStudentGradeByName(String value);
+
+
+
+	public void saveBkScore(String[] user_acount, String[] bkscore, String kc,
+			String bh);
+
 }

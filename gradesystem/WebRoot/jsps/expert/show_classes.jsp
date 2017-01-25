@@ -18,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 	<div>
 		<ul>
-			<c:if test="${empty requestScope.classList || empty requestScope.failList }">
+			<c:if test="${empty requestScope.classList && empty requestScope.failList }">
 				<p class="expert-text">不存在任教班级</p>
 			</c:if>
 			<c:if test="${not empty requestScope.classList}">

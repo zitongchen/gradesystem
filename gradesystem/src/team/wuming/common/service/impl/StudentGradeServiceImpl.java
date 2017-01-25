@@ -33,6 +33,19 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 		return studentGrades;
 	}
 
+	// 根据学生名字查询成绩
+	@Override
+	public List<StudentGrade> serchStudentGradeByName(String value) {
+		List<StudentGrade> studentGrades = studentGradeDao
+				.searchStudentGradeByName(value);
+		for (StudentGrade studentGrade : studentGrades) {
+			String name = String.valueOf(studentGradeDao
+					.queryExpert(studentGrade.getExpert().getExpacount()));
+			studentGrade.getExpert().setName(name);
+		}
+		return studentGrades;
+	}
+
 	/**
 	 * 根据班级编号，教师编号查询学生成绩信息
 	 */
@@ -62,8 +75,6 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 		Float grades = (float) 0;
 		for (int index = 0; index < userId.length; index++) {
 			StudentGrade studentGrade = new StudentGrade();
-
-
 			if (psGrades[index] != "") {
 				psScore = Float.parseFloat(psGrades[index]);
 				grades = psScore * ps;
@@ -91,7 +102,9 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 			studentGrade.setOper(expacount);
 			newStudentGrade.add(studentGrade);
 		}
+
 		studentGradeDao.saveStudentGrades(newStudentGrade);
+
 	}
 
 	@Override
@@ -102,7 +115,7 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 	// 保存补考成绩
 	@Override
 	public void saveFailStudentGrade(String[] userId, String[] bkGrades,
-			String kc, String expacount) {
+			String kc, String expacount, String gradelei) {
 		List<StudentGrade> studentList=new ArrayList<StudentGrade>();
 		for(int i=0;i<userId.length;i++){
 			StudentGrade stuGrade=new StudentGrade();
@@ -110,6 +123,7 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 			stuGrade.setVisit_count(kc);
 			stuGrade.setUser_acount(userId[i]);
 			stuGrade.setOper(expacount);
+			stuGrade.setGradelei(gradelei);
 			studentList.add(stuGrade);
 		}
 		studentGradeDao.saveFailStudentGrade(studentList);
@@ -122,5 +136,12 @@ public class StudentGradeServiceImpl implements StudentGradeService {
 		Object name = studentGradeDao.findExpertName(expacount);
 		return String.valueOf(name);
 	}
+
+	@Override
+	public void saveBkScore(String[] user_acount, String[] bkscore, String kc,
+			String bh) {
+		studentGradeDao.saveBkScore(user_acount, bkscore, kc, bh);
+	}
+
 
 }

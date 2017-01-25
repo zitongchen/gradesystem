@@ -21,6 +21,12 @@ import team.wuming.modules.admin.util.InputStudentMessageUitl;
 import team.wuming.modules.users.domain.User;
 import cn.itcast.servlet.BaseServlet;
 
+/**
+ * 通过学生信息表上传学生信息
+ * 
+ * @author Tony
+ * 
+ */
 public class UploadStudentMessageServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -50,7 +56,8 @@ public class UploadStudentMessageServlet extends HttpServlet {
 				if (fileNameLength <= 0) {
 					request.setAttribute("errorMessage", "你还没有选择上传的文件");
 					request.getRequestDispatcher(
-							"/jsps/admin/add_student_message.jsp").forward(
+							"/jsps/admin/managestudent/add_student_message.jsp")
+							.forward(
 							request, response);
 					return;
 						//return "f:/jsps/admin/add_student_message.jsp";
@@ -61,41 +68,47 @@ public class UploadStudentMessageServlet extends HttpServlet {
 					request.setAttribute("errorMessage",
 								"你上传的文件不是Excel文件，请上传正确的文件！");
 					request.getRequestDispatcher(
-							"/jsps/admin/add_student_message.jsp").forward(
+							"/jsps/admin/managestudent/add_student_message.jsp")
+							.forward(
 							request, response);
 					return;
-						//return "f:/jsps/admin/add_student_message.jsp";
 				}
 				try {
 					userList = inputStudentMessageUtil
 							.studentMessageToList(fileItem.getInputStream());
 				} catch (Exception e) {
-					request.setAttribute("errorMessage", "上传失败！");
-					request.getRequestDispatcher("jsps/admin/add_student_message.jsp").forward(request, response);
+					request.setAttribute("errorMessage", "单元格格式为文本，且不能为空！");
+					request.getRequestDispatcher(
+							"jsps/admin/managestudent/add_student_message.jsp")
+							.forward(request, response);
 					return ;
-					// return "f:jsps/admin/add_student_message.jsp";
 				}
 			}
 			try {
 				adminService.inputStudentMessage(userList);
+				adminService.addMaijor();
+				adminService.addXuexid();
 			} catch (Exception e) {
 				String message = e.getMessage();
 				message = message.substring(message.indexOf("\'") + 1,
 						message.indexOf("\'") + 13);
+				System.out.println(e.getMessage());
 				request.setAttribute("errorMessage", "上传失败！数据库里面已经存在学号为："
 						+ message + "，请确认上传的信息表格是否正确！");
 				request.getRequestDispatcher(
-						"jsps/admin/add_student_message.jsp").forward(request,
+						"jsps/admin/managestudent/add_student_message.jsp")
+						.forward(request,
 						response);
 				return;
-					//return "f:jsps/admin/add_student_message.jsp";
+
 			}
 			request.setAttribute("successMessage", "学生信息录入成功！");
 		}
-		request.getRequestDispatcher("/jsps/admin/add_student_message.jsp")
+		request.getRequestDispatcher(
+				"/jsps/admin/managestudent/add_student_message.jsp")
 				.forward(request, response);
 		return;
-			//return "f:/jsps/admin/add_student_message.jsp";
+
 	}
 
 }

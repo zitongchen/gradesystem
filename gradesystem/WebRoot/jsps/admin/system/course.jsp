@@ -4,24 +4,30 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>课程</title>
-    <base target="body"/>
+    <title>Add Course</title>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/add-perfession.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/system.css">
 </head>
 <body>
 <div class="conntainer">
-    <div class="row make-row">
-        <div class="col-sm-4 col-sm-offset-5 ">
+    <div class="row col-sm-12">
+        <p class="top-txt">课程信息</p>
+        <!--<p class="errorMessage">暂时未存在课程信息</p>-->
+        <div class="col-sm-10 col-sm-offset-1 ">
+            <a><button class="message-btn add-btn show-course">添加课程.......</button></a>
+        </div>
+    </div>
+    <div class="row col-sm-12 add-course">
+        <div class="col-sm-4 col-sm-offset-4 ">
             <p class="top-txt">添加课程</p>
         </div>
     </div>
-    <div class="row make-row">
+    <div class="row col-sm-12 add-course">
         <div class="col-sm-6 col-sm-offset-2">
             <form class="form-horizontal" action="${pageContext.request.contextPath}/AdminServlet" method="post" role="form">
             	<input type="hidden" name="method" value="addObjcenter"/><!-- 使用AdminServlet中的addObjcenter方法 -->
@@ -87,8 +93,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <label class="col-sm-4 control-label">开课学期</label>
                     <div class="col-sm-3">
                         <select name="termth" class="form-control">
-                            <option value="一" selected="selected">一</option>
-                            <option value="二" >二</option>
+                            <option value="1" selected="selected">1</option>
+                            <option value="2" >2</option>
+                            <option value="3" >3</option>
+                            <option value="4" >4</option>
+                            <option value="5" >5</option>
+                            <option value="6" >6</option>
+                            <option value="7" >7</option>
+                            <option value="8" >8</option>
                         </select>
                     </div>
                 </div>
@@ -111,18 +123,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </div>
             </form>
         </div>
-    </div>
+	</div>
 </div>
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    
-    <!-- 引用外部文件 -->
-    <script  type="text/javascript">
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+	<!--导入外部的JS文件-->
+	<script  type="text/javascript">
     	var root="<%=basePath%>";
     </script>
-    <script src="${pageContext.request.contextPath}/js/manage-education.js"></script>
+	<script src="${pageContext.request.contextPath}/js/course.js"></script>
 </body>
 </html>

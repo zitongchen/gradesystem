@@ -55,6 +55,25 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 		return studentGrades;
 	}
 
+	@Override
+	public List<StudentGrade> searchStudentGradeByName(String value) {
+		String sql = "select * from studentgrade where nickname=?";
+		List<StudentGrade> studentGradeList = new ArrayList<StudentGrade>();
+		try {
+			List<Map<String, Object>> map = qr.query(sql, new MapListHandler(),
+					value);
+			for (Map<String, Object> map2 : map) {
+				Expert expert = CommonUtils.toBean(map2, Expert.class);
+				StudentGrade studentGrade = CommonUtils.toBean(map2,
+						StudentGrade.class);
+				studentGrade.setExpert(expert);
+				studentGradeList.add(studentGrade);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return studentGradeList;
+	}
 
 	/**
 	 * 根据教师编号查询教师-用于学生查询成绩功能
@@ -86,7 +105,6 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 				Expert expert = CommonUtils.toBean(map, Expert.class);
 				StudentGrade studentGrade = CommonUtils.toBean(map,
 						StudentGrade.class);
-
 				studentGrade.setExpert(expert);
 				studentGrades.add(studentGrade);
 			}
@@ -101,7 +119,7 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 	@Override
 	public void saveStudentGrades(List<StudentGrade> newStudentGrade) {
 
-		String sql = "update studentgrade set psscore=? ,syscore=?,ksscore=?,totalscores=?,oper=? where user_acount=? and visit_count=?";
+		String sql = "update studentgrade set psscore=? ,syscore=?,ksscore=?,totalscores=?,oper=? where user_acount=? and visit_count=? and state=0";
 		try {
 			for (StudentGrade studentGrade : newStudentGrade) {// 循环保存学生信息
 				qr.update(sql, studentGrade.getPsscore(),
@@ -111,9 +129,10 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
  studentGrade.getOper(),
 						studentGrade.getUser_acount(),
 						studentGrade.getVisit_count());
+
 			}
 		} catch (Exception e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -143,13 +162,17 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 	// 保存补考同学的成绩
 	@Override
 	public void saveFailStudentGrade(List<StudentGrade> studentList) {
-		String sql = "update studentgrade set totalscore=?,bkscore=?,oper=? where user_acount=? and visit_count=?";
+		String sql = "update studentgrade set bkscore=?,totalscores=?,oper=?,gradelei=? where user_acount=? and visit_count=?";
+		String totalscores = null;
 		for (StudentGrade studentGrade : studentList) {
-
+			if (Integer.parseInt(studentGrade.getBkscore()) < 60) {
+				totalscores = studentGrade.getBkscore();
+			} else {
+				totalscores = "60";
+			}
 			try {
-				qr.update(sql, studentGrade.getBkscore(),
-						studentGrade.getBkscore(),
- studentGrade.getOper(),
+				qr.update(sql, studentGrade.getBkscore(), totalscores,
+						studentGrade.getOper(), studentGrade.getGradelei(),
 						studentGrade.getUser_acount(),
 						studentGrade.getVisit_count());
 			} catch (SQLException e) {
@@ -158,6 +181,7 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 		}
 
 	}
+
 
 	// 根据教师编号查询教师姓名：（管理员代教师管理成绩功能）
 	@Override
@@ -169,4 +193,19 @@ public class StudentGradeDaoImpl implements StudentGradeDao {
 			throw new RuntimeException(e);
 		}
 	}
+
+	@Override
+	public void saveBkScore(String[] user_acount, String[] bkscore, String kc,
+			String bh) {
+		String sql = "update studentgrade set bkscore=? where user_acount=? and visit_count=? and bh=?";
+		for (int i = 0; i < user_acount.length; i++) {
+			try {
+				qr.update(sql, bkscore[i], user_acount[i], kc, bh);
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+		}
+
+	}
+
 }

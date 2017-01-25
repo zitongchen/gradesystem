@@ -56,7 +56,7 @@ public class UserServlet extends cn.itcast.servlet.BaseServlet {
 					.getAttribute("verificationCode");
 			if (!(verification.equals(verificationCode))) {
 				request.setAttribute("errorMessage", "验证码错误！");
-				return "f:/index.jsp";
+				return "f:/jsps/user/update_password.jsp";
 			}
 			User user = userService.login(form);
 			request.getSession().setAttribute("session_user", user);
@@ -100,7 +100,6 @@ public class UserServlet extends cn.itcast.servlet.BaseServlet {
 			return "f:/jsps/user/update_password.jsp";
 		} else {
 			String password = request.getParameter("newpassword");
-			System.out.println(password);
 			userService.updateUserPassword(user.getUser_acount(),password);
 		}
 		request.getSession().invalidate();// 销毁session并让用户重新登录

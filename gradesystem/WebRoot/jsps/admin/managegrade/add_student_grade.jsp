@@ -20,17 +20,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- 以下是内容主体部分mainbody -->
 <div class="mainbody">
     <div>
-        <form target="body" onsubmit="return text_formula()" name="" id="" metdod="post" action="${pageContext.request.contextPath}/ExpertServlet">
-            <input type="hidden"  name="method" value="saveClassStudentGrade"/>
+        <form target="body" onsubmit="return text_formula()" name="" id="" method="post" action="${pageContext.request.contextPath}/AdminServlet">
+            <input type="hidden"  name="method" value="saveStudentGrade"/>
             <input type="hidden" name="classId" value="${requestScope.studentgrades[0].bh}"/>
-            <input type="hidden" name="state" value="${requestScope.studentgrade[0].state}"/>
-            <input type="hidden" name="kc" value="${requestScope.studentgrade[0].visit_count}"/>
+            <input type="hidden" name="kc" value="${requestScope.studentgrades[0].visit_count}"/>
+            <input type="hidden" name="expacount" value="${requestScope.studentgrades[0].expert.expacount}"/>
             <!-- 第一个表格 -->
             <table class="table table-bordered table-condensed">
                 <option>课程基本信息：</option>
                 <tr>
-                    <td>教师姓名：</td>
-                    <td><span>${requestScope.expertName}</span></td>
+                    <td>教师编号/姓名：</td>
+                    <td><span>${requestScope.studentgrades[0].expert.expacount}/${requestScope.expertName}</span></td>
                     <td>课程名称：</td>
                     <td><span>${requestScope.studentgrades[0].title}</span></td>
                 </tr>

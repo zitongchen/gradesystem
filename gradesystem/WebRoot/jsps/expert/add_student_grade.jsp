@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+ <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 String path = request.getContextPath();
@@ -20,11 +20,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- 以下是内容主体部分mainbody -->
 <div class="mainbody">
     <div>
-        <form target="body" onsubmit="return text_formula()" name="" id="" metdod="post" action="${pageContext.request.contextPath}/ExpertServlet">
+        <form target="body" onsubmit="return text_formula()"  method="post" action="${pageContext.request.contextPath}/ExpertServlet">
             <input type="hidden"  name="method" value="saveClassStudentGrade"/>
             <input type="hidden" name="classId" value="${requestScope.studentgrades[0].bh}"/>
-            <input type="hidden" name="state" value="${requestScope.studentgrade[0].state}"/>
-            <input type="hidden" name="kc" value="${requestScope.studentgrade[0].visit_count}"/>
+            <input type="hidden" name="kc" value="${requestScope.studentgrades[0].visit_count }"/>
             <!-- 第一个表格 -->
             <table class="table table-bordered table-condensed">
                 <option>课程基本信息：</option>
@@ -32,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <td>教师姓名：</td>
                     <td><span>${sessionScope.session_expert.name}</span></td>
                     <td>课程名称：</td>
-                    <td><span>${requestScope.studentgrades[0].title}</span></td>
+                    <td><span>${requestScope.studentgrades[0].title }</span></td>
                 </tr>
                 <tr>
                     <td>班级：</td>

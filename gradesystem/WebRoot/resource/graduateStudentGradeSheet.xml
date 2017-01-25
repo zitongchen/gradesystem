@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<excel id="student" code="student" name="学生信息导入">
+<excel id="student" code="student" name="毕业学生成绩登记表">
     <colgroup>
         <col index="A" width='28em'></col>
         <col index="B" width='11em'></col>
@@ -16,14 +16,14 @@
             <td rowspan="1" colspan="6" value="毕业生成绩登记表" />
         </tr>
         <tr height="16px"  fontsize="14" fontweight="0" rowheight="25" center="0" >
-            <td rowspan="1" colspan="3" value="学号：1405553127" />
-            <td rowspan="4" colspan="6" value="姓名：陈子通" />
+            <td rowspan="1" colspan="3" value="学号：" />
+            <td rowspan="4" colspan="6" value="姓名：" />
         </tr>
         <tr height="16px"  fontsize="12" fontweight="0" rowheight="25" center="0" >
-            <td rowspan="1" colspan="1" value="专业：临床医学" />
-            <td rowspan="2" colspan="3" value="学习形式：业余" />
-            <td rowspan="4" colspan="5" value="培养层次：专升本" />
-            <td rowspan="6"  colspan="1" value="学制：3年" />
+            <td rowspan="1" colspan="1" value="专业：" />
+            <td rowspan="2" colspan="3" value="学习形式：" />
+            <td rowspan="4" colspan="5" value="培养层次：" />
+            <td rowspan="6"  colspan="1" value="学制：" />
         </tr>
     </title>
     <thead>
@@ -48,10 +48,10 @@
     </tbody>
     <foot>
     	 <tr height="16px" fontsize="14" fontweight="0" rowheight="18" center="1" >
-            <td rowspan="4" colspan="6" value="广东药科大学继续教育学院" />
+            <td rowspan="4" colspan="6"  />
         </tr>
         <tr height="16px"  fontsize="14" fontweight="0" rowheight="18" center="1" >
-            <td rowspan="4" colspan="6" value="2015年1月3日" />
+            <td rowspan="4" colspan="6"  />
         </tr>
     </foot>
 </excel>

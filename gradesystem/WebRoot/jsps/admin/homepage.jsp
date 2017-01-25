@@ -24,18 +24,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="left">
         <div class="left_body">
             <p class="left_title">相关操作</p>
-            <iframe name="sidebar" src="${pageContext.request.contextPath}/jsps/admin/asexpert/show_classes.jsp" frameborder="0"></iframe>
+            <iframe name="sidebar" src="${pageContext.request.contextPath}/jsps/admin/managegrade/grade_mulu.jsp" frameborder="0"></iframe>
         </div>
     </div>
     <div class="right">
         <div class="right_top">
             <ul class="navigation">
-            	
                 <c:if test="${not empty session_admin}">
-			        <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath}/jsps/admin/asexpert/show_classes.jsp" target="sidebar">成绩管理</a></li>
-			        <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath}/jsps/admin/manage_student_message.jsp" target="sidebar">学生信息管理</a></li>
-			        <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath}/jsps/admin/manage_education_message.jsp" target="sidebar">系统信息管理</a></li>
-			        <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath}/jsps/admin/personal.jsp" target="sidebar">个人中心</a></li>
+			        <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath}/jsps/admin/managegrade/grade_mulu.jsp" target="sidebar">成绩管理</a></li>
+			        <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath}/jsps/admin/managestudent/manage_student_message.jsp" target="sidebar">学生信息管理</a></li>
+			        <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath}/jsps/admin/system/manage_education_message.jsp" target="sidebar">系统信息管理</a></li>
+			        <li class="navigation-li"><a class="navigation-li-a" href="${pageContext.request.contextPath}/jsps/admin/person/personal.jsp" target="sidebar">个人中心</a></li>
                 </c:if>
             </ul>
         </div>

@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Xuexid implements Serializable {
 
-	private String deparid;// 学习地点编码
+	private String departid;// 学习地点编码
 	private String xxdd;// 学习点名称
 	private String dizhi;// 学习地址
 	private String telephone;// 电话
@@ -16,12 +16,12 @@ public class Xuexid implements Serializable {
 	private Date yongdate;// 建立日期
 	private String huze;// 负责人
 
-	public String getDeparid() {
-		return deparid;
+	public String getDepartid() {
+		return departid;
 	}
 
-	public void setDeparid(String deparid) {
-		this.deparid = deparid;
+	public void setDepartid(String departid) {
+		this.departid = departid;
 	}
 
 	public String getXxdd() {
@@ -98,11 +98,12 @@ public class Xuexid implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Xuexid [deparid=" + deparid + ", xxdd=" + xxdd + ", dizhi="
+		return "Xuexid [departid=" + departid + ", xxdd=" + xxdd + ", dizhi="
 				+ dizhi + ", telephone=" + telephone + ", lianxiren="
 				+ lianxiren + ", emial=" + emial + ", ytdw=" + ytdw
 				+ ", leixing=" + leixing + ", yongdate=" + yongdate + ", huze="
 				+ huze + "]";
 	}
+
 
 }

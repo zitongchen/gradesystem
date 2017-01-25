@@ -1,41 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<excel id="student" code="student" name="学生成绩登记表">
+<excel id="student" code="student" name="教学点补考情况明细">
     <colgroup><!-- 电子表格的列的宽度 -->
-        <col index="A" width='13em'></col>
-        <col index="B" width='12em'></col>
-        <col index="C" width='13em'></col>
+        <col index="A" width='20em'></col>
+        <col index="B" width='14em'></col>
+        <col index="C" width='20em'></col>
         <col index="D" width='13em'></col>
-        <col index="E" width='11em'></col>
-        <col index="F" width='11em'></col>        
-        <col index="G" width='12em'></col>        
+        <col index="E" width='18em'></col>
     </colgroup>
     <!-- 电子表格的标题：设置表格的高度，行数，列数，内容 -->
     <title>
         <tr height="16px">
-            <td rowspan="1" colspan="7" value="学生成绩登记表" />
+            <td rowspan="1" colspan="5" value="教学点学生补考名单" />
         </tr>
     </title>
-    <ml>
-    	<tr height="16px">
-    		<td rowspan="1" colspan="4" value="班级：计算机科学与技术"/>
-    		<td rowspan="5" colspan="7" value="课程名称___________"/>
-    	</tr>
-    </ml>
-    <foot>
-    	<tr height="16px">
-    		<td rowspan="1" colspan="3" value="任课教师签名："/>
-    		<td rowspan="4" colspan="7" value="值勤人员签名："/>
-    	</tr>
-    </foot>
     <!-- 电子表格的表头：设置高度，表头的内容 -->
     <thead>
         <tr height="16px">
             <th value="学号" />
             <th value="姓名" />
-            <th value="平时与考勤"/>
-            <th value="作业与实验"/>
-            <th value="期末"/>            
-            <th value="总评"/>    
+            <th value="课程"/>
+            <th value="总评成绩"/>    
             <th value="备注"/>        
         </tr>
     </thead>
@@ -48,8 +32,6 @@
             <td type="string" isnullable="false" maxlength="30" /><!--学号 -->
             <td type="string" isnullable="false" maxlength="30" /><!--姓名 -->
             <td type="string" isnullable="false" maxlength="30" /><!--平时成绩 -->
-            <td type="string" isnullable="false" maxlength="30" /><!--考试成绩 -->
-            <td type="string" isnullable="false" maxlength="30" /><!--总评成绩 -->
         </tr>
     </tbody>
 </excel>

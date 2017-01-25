@@ -31,6 +31,12 @@ import team.wuming.modules.admin.service.AdminService;
 import team.wuming.modules.admin.service.impl.AdminServiceImpl;
 import team.wuming.modules.users.domain.User;
 
+/**
+ * 某个班级的成绩登记表下载
+ * 
+ * @author Tony
+ * 
+ */
 public class ClassGradeSheetServlet extends HttpServlet {
 
 	@Override
@@ -254,12 +260,12 @@ public class ClassGradeSheetServlet extends HttpServlet {
 				row.setHeightInPoints(30);
 				for (column = 0; column < tds.size(); column++) {
 					Element td = tds.get(column);
-					HSSFCell cell = row.createCell(column);// 创建单元格
 					Attribute rowSpan = td.getAttribute("rowspan");
 					Attribute colSpan = td.getAttribute("colspan");
 					Attribute value = td.getAttribute("value");
 					int rspan = rowSpan.getIntValue() - 1;
 					int cspan = colSpan.getIntValue() - 1;
+					HSSFCell cell = row.createCell(rspan);// 创建单元格
 					if (value != null) {
 						String val = value.getValue();
 						cell.setCellValue(val);// 设置单元格内容

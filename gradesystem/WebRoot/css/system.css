@@ -10,12 +10,11 @@ html,body{
     color: #099e6a;
     font-family: "Microsoft YaHei UI Light";
     font-size: 32px;
-    margin-top: 30px;
-    margin-bottom: 50px;
+    margin-top: 20px;
+    margin-bottom: 30px;
     text-align: center;
 
 }
-
 .errorMessage{
     color: crimson;
     font-size: 20px;
@@ -31,4 +30,55 @@ html,body{
 }
 .message-bodying p{
     line-height: 35px;
+}
+
+/*班级成绩审核页面*/
+.check-box{
+    margin: 10px 0;
+    height: 30px;
+}
+.check-box .link-box{
+    float: right;
+    margin-right: 10px;
+}
+.check-box .link-box .check-btn{
+    height: 25px;
+
+    border: none;
+    border-radius: 4px;
+    background-color: #099e6a;
+    color: white;
+    outline: none;
+}
+
+.check-box .link-box .check-btn:hover{
+    color: gainsboro;
+}
+
+.submit-btn{
+    background-color: #099e6a;
+    color: white;
+    margin-top: 40px;
+    margin-bottom: 50px;
+    outline: none;
+}
+
+/*展示系统信息页面*/
+.message-btn{
+    height: 30px;
+    background-color: gainsboro;
+    border: none;
+    border-radius: 15px;
+    color: gray;
+    padding: 0 10px;
+    margin: 8px 5px;
+    outline: none;
+}
+.add-btn{
+    background-color: #099e6a;
+    color: white;
+}
+/*课程页面*/
+.add-course {
+    display: none;
 }

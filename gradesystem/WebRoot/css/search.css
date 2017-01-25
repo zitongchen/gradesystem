@@ -28,6 +28,8 @@ body {
 .search-boding .search-button {
     background-color: #099e6a;
     color: white;
+    outline:none;
+   
 }
 
 .error-message-boding {
@@ -64,6 +66,7 @@ body {
     font-size: 12px;
     height: 28px;
     margin: 10px 0;
+    outline: none;
 }
 
 

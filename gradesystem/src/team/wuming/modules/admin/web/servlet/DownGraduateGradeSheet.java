@@ -1,8 +1,26 @@
-package team.wuming.test.poi;
+package team.wuming.modules.admin.web.servlet;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.SimpleFormatter;
+
+import javax.print.attribute.HashAttributeSet;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -16,36 +34,93 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.BorderStyle;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
-public class CreateExcel {
-	/**
-	 * 创建模板文件
-	 * 
-	 * @author David
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// 获取解析xml文件路径
-		String path = System.getProperty("user.dir")
-				+ "/resource/studentGrade.xml";
+import team.wuming.common.domain.StudentGrade;
+import team.wuming.modules.admin.service.AdminService;
+import team.wuming.modules.admin.service.impl.AdminServiceImpl;
+import team.wuming.modules.users.domain.User;
+
+/**
+ * 下载毕业班级的成绩登记表
+ * 
+ * @author Tony
+ * 
+ */
+public class DownGraduateGradeSheet extends HttpServlet {
+
+	private AdminService adminServict = new AdminServiceImpl();
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
+		String bh = request.getParameter("bh");
+		String college = request.getParameter("college");
+		User user = adminServict.searchUserByBh(bh);
+		Map<String, ArrayList<StudentGrade>> mapList = new HashMap<String, ArrayList<StudentGrade>>();
+		mapList = adminServict.SearchGraduateGrade(bh);
+		if (mapList.isEmpty()) {
+			request.setAttribute("errorMessage", "该班级学生不存在成绩！");
+			request.getRequestDispatcher(
+					"/jsps/admin/managestudent/down_graduate_sheet.jsp")
+					.forward(request, response);
+			return;
+		}
+
+		// 获取项目路径
+		String path = request.getServletContext().getRealPath(
+				"/resource/graduateStudentGradeSheet.xml");
+		// 生成sheet表格
 		File file = new File(path);
 		SAXBuilder builder = new SAXBuilder();
+		HSSFWorkbook wb = null;
+		// 解析xml文件
+		Document parse = null;
 		try {
-			// 解析xml文件
-			Document parse = builder.build(file);
-			// 创建Excel
-			HSSFWorkbook wb = new HSSFWorkbook();
+			parse = builder.build(file);
+		} catch (JDOMException e) {
+			e.printStackTrace();
+		}
+		// 创建Excel
+		wb = new HSSFWorkbook();
+		// 创建sheet
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+		String time = sdf.format(date);
+		Set<String> mapNameList = mapList.keySet();
+		Iterator iterator = mapNameList.iterator();
+		int i = 0;
+		for (; iterator.hasNext();) {
+			String user_acount = (String) iterator.next();
+			ArrayList<StudentGrade> list = mapList.get(user_acount);
+			HSSFSheet sheet = wb.createSheet(user_acount
+					+ list.get(0).getNickname());
+			makeSheet(list, time, college, user, sheet, parse, wb);
+			i++;
+		}
+		String fileName = "毕业生成绩登记表.xls";
+		fileName = new String(fileName.getBytes("GBK"), "ISO-8859-1");
+		response.setContentType("application/vnd.ms-excel");
+		response.setHeader("content-disposition", "attachment;filename="
+				+ fileName);
+		OutputStream outputStream = response.getOutputStream();// 创建一个输出流
+		wb.write(outputStream);// 利用poi中的方法下载
+		outputStream.flush();
+		outputStream.close();
+	}
 
-			// 创建sheet
-			HSSFSheet sheet = wb.createSheet("Sheet0");
 
+	private void makeSheet(ArrayList<StudentGrade> list, String time,
+			String college, User user, HSSFSheet sheet, Document parse,
+			HSSFWorkbook wb) {
+		try {
 			// 获取xml文件跟节点
 			Element root = parse.getRootElement();
 			// 获取模板名称
@@ -60,6 +135,12 @@ public class CreateExcel {
 			// 设置标题
 			Element title = root.getChild("title");
 			List<Element> trs = title.getChildren("tr");
+			String[][] titleValue = {
+					{ " " },
+					{ " " },
+					{ list.get(0).getUser_acount(), list.get(0).getNickname() },
+					{ user.getZymc(), user.getXxxs(), user.getCc(),
+							user.getXz() } };
 			for (int i = 0; i < trs.size(); i++) {
 				Element tr = trs.get(i);
 				List<Element> tds = tr.getChildren("td");
@@ -93,7 +174,7 @@ public class CreateExcel {
 					HSSFCell cell = row.createCell(rspan);// 应为存在合并单元格，所以创建单元格在获取单元格合并后的列数
 					if (value != null) {
 						String val = value.getValue();
-						cell.setCellValue(val);// 设置单元格内容
+						cell.setCellValue(val + titleValue[rownum][column]);// 设置单元格内容
 						cell.setCellStyle(cellStyle);
 						if (cspan != 0) {
 							sheet.addMergedRegion(new CellRangeAddress(rownum,
@@ -107,6 +188,7 @@ public class CreateExcel {
 			// 设置表头
 			Element thead = root.getChild("thead");
 			trs = thead.getChildren("tr");
+			
 			for (int i = 0; i < trs.size(); i++) {
 				Element tr = trs.get(i);
 				HSSFRow row = sheet.createRow(rownum);
@@ -140,9 +222,9 @@ public class CreateExcel {
 			// 设置数据区域样式
 			Element tbody = root.getChild("tbody");
 			Element tr = tbody.getChild("tr");
-			int repeat = tr.getAttribute("repeat").getIntValue();
 			List<Element> tds = tr.getChildren("td");
-			for (int i = 0; i < repeat; i++) {
+
+			for (int i = 0; i < list.size(); i++) {
 				HSSFRow row = sheet.createRow(rownum);
 				HSSFCellStyle cellStyle = wb.createCellStyle();// 创建单元格样式
 				// 设置字体
@@ -160,9 +242,21 @@ public class CreateExcel {
 				for (column = 0; column < tds.size(); column++) {
 					Element td = tds.get(column);
 					HSSFCell cell = row.createCell(column);
-					// setType(wb, cell, td);
+					cell.setCellValue(" ");
 					cell.setCellStyle(cellStyle);
 				}
+				sheet.getRow(rownum).getCell(0)
+						.setCellValue(list.get(i).getTitle());
+				sheet.getRow(rownum).getCell(1)
+						.setCellValue(list.get(i).getSthours());
+				sheet.getRow(rownum).getCell(2)
+						.setCellValue(list.get(i).getGradelei());
+				sheet.getRow(rownum).getCell(3)
+						.setCellValue(list.get(i).getTermth());
+				sheet.getRow(rownum).getCell(4)
+						.setCellValue(list.get(i).getTotalscores());
+				sheet.getRow(rownum).getCell(5)
+						.setCellValue(list.get(i).getRemark());
 				rownum++;
 			}
 
@@ -170,6 +264,7 @@ public class CreateExcel {
 			Element foot = root.getChild("foot");
 			trs = foot.getChildren("tr");
 			rownum = rownum + 3;
+			String[] footvalue = { college, time };
 			for (int i = 0; i < trs.size(); i++) {
 				tr = trs.get(i);
 				HSSFRow row = sheet.createRow(rownum);
@@ -186,14 +281,13 @@ public class CreateExcel {
 				cellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);// 垂直居中
 				for (column = 0; column < tds.size(); column++) {
 					Element td = tds.get(column);
-					Attribute valueAttr = td.getAttribute("value");
 					Attribute rowSpan = td.getAttribute("rowspan");
 					Attribute colSpan = td.getAttribute("colspan");
 					int rspan = rowSpan.getIntValue() - 1;
 					int cspan = colSpan.getIntValue() - 1;
 					HSSFCell cell = row.createCell(rspan);
-					if (valueAttr != null) {
-						String value = valueAttr.getValue();
+					if (footvalue != null) {
+						String value = footvalue[i];
 						cell.setCellValue(value);
 						cell.setCellStyle(cellStyle);
 						if (cspan != 0) {
@@ -205,61 +299,10 @@ public class CreateExcel {
 				rownum++;
 			}
 
-			// 生成Excel导入模板
-			File tempFile = new File("e:/" + templateName + ".xls");
-			tempFile.delete();
-			tempFile.createNewFile();
-			FileOutputStream stream = FileUtils.openOutputStream(tempFile);
-			wb.write(stream);
-			stream.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * 测试单元格样式
-	 * 
-	 * @author David
-	 * @param wb
-	 * @param cell
-	 * @param td
-	 */
-	private static void setType(HSSFWorkbook wb, HSSFCell cell, Element td) {
-		Attribute typeAttr = td.getAttribute("type");
-		String type = typeAttr.getValue();
-		HSSFDataFormat format = wb.createDataFormat();
-		HSSFCellStyle cellStyle = wb.createCellStyle();
-		if ("NUMERIC".equalsIgnoreCase(type)) {
-			cell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-			Attribute formatAttr = td.getAttribute("format");
-			String formatValue = formatAttr.getValue();
-			formatValue = StringUtils.isNotBlank(formatValue) ? formatValue
-					: "#,##0.00";
-			cellStyle.setDataFormat(format.getFormat(formatValue));
-		} else if ("STRING".equalsIgnoreCase(type)) {
-			cell.setCellValue("");
-			cell.setCellType(HSSFCell.CELL_TYPE_STRING);
-			cellStyle.setDataFormat(format.getFormat("@"));
-		} else if ("DATE".equalsIgnoreCase(type)) {
-			cell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-			cellStyle.setDataFormat(format.getFormat("yyyy-m-d"));
-		} else if ("ENUM".equalsIgnoreCase(type)) {
-			CellRangeAddressList regions = new CellRangeAddressList(
-					cell.getRowIndex(), cell.getRowIndex(),
-					cell.getColumnIndex(), cell.getColumnIndex());
-			Attribute enumAttr = td.getAttribute("format");
-			String enumValue = enumAttr.getValue();
-			// 加载下拉列表内容
-			DVConstraint constraint = DVConstraint
-					.createExplicitListConstraint(enumValue.split(","));
-			// 数据有效性对象
-			HSSFDataValidation dataValidation = new HSSFDataValidation(regions,
-					constraint);
-			wb.getSheetAt(0).addValidationData(dataValidation);
-		}
-		cell.setCellStyle(cellStyle);
 	}
 
 	/**
@@ -285,5 +328,4 @@ public class CreateExcel {
 			sheet.setColumnWidth(i, v);
 		}
 	}
-
 }

@@ -1,9 +1,12 @@
 package team.wuming.modules.admin.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import team.wuming.common.domain.Maijor;
 import team.wuming.common.domain.Objcenter;
+import team.wuming.common.domain.StudentGrade;
 import team.wuming.common.domain.Xuexid;
 import team.wuming.modules.admin.domain.Admin;
 import team.wuming.modules.experts.domain.Expert;
@@ -45,4 +48,28 @@ public interface AdminService {
 	public List<String> searchClassByName(String bh);
 
 	public List<User> findClassStudentByBh(String classId);
+
+
+
+	public Map<String, ArrayList<StudentGrade>> SearchGraduateGrade(String bh);
+
+	public List<String> searchGraduateClass(String zydm, String nj);
+
+	public List<Xuexid> searchXuxid();
+
+	public List<StudentGrade> searchFailStudentByXuxid(String xuexiId);
+
+	public User searchUserByBh(String bh);
+
+	public void addMaijor();
+
+	public void addXuexid();
+
+	public List<StudentGrade> displayNoAuditGrade();
+
+	public void auditGrades(List<String[]> messageList, String shenhe);
+
+	public List<StudentGrade> searchClassGrade(String bh, String visit_count);
+
+	public List<Objcenter> findObjcenter();
 }

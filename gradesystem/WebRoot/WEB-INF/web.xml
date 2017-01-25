@@ -66,10 +66,18 @@
     <servlet-name>ClassGradeSheetServlet</servlet-name>
     <servlet-class>team.wuming.modules.admin.web.servlet.ClassGradeSheetServlet</servlet-class>
   </servlet>
-
-
-
-
+  <servlet>
+    <servlet-name>DownGraduateGradeSheet</servlet-name>
+    <servlet-class>team.wuming.modules.admin.web.servlet.DownGraduateGradeSheet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>DownFailGradeByJxd</servlet-name>
+    <servlet-class>team.wuming.modules.admin.web.servlet.DownFailGradeByJxd</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>StudentGradeServlet</servlet-name>
+    <servlet-class>team.wuming.common.web.servlet.StudentGradeServlet</servlet-class>
+  </servlet>
 
 
 
@@ -138,6 +146,18 @@
   <servlet-mapping>
     <servlet-name>ClassGradeSheetServlet</servlet-name>
     <url-pattern>/ClassGradeSheetServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DownGraduateGradeSheet</servlet-name>
+    <url-pattern>/DownGraduateGradeSheet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DownFailGradeByJxd</servlet-name>
+    <url-pattern>/DownFailGradeByJxd</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>StudentGradeServlet</servlet-name>
+    <url-pattern>/StudentGradeServlet</url-pattern>
   </servlet-mapping>
   <filter>
     <filter-name>UserLoginFilter</filter-name>

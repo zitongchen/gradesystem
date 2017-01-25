@@ -20,6 +20,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<ul>
 			<li><a href="${pageContext.request.contextPath }/jsps/admin/managestudent/add_student_message.jsp" target="body">上传班级信息</a></li>
 			<li><a href="${pageContext.request.contextPath }/jsps/admin/managestudent/down_gradesheet.jsp" target="body">下载班级成绩登记表</a></li>	
+			<li><a href="${pageContext.request.contextPath }/jsps/admin/managestudent/search_fail_grade.jsp" target="body">教学点补考成绩查询</a></li>	
+			<li><a href="${pageContext.request.contextPath }/jsps/admin/managestudent/down_graduate_sheet.jsp" target="body">下载毕业班成绩表</a></li>	
 		</ul>
 	</div>
 	<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>

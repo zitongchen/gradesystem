@@ -2,7 +2,10 @@ package team.wuming.modules.admin.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import team.wuming.common.dao.StudentGradeDao;
+import team.wuming.common.dao.impl.StudentGradeDaoImpl;
 import team.wuming.common.domain.Maijor;
 import team.wuming.common.domain.Objcenter;
 import team.wuming.common.domain.StudentGrade;
@@ -82,8 +85,7 @@ public class AdminServiceImpl implements AdminService {
 			String expacount) {
 		// 查询课程的详细信息
 		Objcenter objcenter = adminDao.findObjcenterById(visit_count);
-		// 查询教师的信息
-		// Expert expert = adminDao.findExpertById(expacount);
+
 		Expert expert = new Expert();
 		expert.setExpacount(expacount);
 		List<User> userList = adminDao.findUserByClassName(className);
@@ -155,5 +157,91 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<User> findClassStudentByBh(String classId) {
 		return adminDao.findClassStudentByBh(classId);
+	}
+
+
+
+	// 查询毕业班学生的全部成绩
+	@Override
+	public Map<String, ArrayList<StudentGrade>> SearchGraduateGrade(String bh) {
+		List<String> userIdList = new ArrayList<String>();
+		List<Object> userId = adminDao.serachUserIdByBh(bh);
+		for (Object object : userId) {
+			userIdList.add(String.valueOf(object));
+		}
+		Map<String, ArrayList<StudentGrade>> mapList = adminDao
+				.searchGraduateGrade(userIdList);
+		return mapList;
+	}
+
+	// 根据专业代码查询毕业班级
+	@Override
+	public List<String> searchGraduateClass(String zydm, String nj) {
+		List<Object> graduateClass = adminDao.searchGraduateClass(zydm, nj);
+		List<String> graduateClassList = new ArrayList<String>();
+		for (Object object : graduateClass) {
+			graduateClassList.add(String.valueOf(object));
+		}
+		return graduateClassList;
+	}
+
+	// 查询学习地点，用于查询补考名单功能
+	@Override
+	public List<Xuexid> searchXuxid() {
+		return adminDao.searchXuxid();
+	}
+
+	// 用于根据地点查询补考学生名单
+	@Override
+	public List<StudentGrade> searchFailStudentByXuxid(String xuexiId) {
+		List<String> classnameList = new ArrayList<String>();
+		List<Object> classList = adminDao.searchClassByXuexid(xuexiId);
+		for (Object object : classList) {
+			classnameList.add(String.valueOf(object));
+		}
+		return adminDao.searchFailStudent(classnameList);
+	}
+
+	// 用于打印毕业班成绩功能
+	@Override
+	public User searchUserByBh(String bh) {
+		return adminDao.serchUserByBh(bh);
+	}
+
+	// 上传学生信息的时候，根据信息表内容填充专业表
+	@Override
+	public void addMaijor() {
+		adminDao.addMaijor();
+	}
+
+	// 上传学生信息的时候，根据信息表内容填充学习点表
+	@Override
+	public void addXuexid() {
+		adminDao.addXuexid();
+
+	}
+
+	// 显示未审核的班级跟课程
+	@Override
+	public List<StudentGrade> displayNoAuditGrade() {
+		return adminDao.displayNoAuditGrade();
+	}
+
+	@Override
+	public void auditGrades(List<String[]> messageList, String shenhe) {
+		adminDao.auditGrades(messageList, shenhe);
+
+	}
+
+	@Override
+	public List<StudentGrade> searchClassGrade(String bh, String visit_count) {
+
+		return adminDao.searchClassGrade(bh, visit_count);
+	}
+
+	@Override
+	public List<Objcenter> findObjcenter() {
+
+		return adminDao.findObjcenter();
 	}
 }

@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>班级成绩登记表</title>
+    <title>Search</title>
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/search.css">
 </head>
@@ -18,37 +18,42 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="search-boding">
             <div class="col-sm-8 col-sm-offset-1">
                 <div class="col-sm-10 col-sm-offset-2">
-                    <p class="search-heading">班级成绩登记表</p>
+                    <p class="search-heading">学生成绩查询</p>
                 </div>
-                <form class="form-horizontal" action="${pageContext.request.contextPath}/AdminServletOne" method="post" role="form">
-                	<input type="hidden" name="method" value="searchClassByName">
+                <form class="form-horizontal" action="${pageContext.request.contextPath}/AdminServlet" method="post" role="form">
+                	<input type="hidden" name="method" value="searchStudentGrade">
                     <div class="col-sm-10 col-sm-offset-2">
                         <div class="input-group">
-       
-                            <input type="text" name="bh" placeholder="请输入班级名称，可输入部分信息..." value="${requestScope.bh}" class="form-control search-input" maxlength="30">
+                            <input type="text" name="text" class="form-control search-input" maxlength="30" placeholder="请输入学生学号或姓名...">
                             <span class="input-group-btn">
                                     <button type="submit" class="btn search-button">搜索一下</button>
-                            </span>
+                                </span>
+                        </div>
+                        <div class="form-group">
+                            <div class="search-btn-boding">
+                                <div class="radio col-sm-11 col-sm-offset-5">
+                                    <label class="radio-inline" >
+                                        <input name="search_type" type="radio" value="acount" checked>学号
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input name="search_type" type="radio" value="nickname">姓名
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-		<c:if test="${not empty requestScope.errorMessage }">
+        <div class="col-sm-6 col-sm-offset-4">
+            <p >注：为避免重名情况导致信息有误，请使用学号查询！</p>
+        </div>
+        <c:if test="${not empty errorMessage}">
 	        <div class="col-sm-9 col-sm-offset-1 error-message-boding">
-	            <p class="error-message">${requestScope.errorMessage }</p>
+	            <p class="error-message">不存在该学生的成绩信息！</p>
 	        </div>
         </c:if>
 
-        <div class="col-sm-8 col-sm-offset-2 manage-grade-boding">
-            <c:if test="${ not empty requestScope.classList }">
-            	<c:forEach items="${requestScope.classList}"  var="classList">
-            		<div class="col-sm-4 col-sm-offset-1">
-                		<a href="${pageContext.request.contextPath}/ClassGradeSheetServlet?classId=${classList}"><button class="btn manage-grade-btn">${classList}</button></a>
-            		</div>
-            	</c:forEach>
-            </c:if>
-        </div>
     </div>
 </div>
 

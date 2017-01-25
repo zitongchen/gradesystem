@@ -26,8 +26,15 @@ public interface StudentGradeService {
 	public List<StudentGrade> findFailStudent(String classId, String expacount);
 
 	public void saveFailStudentGrade(String[] userId, String[] bkGrades,
-			String kc, String expacount);
+			String kc, String expacount, String gradelei);
 
 	public String findExpertName(String expacount);
+
+	public List<StudentGrade> serchStudentGradeByName(String value);
+
+
+
+	public void saveBkScore(String[] user_acount, String[] bkscore, String kc,
+			String bh);
 
 }

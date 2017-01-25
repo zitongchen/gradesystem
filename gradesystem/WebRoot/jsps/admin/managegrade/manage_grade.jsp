@@ -25,7 +25,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <div class="col-sm-10 col-sm-offset-2">
                         <div class="input-group">
        
-                            <input type="text" name="id" placeholder="请输入教师的账号或姓名" value="${requestScope.id}" class="form-control search-input" maxlength="30">
+                            <input type="text" name="id" placeholder="请输入教师的账号..." value="${requestScope.id}" class="form-control search-input" maxlength="30">
                             <span class="input-group-btn">
                                     <button type="submit" class="btn search-button">搜索一下</button>
                             </span>
